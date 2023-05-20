@@ -31,7 +31,7 @@ public class CardScript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         TempCard.transform.SetSiblingIndex(transform.GetSiblingIndex());
 
         transform.SetParent(DefaultParent.parent);
-        // GetComponent<CanvasGroup>().blocksRaycasts = false;
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
     public void OnDrag(PointerEventData eventData) // Выполняется каждый кадр при перетягивании объекта
@@ -54,7 +54,7 @@ public class CardScript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             return;
         
         transform.SetParent(DefaultParent);
-        // GetComponent<CanvasGroup>().blocksRaycasts = true;
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
 
         transform.SetSiblingIndex(TempCard.transform.GetSiblingIndex());
         TempCard.transform.SetParent(GameObject.Find("Canvas").transform);
