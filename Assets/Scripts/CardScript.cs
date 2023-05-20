@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CardScript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class CardScript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler // Мувмент карты
 {
     Camera MainCamera;
     Vector2 offset;
     public Transform DefaultParent, DefaultTempCardParent;
     GameObject TempCard;
-    public bool IsDraggable;
+    public bool IsDraggable; // Наша рука или нет
     void Awake() 
     {
         MainCamera = Camera.main;
         TempCard = GameObject.Find("TempCard");
     }
     
-    public void OnBeginDrag(PointerEventData eventData) //Выполняется единожды при перетягивании объекта
+    public void OnBeginDrag(PointerEventData eventData) //Выполняется единожды при перетягивании объекта // Инициализация
     {
         offset = transform.position - MainCamera.ScreenToWorldPoint(eventData.position);
 
@@ -31,7 +31,7 @@ public class CardScript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         TempCard.transform.SetSiblingIndex(transform.GetSiblingIndex());
 
         transform.SetParent(DefaultParent.parent);
-        GetComponent<CanvasGroup>().blocksRaycasts = false;
+        // GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
     public void OnDrag(PointerEventData eventData) // Выполняется каждый кадр при перетягивании объекта
@@ -39,8 +39,8 @@ public class CardScript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         if (!IsDraggable)
             return;
         
-        Vector2 newPos = MainCamera.ScreenToWorldPoint(eventData.position);
-        transform.position = newPos + offset;
+        Vector2 newPos = MainCamera.ScreenToWorldPoint(eventData.position); // Позиция курсора
+        transform.position = newPos + offset; // Фикс взятия карты за её угол
 
         if (TempCard.transform.parent != DefaultTempCardParent)
             TempCard.transform.SetParent(DefaultTempCardParent);
@@ -54,14 +54,14 @@ public class CardScript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             return;
         
         transform.SetParent(DefaultParent);
-        GetComponent<CanvasGroup>().blocksRaycasts = true;
+        // GetComponent<CanvasGroup>().blocksRaycasts = true;
 
         transform.SetSiblingIndex(TempCard.transform.GetSiblingIndex());
         TempCard.transform.SetParent(GameObject.Find("Canvas").transform);
         TempCard.transform.localPosition = new Vector2(1800,0);
     }
 
-    void Checkposition()
+    void Checkposition() // Проверка позиции взятой карты относительно содержимого руки, во избежании багов.
     {
         int newIndex = DefaultTempCardParent.childCount;
 

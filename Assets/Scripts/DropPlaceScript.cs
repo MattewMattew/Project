@@ -7,16 +7,15 @@ public enum FieldType
 {
     SELF_HAND,
     SELF_FIELD,
-    // ENYME_HAND,
-    ENYME_FIELD,
+    // ENEMY_HAND,
+    ENEMY_FIELD,
     PACK
 
-    //fhgfghfhhftrbghghh
 }
 public class DropPlaceScript : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public FieldType Type;
-    public void OnDrop(PointerEventData eventData)
+    public void OnDrop(PointerEventData eventData) // Когда кладем карту в поле
     {
         if (Type != FieldType.SELF_FIELD)
             return;
@@ -25,10 +24,9 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler, IPointerEnterHandler
         if(card)
             card.DefaultParent = transform;
     }
-    //djhklfjljgpoijpjpfg
-    public void OnPointerEnter(PointerEventData eventData)
+    public void OnPointerEnter(PointerEventData eventData) // Когда зажимаем ЛКМ на карту
     {
-        if (eventData.pointerDrag == null || Type == FieldType.ENYME_FIELD || Type == FieldType.PACK /*||Type == FieldType.ENYME_HAND*/)
+        if (eventData.pointerDrag == null || Type == FieldType.ENEMY_FIELD || Type == FieldType.PACK /*||Type == FieldType.ENEMY_HAND*/)
             return;
 
         CardScript card = eventData.pointerDrag.GetComponent<CardScript>();
@@ -37,7 +35,7 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler, IPointerEnterHandler
             card.DefaultTempCardParent = transform;
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    public void OnPointerExit(PointerEventData eventData) // Когда отпускаем ЛКМ
     {
         if (eventData.pointerDrag == null)
             return;

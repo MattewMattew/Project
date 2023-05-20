@@ -8,6 +8,10 @@ public struct Card
     public Sprite Logo, Suit;
     public Card(string name, /*string textInfo,*/ string logoPath, string dignity, string suitPath)
     {
+        // name - имя
+        // logoPath - картинка
+        // dignity - достоинство масти
+        // suitPath - масть
         Name = name;
         Logo = Resources.Load<Sprite>(logoPath);
         // TextInfo = textInfo;
@@ -21,7 +25,13 @@ public static class CardManager
     public static List<Card> AllCards = new List<Card>();
 }
 
-public class CardManagerScript : MonoBehaviour
+
+
+// Diamonds - буби
+// Spades - пики
+// Hearts - черви
+// Clubs - крести
+public class CardManagerScript : MonoBehaviour // Список карт и свойства
 {
     public void Awake() 
     {

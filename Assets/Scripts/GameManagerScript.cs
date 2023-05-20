@@ -30,7 +30,7 @@ public class Game
     
 }
 
-public class GameManagerScript : MonoBehaviour
+public class GameManagerScript : MonoBehaviour // Колода
 {
     public Game CurrentGame;
     public Transform SelfHand, EnemyHand;
@@ -42,14 +42,14 @@ public class GameManagerScript : MonoBehaviour
         GiveHandCards(CurrentGame.Pack, SelfHand);
     }
     
-    void GiveHandCards(List<Card> pack, Transform hand)
+    void GiveHandCards(List<Card> pack, Transform hand) // Количество карт в руке
     {
         int i = 0;
-        while (i++ < 4)
+        while (i++ < 5)
             GiveCardToHand(pack, hand);
     }
 
-    void GiveCardToHand(List<Card> pack, Transform hand)
+    void GiveCardToHand(List<Card> pack, Transform hand) // Выдача карты в руку
     {
         if (pack.Count == 0)
             return;
