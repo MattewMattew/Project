@@ -53,7 +53,7 @@ public class CardManagerScript : MonoBehaviour // Список карт и св�
 
         CardManager.AllCards.Add(new Card("General","Sprites/Cards/General","9","Sprites/Suits/Hearts"));
 
-        CardManager.AllCards.Add(new Card("Indians","Sprites/Cards/Indians","K","Sprites/Suits/Diamond"));
+        CardManager.AllCards.Add(new Card("Indians","Sprites/Cards/Indians","K","Sprites/Suits/Diamonds"));
 
         CardManager.AllCards.Add(new Card("Jail","Sprites/Cards/Jail","10","Sprites/Suits/Spades"));
 
@@ -61,7 +61,7 @@ public class CardManagerScript : MonoBehaviour // Список карт и св�
 
         CardManager.AllCards.Add(new Card("Mustang","Sprites/Cards/Mustang","8","Sprites/Suits/Hearts"));
 
-        CardManager.AllCards.Add(new Card("Panic","Sprites/Cards/Panic","8","Sprites/Suits/Diamond"));
+        CardManager.AllCards.Add(new Card("Panic","Sprites/Cards/Panic","8","Sprites/Suits/Diamonds"));
 
         CardManager.AllCards.Add(new Card("Remington","Sprites/Cards/Remington","K","Sprites/Suits/Clubs"));
 
@@ -75,7 +75,7 @@ public class CardManagerScript : MonoBehaviour // Список карт и св�
 
         CardManager.AllCards.Add(new Card("Winchester","Sprites/Cards/Winchester","8","Sprites/Suits/Spades"));
 
-        CardManager.AllCards.Add(new Card("Women","Sprites/Cards/Women","9","Sprites/Suits/Diamond"));
+        CardManager.AllCards.Add(new Card("Women","Sprites/Cards/Women","9","Sprites/Suits/Diamonds"));
 
         CardManager.AllCards.Add(new Card("Roach","Sprites/Cards/Roach","A","Sprites/Suits/Spades"));
     }

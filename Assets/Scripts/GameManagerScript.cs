@@ -23,8 +23,11 @@ public class Game
     {
         List<Card> list = new List<Card>();
         for (int i = 0; i < 22; i++)
-            list.Add(CardManager.AllCards[Random.Range(0, CardManager.AllCards.Count)]);
-            Debug.Log(list);
+        {
+            int card = Random.Range(0, CardManager.AllCards.Count);
+            list.Add(CardManager.AllCards[card]);
+            CardManager.AllCards.RemoveAt(card);
+        }
         return list;
     }
     
@@ -45,8 +48,10 @@ public class GameManagerScript : MonoBehaviour // Колода
     void GiveHandCards(List<Card> pack, Transform hand) // Количество карт в руке
     {
         int i = 0;
-        while (i++ < 5)
+        while (i++ < 5){
             GiveCardToHand(pack, hand);
+        }
+
     }
 
     void GiveCardToHand(List<Card> pack, Transform hand) // Выдача карты в руку
