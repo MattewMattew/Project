@@ -22,7 +22,11 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler, IPointerEnterHandler
         CardScript card = eventData.pointerDrag.GetComponent<CardScript>();
 
         if(card)
+        {
+            card.GameManager.PlayerHandCards.Remove(card.GetComponent<CardInfoScripts>());
+            card.GameManager.PlayerFieldCards.Add(card.GetComponent<CardInfoScripts>());
             card.DefaultParent = transform;
+        }
     }
     public void OnPointerEnter(PointerEventData eventData) // Когда зажимаем ЛКМ на карту
     {

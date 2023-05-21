@@ -9,11 +9,13 @@ public class CardScript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     Vector2 offset;
     public Transform DefaultParent, DefaultTempCardParent;
     GameObject TempCard;
+    public GameManagerScript GameManager;
     public bool IsDraggable; // Наша рука или нет
     void Awake() 
     {
         MainCamera = Camera.main;
         TempCard = GameObject.Find("TempCard");
+        GameManager = FindObjectOfType<GameManagerScript>();
     }
     
     public void OnBeginDrag(PointerEventData eventData) //Выполняется единожды при перетягивании объекта // Инициализация
@@ -22,7 +24,8 @@ public class CardScript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
         DefaultParent = DefaultTempCardParent = transform.parent;
 
-        IsDraggable = DefaultParent.GetComponent<DropPlaceScript>().Type == FieldType.SELF_HAND;
+        IsDraggable = DefaultParent.GetComponent<DropPlaceScript>().Type == FieldType.SELF_HAND &&
+                      GameManager.IsPlayerMove;
 
         if (!IsDraggable)
             return;
