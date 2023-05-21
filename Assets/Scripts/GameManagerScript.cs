@@ -23,7 +23,11 @@ public class Game
     {
         List<Card> list = new List<Card>();
         for (int i = 0; i < 22; i++)
-            list.Add(CardManager.AllCards[Random.Range(0, CardManager.AllCards.Count)]);
+        {
+            int card = Random.Range(0, CardManager.AllCards.Count);
+            list.Add(CardManager.AllCards[card]);
+            CardManager.AllCards.RemoveAt(card);
+        }
             Debug.Log(list);
         return list;
     }
