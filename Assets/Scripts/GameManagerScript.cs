@@ -3,38 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Mirror;
 
-public class Game
+public class GameManagerScript : NetworkBehaviour // Колода
 {
-    public List<Card> Pack;
-    
-    public Game()
+    public class GameCard
     {
-        Pack = GivePack();
-    }
-    List<Card> GivePack()
-    {
-        List<Card> list = new List<Card>();
-        for (int i = 0; i < 22; i++)
+        public List<Card> Pack;
+        
+        public GameCard()
         {
-            int card = Random.Range(0, CardManager.AllCards.Count);
-            list.Add(CardManager.AllCards[card]);
-            CardManager.AllCards.RemoveAt(card);
+            Pack = GivePack();
         }
-        return list;
-    }
-    
-}
+        [ServerCallback]
+        List<Card> GivePack()
+        {
+            List<Card> list = new List<Card>();
+            for (int i = 0; i < 22; i++)
+            {
+                int card = Random.Range(0, CardManager.AllCards.Count);
+                list.Add(CardManager.AllCards[card]);
+                CardManager.AllCards.RemoveAt(card);
+            }
+            return list;
+        }
 
-public class GameManagerScript : MonoBehaviour // Колода
-{
-    public Game CurrentGame;
+    }
+    public GameCard CurrentGame;
     public Transform SelfHand, EnemyHand;
     public GameObject CardPref;
     int Move, MoveTime = 30;
     public TextMeshProUGUI MoveTimeTxt;
     public Button EndMoveBtn;
-
+    public List<Vector2> spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, -77), new Vector2(0, 421)};
     public List<CardInfoScripts> PlayerHandCards = new List<CardInfoScripts>(),
                                  PlayerFieldCards = new List<CardInfoScripts>(),
                                  EnemyHandCards = new List<CardInfoScripts>(),
@@ -51,10 +52,11 @@ public class GameManagerScript : MonoBehaviour // Колода
 
     void Start()
     {
-        CurrentGame = new Game();
-
+        gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
+        CurrentGame = new GameCard();
+        /*NetworkServer.Spawn();*/
         GiveHandCards(CurrentGame.Pack, SelfHand);
-        GiveHandCards(CurrentGame.Pack, EnemyHand);
+        /*GiveHandCards(CurrentGame.Pack, EnemyHand);*/
         
         StartCoroutine(MoveFunc());
     }
@@ -74,6 +76,7 @@ public class GameManagerScript : MonoBehaviour // Колода
         Card card = pack[0];
 
         GameObject cardGo = Instantiate(CardPref, hand, false);
+        NetworkServer.Spawn(cardGo);
 
         if (hand == EnemyHand)
         {
@@ -92,15 +95,15 @@ public class GameManagerScript : MonoBehaviour // Колода
 
     IEnumerator MoveFunc ()
     {
-        MoveTime = 30;
-        MoveTimeTxt.text = MoveTime.ToString();
+        MoveTime = 1;
+        /*MoveTimeTxt.text = MoveTime.ToString();*/
 
         while (MoveTime-- > 0)
         {
-            MoveTimeTxt.text = MoveTime.ToString();
+            /*MoveTimeTxt.text = MoveTime.ToString();*/
             yield return new WaitForSeconds(1); //Ожидание секунда  
         }
-        ChangeMove();
+        /*ChangeMove();*/
     }
 
     public void ChangeMove() 

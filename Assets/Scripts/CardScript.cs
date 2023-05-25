@@ -1,9 +1,10 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CardScript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler // Мувмент карты
+public class CardScript : NetworkBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler // Мувмент карты
 {
     Camera MainCamera;
     Vector2 offset;
