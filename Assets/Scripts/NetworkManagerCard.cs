@@ -21,7 +21,7 @@ public class NetworkManagerCard : NetworkManager
     {
         // add player at correct spawn position
         /*Transform start = numPlayers == 0 ? leftRacketSpawn : rightRacketSpawn;*/
-    
+        conn.isReady = true;
         GameObject player = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         NetworkServer.AddPlayerForConnection(conn, player);
 
@@ -30,6 +30,7 @@ public class NetworkManagerCard : NetworkManager
             /*GiveHandCards(CurrentGame.Pack, EnemyHand);*/
             GameObject CanvasPref = Instantiate(PrefabCanvas);
             NetworkServer.Spawn(CanvasPref);
+            player.transform.SetParent(GameObject.Find("Background").transform);
 
         }
     }

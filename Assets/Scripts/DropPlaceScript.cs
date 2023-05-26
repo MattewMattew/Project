@@ -1,7 +1,10 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.PlayerLoop;
 
 public enum FieldType
 {
@@ -12,29 +15,92 @@ public enum FieldType
     PACK
 
 }
-public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,IPointerExitHandler,/* IDropHandler,  */
+public class DropPlaceScript : NetworkBehaviour, IPointerEnterHandler,IPointerExitHandler,/* IDropHandler,  */
                                IPointerClickHandler
 {
+    SyncList<GameObject> cards = new SyncList<GameObject>();
     public FieldType Type;
     public bool PlaceCheck;
-    CardScript[] card;
+    GameObject[] card;
     private Vector2 pos1;
     private Vector2 pos2;
+    public List<GameObject> TransformVars;
 
-    public void OnPointerClick(PointerEventData eventData)
+    [Server]
+    public void CmdChildrenAdded(GameObject item)
     {
-        card = FindObjectsOfType<CardScript>();
-        foreach (var item in card)
+        Debug.Log(item);
+        cards.Add(item);
+    }
+    [Command]
+    public void ChildrenAdded(GameObject item)
+    {
+        CmdChildrenAdded(item);
+    }
+
+    public override void OnStartClient()
+    {
+        
+        base.OnStartClient();
+
+        cards.Callback += SyncTransformVars; //вместо hook, для SyncList используем подписку на Callback
+
+        TransformVars = new List<GameObject>(cards.Count); //так как Callback действует только на изменение массива,  
+        for (int i = 0; i < cards.Count; i++) //а у нас на момент подключения уже могут быть какие-то данные в массиве, нам нужно эти данные внести в локальный массив
         {
-            if(item.TempCard != null) 
-            {
-                item.transform.SetParent(gameObject.transform);
-                item.TempCard = null;
-                item.transform.localScale = new Vector2(1f, 1f);
-            }
+            TransformVars.Add(cards[i]);
         }
     }
 
+
+    void SyncTransformVars(SyncList<GameObject>.Operation op, int index, GameObject oldItem, GameObject newItem)
+    {
+        switch (op)
+        {
+            case SyncList<GameObject>.Operation.OP_ADD:
+                {
+                    TransformVars.Add(newItem);
+                    break;
+                }
+            case SyncList<GameObject>.Operation.OP_CLEAR:
+                {
+
+                    break;
+                }
+            case SyncList<GameObject>.Operation.OP_INSERT:
+                {
+
+                    break;
+                }   
+            case SyncList<GameObject>.Operation.OP_REMOVEAT:
+                {
+
+                    break;
+                }
+            case SyncList<GameObject>.Operation.OP_SET:
+                {
+
+                    break;
+                }
+        }
+    }
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        card = GameObject.FindGameObjectsWithTag("Card");
+        foreach (var item in card)
+        {
+            if(item.GetComponent<CardScript>().TempCard != null) 
+            {
+                item.transform.SetParent(gameObject.transform);
+                item.GetComponent<CardScript>().TempCard = null;
+                item.transform.localScale = new Vector2(1f, 1f);
+                if (isServer)
+                    ChildrenAdded(item);
+                else
+                    CmdChildrenAdded(item);
+            }
+        }
+    }
 
 
     // public void OnDrop(PointerEventData eventData) // Когда кладем карту в поле
@@ -49,7 +115,25 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,IPointerExitH
     //         card.GameManager.PlayerFieldCards.Add(card.GetComponent<CardInfoScripts>());
     //     }
     // }
+/*    void Update()
+    {
+        var enemyField = FindObjectsOfType<DropPlaceScript>();
+        foreach (var item in enemyField)
+        {
+            if(item.Type == FieldType.ENEMY_FIELD)
+            {
+                foreach (var item1 in cards)
+                {
+                    item1.SetParent(item.transform);
+                }
+            }
+        }
+    }*/
     void Awake(){
+/*        if (!isLocalPlayer)
+        {
+            Type = FieldType.ENEMY_FIELD;
+        }*/
         pos1 = transform.localPosition;
         pos2 = new Vector2(0,transform.localPosition.y+99f);
 

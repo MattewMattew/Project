@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 6751019083563272255}
   m_Layer: 5
   m_Name: Card
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -193,11 +193,8 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  DefaultParent: {fileID: 0}
-  DefaultTempCardParent: {fileID: 0}
+  TempCard: {fileID: 0}
   GameManager: {fileID: 0}
-  IsDraggable: 0
-  CardCheck: 0
 --- !u!225 &-6318740297445520447
 CanvasGroup:
   m_ObjectHideFlags: 0
