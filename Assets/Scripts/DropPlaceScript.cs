@@ -12,12 +12,14 @@ public enum FieldType
     PACK
 
 }
-public class DropPlaceScript : MonoBehaviour,/* IDropHandler, IPointerEnterHandler, IPointerExitHandler */
+public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,IPointerExitHandler,/* IDropHandler,  */
                                IPointerClickHandler
 {
     public FieldType Type;
     public bool PlaceCheck;
     CardScript[] card;
+    private Vector2 pos1;
+    private Vector2 pos2;
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -47,16 +49,45 @@ public class DropPlaceScript : MonoBehaviour,/* IDropHandler, IPointerEnterHandl
     //         card.GameManager.PlayerFieldCards.Add(card.GetComponent<CardInfoScripts>());
     //     }
     // }
-    // public void OnPointerEnter(PointerEventData eventData) // Когда зажимаем ЛКМ на карту
-    // {
-    //     if (eventData.pointerDrag == null || Type == FieldType.ENEMY_FIELD || Type == FieldType.PACK /*||Type == FieldType.ENEMY_HAND*/)
-    //         return;
+    void Awake(){
+        pos1 = transform.localPosition;
+        pos2 = new Vector2(0,transform.localPosition.y+99f);
 
-    //     CardScript card = eventData.pointerDrag.GetComponent<CardScript>();
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {   
+        if (Type == FieldType.SELF_HAND)
+        {
+            
+            StopAllCoroutines();
+            StartCoroutine(TransfordSelfHand(transform.localPosition, pos1, 0.2f));
 
-    //     if (card)
-    //         card.DefaultTempCardParent = transform;
-    // }
+
+        }
+    }
+    public void OnPointerEnter(PointerEventData eventData) // Когда зажимаем ЛКМ на карту
+    {
+        if (Type == FieldType.SELF_HAND)
+        {
+            
+            StopAllCoroutines();
+            StartCoroutine(TransfordSelfHand(transform.localPosition, pos2, 0.2f));
+            
+            
+
+        }
+    }
+
+    private  IEnumerator TransfordSelfHand(Vector2 posstart,Vector2 posend, float time){
+        float t = 0;
+        do
+        {
+            transform.localPosition = Vector2.Lerp(posstart,posend,t/time);
+            t +=Time.deltaTime;
+            yield return null;
+        } while (t<=time);
+
+    }
 
     // public void OnPointerExit(PointerEventData eventData) // Когда отпускаем ЛКМ
     // {
