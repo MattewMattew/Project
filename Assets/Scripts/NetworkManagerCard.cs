@@ -25,7 +25,7 @@ public class NetworkManagerCard : NetworkManager
         GameObject player = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         NetworkServer.AddPlayerForConnection(conn, player);
 
-        if (numPlayers == 2)
+        if (numPlayers == 1)
         {
             /*GiveHandCards(CurrentGame.Pack, EnemyHand);*/
             GameObject CanvasPref = Instantiate(PrefabCanvas);

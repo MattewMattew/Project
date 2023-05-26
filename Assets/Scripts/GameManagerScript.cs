@@ -29,6 +29,7 @@ public class GameManagerScript : NetworkBehaviour // Колода
         }
 
     }
+    public bool EndTurn;
     public GameCard CurrentGame;
     public Transform SelfHand, EnemyHand;
     public GameObject CardPref;
