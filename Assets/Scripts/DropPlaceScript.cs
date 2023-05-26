@@ -15,12 +15,12 @@ public enum FieldType
     PACK
 
 }
-public class DropPlaceScript : NetworkBehaviour, IPointerEnterHandler,IPointerExitHandler,/* IDropHandler,  */
-                               IPointerClickHandler
+
+public class DropPlaceScript : NetworkBehaviour, IPointerEnterHandler,
+                               IPointerExitHandler, IPointerClickHandler
 {
     SyncList<GameObject> cards = new SyncList<GameObject>();
     public FieldType Type;
-    public bool PlaceCheck;
     GameObject[] card;
     private Vector2 pos1;
     private Vector2 pos2;
@@ -51,7 +51,6 @@ public class DropPlaceScript : NetworkBehaviour, IPointerEnterHandler,IPointerEx
             TransformVars.Add(cards[i]);
         }
     }
-
 
     void SyncTransformVars(SyncList<GameObject>.Operation op, int index, GameObject oldItem, GameObject newItem)
     {
@@ -84,6 +83,7 @@ public class DropPlaceScript : NetworkBehaviour, IPointerEnterHandler,IPointerEx
                 }
         }
     }
+
     public void OnPointerClick(PointerEventData eventData)
     {
         card = GameObject.FindGameObjectsWithTag("Card");
@@ -94,6 +94,9 @@ public class DropPlaceScript : NetworkBehaviour, IPointerEnterHandler,IPointerEx
                 item.transform.SetParent(gameObject.transform);
                 item.GetComponent<CardScript>().TempCard = null;
                 item.transform.localScale = new Vector2(1f, 1f);
+
+                item.GetComponent<CardScript>().GameManager.PlayerHandCards.Remove(item.GetComponent<CardInfoScripts>());
+                item.GetComponent<CardScript>().GameManager.PlayerFieldCards.Add(item.GetComponent<CardInfoScripts>());
                 if (isServer)
                     ChildrenAdded(item);
                 else
@@ -101,64 +104,31 @@ public class DropPlaceScript : NetworkBehaviour, IPointerEnterHandler,IPointerEx
             }
         }
     }
-
-
-    // public void OnDrop(PointerEventData eventData) // Когда кладем карту в поле
-    // {
-    //     if (Type != FieldType.SELF_FIELD)
-    //         return;
-    //     CardScript card = eventData.pointerDrag.GetComponent<CardScript>();
-
-    //     if(card)
-    //     {
-    //         card.GameManager.PlayerHandCards.Remove(card.GetComponent<CardInfoScripts>());
-    //         card.GameManager.PlayerFieldCards.Add(card.GetComponent<CardInfoScripts>());
-    //     }
-    // }
-/*    void Update()
+    void Awake()
     {
-        var enemyField = FindObjectsOfType<DropPlaceScript>();
-        foreach (var item in enemyField)
-        {
-            if(item.Type == FieldType.ENEMY_FIELD)
-            {
-                foreach (var item1 in cards)
-                {
-                    item1.SetParent(item.transform);
-                }
-            }
-        }
-    }*/
-    void Awake(){
 /*        if (!isLocalPlayer)
         {
             Type = FieldType.ENEMY_FIELD;
         }*/
         pos1 = transform.localPosition;
         pos2 = new Vector2(0,transform.localPosition.y+99f);
-
     }
+
     public void OnPointerExit(PointerEventData eventData)
     {   
         if (Type == FieldType.SELF_HAND)
         {
-            
             StopAllCoroutines();
             StartCoroutine(TransfordSelfHand(transform.localPosition, pos1, 0.2f));
-
-
         }
     }
+
     public void OnPointerEnter(PointerEventData eventData) // Когда зажимаем ЛКМ на карту
     {
         if (Type == FieldType.SELF_HAND)
         {
-            
             StopAllCoroutines();
             StartCoroutine(TransfordSelfHand(transform.localPosition, pos2, 0.2f));
-            
-            
-
         }
     }
 
@@ -172,15 +142,4 @@ public class DropPlaceScript : NetworkBehaviour, IPointerEnterHandler,IPointerEx
         } while (t<=time);
 
     }
-
-    // public void OnPointerExit(PointerEventData eventData) // Когда отпускаем ЛКМ
-    // {
-    //     if (eventData.pointerDrag == null)
-    //         return;
-
-    //     CardScript card = eventData.pointerDrag.GetComponent<CardScript>();
-
-    //     if (card && card.DefaultTempCardParent == transform)
-    //         card.DefaultTempCardParent = card.DefaultParent;
-    // }
 }
