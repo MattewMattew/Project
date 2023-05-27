@@ -23,4 +23,7 @@ public class MainMenuUI : MonoBehaviour
             Screen.SetResolution(800, 600, true);
         } 
     }
+    public void CloseGame(){
+         Application.Quit();}
+
 }
