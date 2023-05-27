@@ -8,8 +8,8 @@ public class ServerManager : NetworkBehaviour
     public readonly SyncList<CardAttributes> PackCards = new SyncList<CardAttributes>();
     public GameCard CurrentGame;
     public List<Card> CardVars;
-
-
+    public readonly SyncList<CardAttributes> Hand1 = new SyncList<CardAttributes>();
+    public readonly SyncList<CardAttributes> Hand2 = new SyncList<CardAttributes>();
     public class GameCard
     {
         public List<CardAttributes> Pack;
@@ -98,26 +98,64 @@ public class ServerManager : NetworkBehaviour
         if (isServer)
         {
             CmdCardAdded();
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Field");
+            foreach (var player in players)
+            {
+                print(player.GetComponent<NetworkIdentity>().netId);
+                GiveHandCards(PackCards, player);
+            }
         }
         foreach (var item in PackCards)
         {
             print(item.Name);
         }
+        
+
     }
-/*    public override void OnStartClient()
+    void GiveHandCards(SyncList<CardAttributes> pack, GameObject hand) // Количество карт в руке
     {
+        int i = 0;
+        while (i++ < 4)
+            GiveCardToHand(pack, hand);
+    }
 
-        base.OnStartClient();
+    void GiveCardToHand(SyncList<CardAttributes> pack, GameObject hand) // Выдача карты в руку
+    {
+        if (pack.Count == 0)
+            return;
 
-        Cards.Callback += SyncTransformVars; //вместо hook, для SyncList используем подписку на Callback
-        CardVars = new List<Card>(Cards.Count); //так как Callback действует только на изменение массива,  
-        for (int i = 0; i < Cards.Count; i++) //а у нас на момент подключения уже могут быть какие-то данные в массиве, нам нужно эти данные внести в локальный массив
+        CardAttributes card = pack[0];
+
+        /*        GameObject cardGo = Instantiate(CardPref, hand, false);
+                NetworkServer.Spawn(cardGo);*/
+
+        /*        if (hand == EnemyHand)
+                {
+                    cardGo.GetComponent<CardInfoScripts>().HideCardInfo(card);
+                    EnemyHandCards.Add(cardGo.GetComponent<CardInfoScripts>());
+                }
+                else
+                {
+                    cardGo.GetComponent<CardInfoScripts>().ShowCardInfo(card);
+                    PlayerHandCards.Add(cardGo.GetComponent<CardInfoScripts>());
+                }*/
+        pack.RemoveAt(0);
+
+    }
+    /*    public override void OnStartClient()
         {
-            print(Cards[i].Name);
-            CardVars.Add(Cards[i]);
-        }
-        Debug.Log(CardVars.Count + " " + "До выдачи");
-        GiveHandCards(CardVars, SelfHand);
-        print(CardVars.Count + " " + "После выдачи");
-    }*/
+
+            base.OnStartClient();
+
+            Cards.Callback += SyncTransformVars; //вместо hook, для SyncList используем подписку на Callback
+            CardVars = new List<Card>(Cards.Count); //так как Callback действует только на изменение массива,  
+            for (int i = 0; i < Cards.Count; i++) //а у нас на момент подключения уже могут быть какие-то данные в массиве, нам нужно эти данные внести в локальный массив
+            {
+                print(Cards[i].Name);
+                CardVars.Add(Cards[i]);
+            }
+            Debug.Log(CardVars.Count + " " + "До выдачи");
+            GiveHandCards(CardVars, SelfHand);
+            print(CardVars.Count + " " + "После выдачи");
+        }*/
 }
