@@ -95,8 +95,8 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
                 item.GetComponent<CardScript>().TempCard = null;
                 item.transform.localScale = new Vector2(1f, 1f);
 
-                item.GetComponent<CardScript>().GameManager.PlayerHandCards.Remove(item.GetComponent<CardInfoScripts>());
-                item.GetComponent<CardScript>().GameManager.PlayerFieldCards.Add(item.GetComponent<CardInfoScripts>());
+                // item.GetComponent<CardScript>().GameManager.PlayerHandCards.Remove(item.GetComponent<CardInfoScripts>());
+                // item.GetComponent<CardScript>().GameManager.PlayerFieldCards.Add(item.GetComponent<CardInfoScripts>());
 /*                if (isServer)
                     ChildrenAdded(item);
                 else

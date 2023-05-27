@@ -7,72 +7,98 @@ using Mirror;
 
 public class GameManagerScript : MonoBehaviour // Колода
 {
-    public bool EndTurn;
-    public Transform SelfHand, EnemyHand;
+    public bool isPackReady;
+    public Transform SelfHand;
     public GameObject CardPref;
-    int Move, MoveTime = 30;
-    public TextMeshProUGUI MoveTimeTxt;
-    public Button EndMoveBtn;
+    // int Move, MoveTime = 30;
+    // public TextMeshProUGUI MoveTimeTxt;
+    // public Button EndMoveBtn;
+    ServerManager ServerCard;
     public List<Vector2> spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, -77), new Vector2(0, 421)};
-    public List<CardInfoScripts> PlayerHandCards = new List<CardInfoScripts>(),
-                                 PlayerFieldCards = new List<CardInfoScripts>(),
-                                 EnemyHandCards = new List<CardInfoScripts>(),
-                                 EnemyFieldCards = new List<CardInfoScripts>();
+    // public List<CardInfoScripts> PlayerHandCards = new List<CardInfoScripts>(),
+    //                              PlayerFieldCards = new List<CardInfoScripts>();
+    //                              EnemyHandCards = new List<CardInfoScripts>(),
+    //                              EnemyFieldCards = new List<CardInfoScripts>();
 
-    public bool IsPlayerMove
-    {
-        get
-        {
-        return Move % 2 == 0;
-        } 
+    // public bool IsPlayerMove
+    // {
+    //     get
+    //     {
+    //     return Move % 2 == 0;
+    //     } 
             
-    }
+    // }
+
+
     void Update()
-    {
+    {   
 
     }
     void Awake()
     {
-
+        
     }
     void Start()
     {
-        
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Field");
+        foreach (var player in players)
+        {
+            if (player.GetComponent<NetworkIdentity>().netId == 1)
+                if(gameObject.GetComponent<ServerManager>().Hand1.Count == 4)
+                {
+                    foreach (var item in gameObject.GetComponent<ServerManager>().Hand1)
+                    {
+                        GameObject cardGo = Instantiate(CardPref, SelfHand, false);
+
+                        cardGo.GetComponent<CardInfoScripts>().ShowCardInfo(item);
+                    }
+                }
+            if (player.GetComponent<NetworkIdentity>().netId == 2)
+                if(gameObject.GetComponent<ServerManager>().Hand2.Count == 4)
+                {
+                    foreach (var item in gameObject.GetComponent<ServerManager>().Hand2)
+                    {
+                        GameObject cardGo = Instantiate(CardPref, SelfHand, false);
+                        cardGo.GetComponent<CardInfoScripts>().ShowCardInfo(item);
+                    }
+                }
+        }
+        // GiveHandCards(ServerCard.PackCards, SelfHand);
     }
     
-/*    void GiveHandCards(List<Card> pack, Transform hand) // Количество карт в руке
-    {
-        int i = 0;
-        while (i++ < 4)
-            GiveCardToHand(pack, hand);
-    }
+    // void GiveHandCards(List<CardAttributes> pack, Transform hand) // Количество карт в руке
+    // {
+    //     int i = 0;
+    //     while (i++ < 4)
+    //         GiveCardToHand(pack, hand);
+    // }
 
-    void GiveCardToHand(List<Card> pack, Transform hand) // Выдача карты в руку
-    {
-        if (pack.Count == 0)
-            return;
+    // void GiveCardToHand(CardAttributes card, Transform hand) // Выдача карты в руку
+    // {
+    //     // if (pack.Count == 0)
+    //     //     return;
 
-        Card card = CardVars[0];
+    //     GameObject cardGo = Instantiate(CardPref, hand, false);
 
-        GameObject cardGo = Instantiate(CardPref, hand, false);
-        NetworkServer.Spawn(cardGo);
+    //     cardGo.GetComponent<CardInfoScripts>().HideCardInfo(card);
+    //     // PlayerHandCards.Add(cardGo.GetComponent<CardInfoScripts>());
 
-        if (hand == EnemyHand)
-        {
-            cardGo.GetComponent<CardInfoScripts>().HideCardInfo(card);
-            EnemyHandCards.Add(cardGo.GetComponent<CardInfoScripts>());
-        }
-        else
-        {
-            cardGo.GetComponent<CardInfoScripts>().ShowCardInfo(card);
-            PlayerHandCards.Add(cardGo.GetComponent<CardInfoScripts>());
-        }
+    //     // if (hand == EnemyHand)
+    //     // {
+    //     //     cardGo.GetComponent<CardInfoScripts>().HideCardInfo(card);
+    //     //     // EnemyHandCards.Add(cardGo.GetComponent<CardInfoScripts>());
+    //     // }
+    //     // else
+    //     // {
+    //     //     cardGo.GetComponent<CardInfoScripts>().ShowCardInfo(card);
+    //     //     // PlayerHandCards.Add(cardGo.GetComponent<CardInfoScripts>());
+    //     // }
         
-        CardVars.RemoveAt(0);     
+    //     // pack.RemoveAt(0);     
 
-    }
+    // }
 
-    IEnumerator MoveFunc ()
+    /*IEnumerator MoveFunc ()
     {
         MoveTime = 1;
         *//*MoveTimeTxt.text = MoveTime.ToString();*//*

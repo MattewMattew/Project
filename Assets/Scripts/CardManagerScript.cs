@@ -57,7 +57,7 @@ public class CardManagerScript : MonoBehaviour // Список карт и св�
 
         CardManager.AllCards.Add(new Card("Beer", "Sprites/Cards/Beer", "6", "Sprites/Suits/Hearts"));
 
-        CardManager.AllCards.Add(new Card("Carbin", "Sprites/Cards/Carbin", "A", "Sprites/Suits/Clubs"));
+        CardManager.AllCards.Add(new Card("Carbine", "Sprites/Cards/Carbine", "A", "Sprites/Suits/Clubs"));
 
         CardManager.AllCards.Add(new Card("Diligence", "Sprites/Cards/Diligence", "9", "Sprites/Suits/Spades"));
 
