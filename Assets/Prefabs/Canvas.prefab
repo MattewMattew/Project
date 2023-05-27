@@ -117,7 +117,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 0
-  PlaceCheck: 0
 --- !u!1 &8176276488995756597
 GameObject:
   m_ObjectHideFlags: 0
@@ -582,7 +581,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 3
-  PlaceCheck: 0
 --- !u!1 &8176276490431693420
 GameObject:
   m_ObjectHideFlags: 0
@@ -632,7 +630,8 @@ GameObject:
   - component: {fileID: 8176276490597807782}
   - component: {fileID: 8176276490597807783}
   - component: {fileID: 8176276490597807771}
-  - component: {fileID: 6571184506147135368}
+  - component: {fileID: 8463719135920862082}
+  - component: {fileID: 4138922310632747799}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -741,7 +740,22 @@ MonoBehaviour:
   serverOnly: 0
   visible: 0
   hasSpawned: 0
---- !u!114 &6571184506147135368
+--- !u!114 &8463719135920862082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8176276490597807780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95cd4b9702da5a94e8141fe6e68d7e77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+--- !u!114 &4138922310632747799
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -753,9 +767,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159c9a59d05834439fecc42edc0d03a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
   EndTurn: 0
   SelfHand: {fileID: 8176276488691115915}
   EnemyHand: {fileID: 0}

@@ -25,10 +25,10 @@ public class NetworkManagerCard : NetworkManager
         GameObject player = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         NetworkServer.AddPlayerForConnection(conn, player);
 
-        if (numPlayers == 1)
+        if (numPlayers == 2)
         {
             /*GiveHandCards(CurrentGame.Pack, EnemyHand);*/
-            GameObject CanvasPref = Instantiate(PrefabCanvas);
+            GameObject CanvasPref = Instantiate(spawnPrefabs.Find(prefab => prefab.name == "Canvas"));
             NetworkServer.Spawn(CanvasPref);
             player.transform.SetParent(GameObject.Find("Background").transform);
 

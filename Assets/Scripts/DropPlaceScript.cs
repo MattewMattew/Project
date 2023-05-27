@@ -16,29 +16,29 @@ public enum FieldType
 
 }
 
-public class DropPlaceScript : NetworkBehaviour, IPointerEnterHandler,
+public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
                                IPointerExitHandler, IPointerClickHandler
 {
-    SyncList<GameObject> cards = new SyncList<GameObject>();
+    /*public readonly SyncList<GameObject> cards = new SyncList<GameObject>();*/
     public FieldType Type;
     GameObject[] card;
     private Vector2 pos1;
     private Vector2 pos2;
-    public List<GameObject> TransformVars;
+/*    public List<GameObject> TransformVars;
 
     [Server]
-    public void CmdChildrenAdded(GameObject item)
+    public void ChildrenAdded(GameObject item)
     {
         Debug.Log(item);
         cards.Add(item);
     }
     [Command]
-    public void ChildrenAdded(GameObject item)
+    public void CmdChildrenAdded(GameObject item)
     {
-        CmdChildrenAdded(item);
-    }
+        ChildrenAdded(item);
+    }*/
 
-    public override void OnStartClient()
+    /*public override void OnStartClient()
     {
         
         base.OnStartClient();
@@ -82,7 +82,7 @@ public class DropPlaceScript : NetworkBehaviour, IPointerEnterHandler,
                     break;
                 }
         }
-    }
+    }*/
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -97,10 +97,10 @@ public class DropPlaceScript : NetworkBehaviour, IPointerEnterHandler,
 
                 item.GetComponent<CardScript>().GameManager.PlayerHandCards.Remove(item.GetComponent<CardInfoScripts>());
                 item.GetComponent<CardScript>().GameManager.PlayerFieldCards.Add(item.GetComponent<CardInfoScripts>());
-                if (isServer)
+/*                if (isServer)
                     ChildrenAdded(item);
                 else
-                    CmdChildrenAdded(item);
+                    CmdChildrenAdded(item);*/
             }
         }
     }

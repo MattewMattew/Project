@@ -24,10 +24,10 @@ public class CardInfoScripts : MonoBehaviour
         SelfCard = card;
 
         Name.text = card.Name;
-        Logo.sprite = card.Logo;
+/*        Logo.sprite = card.Logo;
         Logo.preserveAspect = true;
         Suit.sprite = card.Suit;
-        Suit.preserveAspect = true;
+        Suit.preserveAspect = true*/;
         Dignity.text = card.Dignity;
     }
 
