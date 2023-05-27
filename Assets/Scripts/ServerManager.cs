@@ -125,7 +125,14 @@ public class ServerManager : NetworkBehaviour
             return;
 
         CardAttributes card = pack[0];
-
+        if(hand.GetComponent<NetworkIdentity>().netId == 1)
+        {
+            Hand1.Add(pack[0]);
+        }
+        else if(hand.GetComponent<NetworkIdentity>().netId == 2)
+        {
+            Hand2.Add(pack[0]);
+        }
         /*        GameObject cardGo = Instantiate(CardPref, hand, false);
                 NetworkServer.Spawn(cardGo);*/
 
