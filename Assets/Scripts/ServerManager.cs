@@ -120,7 +120,7 @@ public class ServerManager : NetworkBehaviour
         if (isServer) CmdCardAdded();
         gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
         GameObject[] players = GameObject.FindGameObjectsWithTag("Field");
-        spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, 0), new Vector2(0, 421), new Vector2(0, 696) };
+        spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, 0), new Vector2(0, 421), new Vector2(696, 0) };
         foreach (var player in players)
         {
             if (player.GetComponent<PlayerNetworkController>().isLocalPlayer)
