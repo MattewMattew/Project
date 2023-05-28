@@ -8,16 +8,17 @@ public class ServerManager : NetworkBehaviour
     public readonly SyncList<CardAttributes> PackCards = new SyncList<CardAttributes>();
     public GameCard CurrentGame;
     public List<CardAttributes> CardVars;
-    public List<CardAttributes> InvCards1 = new List<CardAttributes>();
-    public List<CardAttributes> InvCards2 = new List<CardAttributes>();
-    public List<CardAttributes> InvCards3 = new List<CardAttributes>();
     public readonly SyncList<CardAttributes> Hand1 = new SyncList<CardAttributes>();
     public readonly SyncList<CardAttributes> Hand2 = new SyncList<CardAttributes>();
     public readonly SyncList<CardAttributes> Hand3 = new SyncList<CardAttributes>();
     public readonly SyncList<CardAttributes> Inventory1 = new SyncList<CardAttributes>();
     public readonly SyncList<CardAttributes> Inventory2 = new SyncList<CardAttributes>();
     public readonly SyncList<CardAttributes> Inventory3 = new SyncList<CardAttributes>();
-    private List<Vector2> spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, -77), new Vector2(0, 421) };
+
+    [SyncVar]
+    public uint turnPlayerId;
+
+    private List<Vector2> spawnPoint; 
     public class GameCard
     {
         public List<CardAttributes> Pack;
@@ -73,6 +74,7 @@ public class ServerManager : NetworkBehaviour
                 }
         }
     }
+    
     [Server]
     public void CardAdded(CardAttributes item)
     {
@@ -81,32 +83,36 @@ public class ServerManager : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void CmdCardAdded()
     {
-        print("Pack check");
         if (PackCards.Count == 0)
         {
-            print("Pack is spawned");
             CurrentGame = new GameCard();
             foreach (var item in CurrentGame.Pack)
             {
                 CardAdded(item);
             }
         }
-        else
+
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Field");
+        foreach (var player in players)
         {
-            print("Pack be ready");
+            if (isServer)
+            {
+                GiveHandCards(PackCards, player);
+                turnPlayerId = player.GetComponent<NetworkIdentity>().netId;
+            }
         }
     }
     void Update()
     {
         print(PackCards.Count+" "+"ServerManager");
-        print($"{InvCards1.Count} InvCards1");
-        print($"{Inventory1.Count} Inventory1");
 
     }
     void Start()
     {
         if (isServer) CmdCardAdded();
+        gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
         GameObject[] players = GameObject.FindGameObjectsWithTag("Field");
+        spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, -77), new Vector2(0, 421) };
         foreach (var player in players)
         {
             if (player.GetComponent<PlayerNetworkController>().isLocalPlayer)
@@ -118,29 +124,13 @@ public class ServerManager : NetworkBehaviour
                 player.GetComponent<PlayerNetworkController>().setPlayerPosition(spawnPoint[1]);
                 spawnPoint.RemoveAt(1);
             }
-            if (isServer)
-            {
-                GiveHandCards(PackCards, player);
-            }
         }
-        gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
-        foreach (var item in Inventory1)
-        {
-            InvCards1.Add(item);
-        }
-        foreach (var item in Inventory2)
-        {
-            InvCards2.Add(item);
-        }
-        foreach (var item in Inventory3)
-        {
-            InvCards3.Add(item);
-        }
-        
-        
-
 
     }
+/*    void Turn(int oldValue, int newValue)
+    {
+        turnPlayerId = newValue;
+    }*/
     void GiveHandCards(SyncList<CardAttributes> pack, GameObject hand) // Количество карт в руке
     {
         int i = 0;
@@ -152,8 +142,6 @@ public class ServerManager : NetworkBehaviour
     {
         if (pack.Count == 0)
             return;
-
-        CardAttributes card = pack[0];
         if(hand.GetComponent<NetworkIdentity>().netId == 1)
         {
             Hand1.Add(pack[0]);

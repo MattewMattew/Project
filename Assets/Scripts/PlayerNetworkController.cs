@@ -2,16 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
-using Unity.VisualScripting;
-using UnityEditor.UIElements;
-using static UnityEditor.Progress;
 
 public class PlayerNetworkController : NetworkBehaviour
 {
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 /*    void Update()
     {
