@@ -10,6 +10,7 @@ public class ServerManager : NetworkBehaviour
     public List<Card> CardVars;
     public readonly SyncList<CardAttributes> Hand1 = new SyncList<CardAttributes>();
     public readonly SyncList<CardAttributes> Hand2 = new SyncList<CardAttributes>();
+    private List<Vector2> spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, -77), new Vector2(0, 421) };
     public class GameCard
     {
         public List<CardAttributes> Pack;
@@ -98,7 +99,15 @@ public class ServerManager : NetworkBehaviour
         GameObject[] players = GameObject.FindGameObjectsWithTag("Field");
         foreach (var player in players)
         {
-            player.GetComponent<PlayerNetworkController>().setPlayerPosition();
+            if (player.GetComponent<PlayerNetworkController>().isLocalPlayer)
+            {
+                player.GetComponent<PlayerNetworkController>().setPlayerPosition(spawnPoint[0]);
+            }
+            else
+            {
+                player.GetComponent<PlayerNetworkController>().setPlayerPosition(spawnPoint[1]);
+                spawnPoint.RemoveAt(1);
+            }
             if (isServer)
             {
                 GiveHandCards(PackCards, player);

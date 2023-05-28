@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using Unity.VisualScripting;
 
 public class PlayerNetworkController : NetworkBehaviour
 {
-    private List<Vector2> spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, -77), new Vector2(0, 421) };
-    private bool isSpawned = false;
+    
+private bool isSpawned = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,20 +15,10 @@ public class PlayerNetworkController : NetworkBehaviour
     }
 
     // Update is called once per frame
-    public void setPlayerPosition()
+    public void setPlayerPosition(Vector2 pos)
     {
         transform.SetParent(GameObject.Find("Background").transform);
         transform.localScale = new Vector3(1,1,1);
-        if (isLocalPlayer)
-        {
-            transform.localPosition = spawnPoint[0];
-        }
-        else
-        {
-            transform.localPosition = spawnPoint[1];
-            spawnPoint.RemoveAt(1);
-            print($"{spawnPoint.Count} {spawnPoint[1]} after delete");
-        }
-        print(spawnPoint.Count+ " " + "spawnPos");
+        transform.localPosition = pos;
     }
 }
