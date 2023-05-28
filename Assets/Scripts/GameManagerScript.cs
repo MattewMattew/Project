@@ -43,21 +43,22 @@ public class GameManagerScript : MonoBehaviour // Колода
         GameObject[] players = GameObject.FindGameObjectsWithTag("Field");
         foreach (var player in players)
         {
-            if (player.GetComponent<NetworkIdentity>().netId == 1)
+            if (player.GetComponent<NetworkIdentity>().netId == 1 && player.GetComponent<NetworkIdentity>().isLocalPlayer)
                 if(gameObject.GetComponent<ServerManager>().Hand1.Count == 4)
                 {
                     foreach (var item in gameObject.GetComponent<ServerManager>().Hand1)
                     {
                         GameObject cardGo = Instantiate(CardPref, SelfHand, false);
-
+                        print(item.Name + " " + "hand1");
                         cardGo.GetComponent<CardInfoScripts>().ShowCardInfo(item);
                     }
                 }
-            if (player.GetComponent<NetworkIdentity>().netId == 2)
+            if (player.GetComponent<NetworkIdentity>().netId == 2 && player.GetComponent<NetworkIdentity>().isLocalPlayer)
                 if(gameObject.GetComponent<ServerManager>().Hand2.Count == 4)
                 {
                     foreach (var item in gameObject.GetComponent<ServerManager>().Hand2)
                     {
+                        print(item.Name + " " + "hand2");
                         GameObject cardGo = Instantiate(CardPref, SelfHand, false);
                         cardGo.GetComponent<CardInfoScripts>().ShowCardInfo(item);
                     }

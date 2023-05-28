@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CardScript : NetworkBehaviour, IPointerClickHandler 
+public class CardScript : MonoBehaviour, IPointerClickHandler 
 {
     public GameObject TempCard;
     public GameManagerScript GameManager;
