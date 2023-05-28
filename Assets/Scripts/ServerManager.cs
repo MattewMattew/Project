@@ -18,6 +18,7 @@ public class ServerManager : NetworkBehaviour
     [SyncVar]
     public uint turnPlayerId;
 
+    int Move, MoveTime = 30;
     private List<Vector2> spawnPoint; 
     public class GameCard
     {
@@ -98,13 +99,18 @@ public class ServerManager : NetworkBehaviour
             if (isServer)
             {
                 GiveHandCards(PackCards, player);
-                turnPlayerId = player.GetComponent<NetworkIdentity>().netId;
+                if(player.GetComponent<NetworkIdentity>().netId == 1)
+                {
+                    GiveTurn(player.GetComponent<NetworkIdentity>().netId);
+                    StartCoroutine(MoveFunc());
+                }
             }
         }
     }
     void Update()
     {
         print(PackCards.Count+" "+"ServerManager");
+        print($"{turnPlayerId}");
 
     }
     void Start()
@@ -125,7 +131,32 @@ public class ServerManager : NetworkBehaviour
                 spawnPoint.RemoveAt(1);
             }
         }
+    }
+    IEnumerator MoveFunc()
+    {
+        MoveTime = 3;
+        while (MoveTime-- > 0)
+        {
+            yield return new WaitForSeconds(1); //ќжидание секунда  
+        }
+        ChangeMove();
+    }
+    [Command(requiresAuthority = false)]
+    public void ChangeMove()
+    {
+        StopAllCoroutines();
 
+        if (turnPlayerId+1 > FindObjectOfType<NetworkManagerCard>().numPlayers)
+            GiveTurn(1);
+        else GiveTurn(turnPlayerId + 1);
+
+        StartCoroutine(MoveFunc());
+
+    }
+    [Server]
+    void GiveTurn(uint id)
+    {
+        turnPlayerId = id;
     }
 /*    void Turn(int oldValue, int newValue)
     {

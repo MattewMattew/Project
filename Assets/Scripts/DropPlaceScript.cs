@@ -86,23 +86,27 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        card = GameObject.FindGameObjectsWithTag("Card");
-        foreach (var item in card)
+        if (FindObjectOfType<ServerManager>().turnPlayerId == transform.GetComponent<NetworkIdentity>().netId && transform.GetComponent<NetworkIdentity>().isLocalPlayer)
         {
-            if(item.GetComponent<CardScript>().TempCard != null) 
+            card = GameObject.FindGameObjectsWithTag("Card");
+            foreach (var item in card)
             {
-                item.transform.SetParent(gameObject.transform);
-                item.GetComponent<CardScript>().TempCard = null;
-                item.transform.localScale = new Vector2(1f, 1f);
+                if (item.GetComponent<CardScript>().TempCard != null)
+                {
+                    item.transform.SetParent(gameObject.transform);
+                    item.GetComponent<CardScript>().TempCard = null;
+                    item.transform.localScale = new Vector2(1f, 1f);
 
-                // item.GetComponent<CardScript>().GameManager.PlayerHandCards.Remove(item.GetComponent<CardInfoScripts>());
-                // item.GetComponent<CardScript>().GameManager.PlayerFieldCards.Add(item.GetComponent<CardInfoScripts>());
-/*                if (isServer)
-                    ChildrenAdded(item);
-                else
-                    CmdChildrenAdded(item);*/
+                    // item.GetComponent<CardScript>().GameManager.PlayerHandCards.Remove(item.GetComponent<CardInfoScripts>());
+                    // item.GetComponent<CardScript>().GameManager.PlayerFieldCards.Add(item.GetComponent<CardInfoScripts>());
+                    /*                if (isServer)
+                                        ChildrenAdded(item);
+                                    else
+                                        CmdChildrenAdded(item);*/
+                }
             }
         }
+        else print($"Now be turn is {FindObjectOfType<ServerManager>().turnPlayerId} player!");
     }
     void Awake()
     {
