@@ -36,6 +36,8 @@ public class GameManagerScript : MonoBehaviour // Колода
                 GiveHandCards(gameObject.GetComponent<ServerManager>().Hand2);
             if (player.GetComponent<NetworkIdentity>().netId == 3 && player.GetComponent<NetworkIdentity>().isLocalPlayer)
                 GiveHandCards(gameObject.GetComponent<ServerManager>().Hand3);
+            if (player.GetComponent<NetworkIdentity>().netId == 4 && player.GetComponent<NetworkIdentity>().isLocalPlayer)
+                GiveHandCards(gameObject.GetComponent<ServerManager>().Hand4);
 
         }
     }
@@ -58,6 +60,7 @@ public class GameManagerScript : MonoBehaviour // Колода
             if (id == 1) GiveInventoryCard(FindObjectOfType<ServerManager>().Inventory1, inventory);
             if (id == 2) GiveInventoryCard(FindObjectOfType<ServerManager>().Inventory2, inventory);
             if (id == 3) GiveInventoryCard(FindObjectOfType<ServerManager>().Inventory3, inventory);
+            if (id == 4) GiveInventoryCard(FindObjectOfType<ServerManager>().Inventory4, inventory);
         }
     }
 

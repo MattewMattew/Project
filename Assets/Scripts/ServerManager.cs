@@ -11,9 +11,11 @@ public class ServerManager : NetworkBehaviour
     public readonly SyncList<CardAttributes> Hand1 = new SyncList<CardAttributes>();
     public readonly SyncList<CardAttributes> Hand2 = new SyncList<CardAttributes>();
     public readonly SyncList<CardAttributes> Hand3 = new SyncList<CardAttributes>();
+    public readonly SyncList<CardAttributes> Hand4 = new SyncList<CardAttributes>();
     public readonly SyncList<CardAttributes> Inventory1 = new SyncList<CardAttributes>();
     public readonly SyncList<CardAttributes> Inventory2 = new SyncList<CardAttributes>();
     public readonly SyncList<CardAttributes> Inventory3 = new SyncList<CardAttributes>();
+    public readonly SyncList<CardAttributes> Inventory4 = new SyncList<CardAttributes>();
 
     [SyncVar]
     public uint turnPlayerId;
@@ -118,7 +120,7 @@ public class ServerManager : NetworkBehaviour
         if (isServer) CmdCardAdded();
         gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
         GameObject[] players = GameObject.FindGameObjectsWithTag("Field");
-        spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, -77), new Vector2(0, 421) };
+        spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, 0), new Vector2(0, 421), new Vector2(0, 696) };
         foreach (var player in players)
         {
             if (player.GetComponent<PlayerNetworkController>().isLocalPlayer)
@@ -134,7 +136,7 @@ public class ServerManager : NetworkBehaviour
     }
     IEnumerator MoveFunc()
     {
-        MoveTime = 3;
+        MoveTime = 5;
         while (MoveTime-- > 0)
         {
             yield return new WaitForSeconds(1); //ќжидание секунда  
@@ -184,6 +186,10 @@ public class ServerManager : NetworkBehaviour
         else if(hand.GetComponent<NetworkIdentity>().netId == 3)
         {
             Hand3.Add(pack[0]);
+        }
+        else if(hand.GetComponent<NetworkIdentity>().netId == 4)
+        {
+            Hand4.Add(pack[0]);
         }
         pack.RemoveAt(0);
 

@@ -39,6 +39,7 @@ public class PlayerNetworkController : NetworkBehaviour
         if(id == 1) FindObjectOfType<ServerManager>().Inventory1.Add(card);
         if(id == 2) FindObjectOfType<ServerManager>().Inventory2.Add(card);
         if(id == 3) FindObjectOfType<ServerManager>().Inventory3.Add(card);
+        if(id == 4) FindObjectOfType<ServerManager>().Inventory4.Add(card);
         
         UpdateInvClientRpc();
     }
@@ -61,6 +62,10 @@ public class PlayerNetworkController : NetworkBehaviour
                 CmdUpdateInventory(childCards[childCards.Count - 1], netId);
             }
             if(GetComponent<NetworkIdentity>().netId == 3)
+            {
+                CmdUpdateInventory(childCards[childCards.Count - 1], netId);
+            }
+            if(GetComponent<NetworkIdentity>().netId == 4)
             {
                 CmdUpdateInventory(childCards[childCards.Count - 1], netId);
             }
