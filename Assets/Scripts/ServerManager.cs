@@ -11,6 +11,10 @@ public class ServerManager : NetworkBehaviour
     public readonly SyncList<CardAttributes> Hand1 = new SyncList<CardAttributes>();
     public readonly SyncList<CardAttributes> Hand2 = new SyncList<CardAttributes>();
     public readonly SyncList<CardAttributes> Hand3 = new SyncList<CardAttributes>();
+    public readonly SyncList<CardAttributes> Inventory1 = new SyncList<CardAttributes>();
+    public readonly SyncList<CardAttributes> Inventory2 = new SyncList<CardAttributes>();
+    public readonly SyncList<CardAttributes> Inventory3 = new SyncList<CardAttributes>();
+
     private List<Vector2> spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, -77), new Vector2(0, 421) };
     public class GameCard
     {
