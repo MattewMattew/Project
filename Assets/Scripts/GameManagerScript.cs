@@ -44,27 +44,26 @@ public class GameManagerScript : MonoBehaviour // Колода
         foreach (var player in players)
         {
             if (player.GetComponent<NetworkIdentity>().netId == 1 && player.GetComponent<NetworkIdentity>().isLocalPlayer)
-                if(gameObject.GetComponent<ServerManager>().Hand1.Count == 4)
-                {
-                    foreach (var item in gameObject.GetComponent<ServerManager>().Hand1)
-                    {
-                        GameObject cardGo = Instantiate(CardPref, SelfHand, false);
-                        print(item.Name + " " + "hand1");
-                        cardGo.GetComponent<CardInfoScripts>().ShowCardInfo(item);
-                    }
-                }
+                GiveHandCards(gameObject.GetComponent<ServerManager>().Hand1);
             if (player.GetComponent<NetworkIdentity>().netId == 2 && player.GetComponent<NetworkIdentity>().isLocalPlayer)
-                if(gameObject.GetComponent<ServerManager>().Hand2.Count == 4)
-                {
-                    foreach (var item in gameObject.GetComponent<ServerManager>().Hand2)
-                    {
-                        print(item.Name + " " + "hand2");
-                        GameObject cardGo = Instantiate(CardPref, SelfHand, false);
-                        cardGo.GetComponent<CardInfoScripts>().ShowCardInfo(item);
-                    }
-                }
+                GiveHandCards(gameObject.GetComponent<ServerManager>().Hand2);
+            if (player.GetComponent<NetworkIdentity>().netId == 3 && player.GetComponent<NetworkIdentity>().isLocalPlayer)
+                GiveHandCards(gameObject.GetComponent<ServerManager>().Hand3);
+
         }
         // GiveHandCards(ServerCard.PackCards, SelfHand);
+    }
+
+    void GiveHandCards (SyncList<CardAttributes> hand)
+    {
+        if(hand.Count == 4)
+        {
+            foreach (var item in hand)
+            {
+                GameObject cardGo = Instantiate(CardPref, SelfHand, false);
+                cardGo.GetComponent<CardInfoScripts>().ShowCardInfo(item);
+            }
+        }
     }
     
     // void GiveHandCards(List<CardAttributes> pack, Transform hand) // Количество карт в руке
