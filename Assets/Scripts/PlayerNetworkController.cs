@@ -26,6 +26,8 @@ public class PlayerNetworkController : NetworkBehaviour
         {
             transform.localPosition = spawnPoint[1];
             spawnPoint.RemoveAt(1);
+            print($"{spawnPoint.Count} {spawnPoint[1]} after delete");
         }
+        print(spawnPoint.Count+ " " + "spawnPos");
     }
 }

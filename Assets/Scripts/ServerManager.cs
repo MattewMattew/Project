@@ -94,23 +94,17 @@ public class ServerManager : NetworkBehaviour
     }
     void Start()
     {
-        gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
-        if (isServer)
+        if (isServer) CmdCardAdded();
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Field");
+        foreach (var player in players)
         {
-            CmdCardAdded();
-            GameObject[] players = GameObject.FindGameObjectsWithTag("Field");
-            foreach (var player in players)
+            player.GetComponent<PlayerNetworkController>().setPlayerPosition();
+            if (isServer)
             {
-                print(player.GetComponent<NetworkIdentity>().netId);
                 GiveHandCards(PackCards, player);
             }
         }
-        foreach (var item in PackCards)
-        {
-            print(item.Name);
-        }
-        
-
+        gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
     }
     void GiveHandCards(SyncList<CardAttributes> pack, GameObject hand) // Количество карт в руке
     {
@@ -133,19 +127,6 @@ public class ServerManager : NetworkBehaviour
         {
             Hand2.Add(pack[0]);
         }
-        /*        GameObject cardGo = Instantiate(CardPref, hand, false);
-                NetworkServer.Spawn(cardGo);*/
-
-        /*        if (hand == EnemyHand)
-                {
-                    cardGo.GetComponent<CardInfoScripts>().HideCardInfo(card);
-                    EnemyHandCards.Add(cardGo.GetComponent<CardInfoScripts>());
-                }
-                else
-                {
-                    cardGo.GetComponent<CardInfoScripts>().ShowCardInfo(card);
-                    PlayerHandCards.Add(cardGo.GetComponent<CardInfoScripts>());
-                }*/
         pack.RemoveAt(0);
 
     }
