@@ -7,14 +7,16 @@ public class ServerManager : NetworkBehaviour
 {
     public readonly SyncList<CardAttributes> PackCards = new SyncList<CardAttributes>();
     public GameCard CurrentGame;
-    public List<Card> CardVars;
+    public List<CardAttributes> CardVars;
+    public List<CardAttributes> InvCards1 = new List<CardAttributes>();
+    public List<CardAttributes> InvCards2 = new List<CardAttributes>();
+    public List<CardAttributes> InvCards3 = new List<CardAttributes>();
     public readonly SyncList<CardAttributes> Hand1 = new SyncList<CardAttributes>();
     public readonly SyncList<CardAttributes> Hand2 = new SyncList<CardAttributes>();
     public readonly SyncList<CardAttributes> Hand3 = new SyncList<CardAttributes>();
     public readonly SyncList<CardAttributes> Inventory1 = new SyncList<CardAttributes>();
     public readonly SyncList<CardAttributes> Inventory2 = new SyncList<CardAttributes>();
     public readonly SyncList<CardAttributes> Inventory3 = new SyncList<CardAttributes>();
-
     private List<Vector2> spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, -77), new Vector2(0, 421) };
     public class GameCard
     {
@@ -39,7 +41,7 @@ public class ServerManager : NetworkBehaviour
         }
 
     }
-    void SyncPackList(SyncList<CardAttributes>.Operation op, int index, Card oldItem, Card newItem)
+    void SyncPackList(SyncList<CardAttributes>.Operation op, int index, CardAttributes oldItem, CardAttributes newItem)
     {
         print($"{oldItem}, {newItem}");
         switch (op)
@@ -97,6 +99,9 @@ public class ServerManager : NetworkBehaviour
     void Update()
     {
         print(PackCards.Count+" "+"ServerManager");
+        print($"{InvCards1.Count} InvCards1");
+        print($"{Inventory1.Count} Inventory1");
+
     }
     void Start()
     {
@@ -119,6 +124,22 @@ public class ServerManager : NetworkBehaviour
             }
         }
         gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
+        foreach (var item in Inventory1)
+        {
+            InvCards1.Add(item);
+        }
+        foreach (var item in Inventory2)
+        {
+            InvCards2.Add(item);
+        }
+        foreach (var item in Inventory3)
+        {
+            InvCards3.Add(item);
+        }
+        
+        
+
+
     }
     void GiveHandCards(SyncList<CardAttributes> pack, GameObject hand) // Количество карт в руке
     {
