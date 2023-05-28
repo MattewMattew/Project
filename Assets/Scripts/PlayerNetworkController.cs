@@ -8,25 +8,32 @@ using static UnityEditor.Progress;
 
 public class PlayerNetworkController : NetworkBehaviour
 {
-    bool test = false;
-    int ti = 100000;
     // Start is called before the first frame update
     void Start()
     {
         
     }
-    void Update()
+/*    void Update()
     {
+
+
+    }*/
+
+
+    [ClientRpc]
+    public void UpdateInvClientRpc()
+    {
+
         if (FindObjectOfType<ServerManager>() && !isLocalPlayer)
         {
-            if (netId == 1 )
+            if (netId == 1)
             {
                 print($"{transform.childCount} transform childCount");
-                if(transform.childCount < FindObjectOfType<ServerManager>().Inventory1.Count)
+                if (transform.childCount < FindObjectOfType<ServerManager>().Inventory1.Count)
                 {
                     print($"id {netId} need update inventory");
                     GameObject card = Instantiate(FindObjectOfType<GameManagerScript>().CardPref, transform, false);
-                    card.GetComponent<CardInfoScripts>().ShowCardInfo(FindObjectOfType<ServerManager>().Inventory1[FindObjectOfType<ServerManager>().Inventory1.Count-1]);
+                    card.GetComponent<CardInfoScripts>().ShowCardInfo(FindObjectOfType<ServerManager>().Inventory1[FindObjectOfType<ServerManager>().Inventory1.Count - 1]);
                 }
             }
             if (netId == 2)
@@ -50,11 +57,7 @@ public class PlayerNetworkController : NetworkBehaviour
                 }
             }
         }
-
     }
-
-
-
     public void setPlayerPosition(Vector2 pos)
     {
         transform.SetParent(GameObject.Find("Background").transform);
@@ -84,6 +87,7 @@ public class PlayerNetworkController : NetworkBehaviour
 
             FindObjectOfType<ServerManager>().Inventory3.Add(card);
         }
+        UpdateInvClientRpc();
     }
     private void OnTransformChildrenChanged()
     {
