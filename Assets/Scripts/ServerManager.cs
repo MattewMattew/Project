@@ -10,6 +10,7 @@ public class ServerManager : NetworkBehaviour
     public List<Card> CardVars;
     public readonly SyncList<CardAttributes> Hand1 = new SyncList<CardAttributes>();
     public readonly SyncList<CardAttributes> Hand2 = new SyncList<CardAttributes>();
+    public readonly SyncList<CardAttributes> Hand3 = new SyncList<CardAttributes>();
     private List<Vector2> spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, -77), new Vector2(0, 421) };
     public class GameCard
     {
@@ -135,6 +136,10 @@ public class ServerManager : NetworkBehaviour
         else if(hand.GetComponent<NetworkIdentity>().netId == 2)
         {
             Hand2.Add(pack[0]);
+        }
+        else if(hand.GetComponent<NetworkIdentity>().netId == 3)
+        {
+            Hand3.Add(pack[0]);
         }
         pack.RemoveAt(0);
 
