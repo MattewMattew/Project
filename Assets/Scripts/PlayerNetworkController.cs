@@ -5,6 +5,7 @@ using Mirror;
 
 public class PlayerNetworkController : NetworkBehaviour
 {
+    private List<Vector2> spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, -77), new Vector2(0, 421) };
     private bool isSpawned = false;
     // Start is called before the first frame update
     void Start()
@@ -13,29 +14,18 @@ public class PlayerNetworkController : NetworkBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void setPlayerPosition()
     {
+        transform.SetParent(GameObject.Find("Background").transform);
+        transform.localScale = new Vector3(1,1,1);
         if (isLocalPlayer)
         {
-            if (FindObjectOfType<GameManagerScript>())
-            {
-                transform.SetParent(GameObject.Find("Background").transform);
-                if (!isSpawned)
-                {
-                    GameManagerScript GameManager = FindObjectOfType<GameManagerScript>(); ;
-                    List<Vector2> pos = GameManager.spawnPoint;
-                    if (pos != null)
-                    {
-                        Debug.Log(pos[0]);
-                        transform.localPosition = pos[0];
-                        transform.localScale = new Vector3(1, 1, 0);
-                        GameManager.spawnPoint.RemoveAt(0);
-                        
-                        isSpawned = true;
-                    }
-                }
-            }
+            transform.localPosition = spawnPoint[0];
         }
-
+        else
+        {
+            transform.localPosition = spawnPoint[1];
+            spawnPoint.RemoveAt(1);
+        }
     }
 }

@@ -14,7 +14,7 @@ public class GameManagerScript : MonoBehaviour // Колода
     // public TextMeshProUGUI MoveTimeTxt;
     // public Button EndMoveBtn;
     ServerManager ServerCard;
-    public List<Vector2> spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, -77), new Vector2(0, 421)};
+    
     // public List<CardInfoScripts> PlayerHandCards = new List<CardInfoScripts>(),
     //                              PlayerFieldCards = new List<CardInfoScripts>();
     //                              EnemyHandCards = new List<CardInfoScripts>(),

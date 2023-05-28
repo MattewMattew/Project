@@ -16,13 +16,12 @@ public enum NetworkManagerMode { Offline, ServerOnly, ClientOnly, Host }
 public class NetworkManagerCard : NetworkManager
 {
     public GameObject PrefabCanvas;
-
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
         // add player at correct spawn position
         /*Transform start = numPlayers == 0 ? leftRacketSpawn : rightRacketSpawn;*/
         conn.isReady = true;
-        GameObject player = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject player = Instantiate(playerPrefab, new Vector2(0,0), Quaternion.identity);
         NetworkServer.AddPlayerForConnection(conn, player);
 
         if (numPlayers == 2)
@@ -30,8 +29,6 @@ public class NetworkManagerCard : NetworkManager
             /*GiveHandCards(CurrentGame.Pack, EnemyHand);*/
             GameObject CanvasPref = Instantiate(spawnPrefabs.Find(prefab => prefab.name == "Canvas"));
             NetworkServer.Spawn(CanvasPref);
-            player.transform.SetParent(GameObject.Find("Background").transform);
-
         }
     }
 
