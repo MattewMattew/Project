@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: PlayButtons Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: PlayButtons
+  m_TableCollectionNameGuidString: cece2f76a302ac94dbd37ca0933c60da
+  m_Entries:
+  - m_Id: 3581907984384
+    m_Key: Documentation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4454209970176
+    m_Key: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4723488481280
+    m_Key: Exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5538009735168
+    m_Key: Object of the Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6350463197184
+    m_Key: Setup
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6553106800640
+    m_Key: Game Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9506651791360
+    m_Key: END OF THE GAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9958005039104
+    m_Key: THE CARDS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10224251068416
+    m_Key: THE CHARACTERS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11142711369728
+    m_Key: ScreenSize
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11527920443392
+    m_Key: AllVolume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12154922754048
+    m_Key: 'Music Volume '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12496536231936
+    m_Key: Sound Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12724408573952
+    m_Key: Save settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27300739047424
+    m_Key: Play
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 5192792853204434968
+  references:
+    version: 2
+    RefIds:
+    - rid: 5192792853204434968
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1685277175428

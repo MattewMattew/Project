@@ -53,9 +53,7 @@ public class VolumeScript : MonoBehaviour
         volumeSlider.value = allvolumeValue; 
         mVolumeSlider.value = musicvolumeValue; 
         sfxVolumeSlider.value = svolumeValue; 
-        Debug.Log(allvolumeValue );
-        Debug.Log(musicvolumeValue );
-        Debug.Log(svolumeValue );
+
         MusicVolume.volume= musicvolumeValue/100;
         SoundVolume.volume= svolumeValue/100;
         AudioListener.volume = allvolumeValue/100;

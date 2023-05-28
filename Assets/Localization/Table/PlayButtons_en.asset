@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: PlayButtons_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: cece2f76a302ac94dbd37ca0933c60da, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 5192792853204434969
+  m_TableData:
+  - m_Id: 5538009735168
+    m_Localized: OBJECT OF THE GAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3581907984384
+    m_Localized: Documentation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4454209970176
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4723488481280
+    m_Localized: Exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6350463197184
+    m_Localized: PREPARATION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6553106800640
+    m_Localized: THE GAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9506651791360
+    m_Localized: END OF THE GAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9958005039104
+    m_Localized: THE CARDS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10224251068416
+    m_Localized: THE CHARACTERS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11142711369728
+    m_Localized: Screen Size
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11527920443392
+    m_Localized: All Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12154922754048
+    m_Localized: 'Music Volume '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12496536231936
+    m_Localized: Sound Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12724408573952
+    m_Localized: Save settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27300739047424
+    m_Localized: Play
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 5192792853204434969
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00605a75b1000000
