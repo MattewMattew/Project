@@ -23,40 +23,7 @@ public class PlayerNetworkController : NetworkBehaviour
     [ClientRpc]
     public void UpdateInvClientRpc()
     {
-
-        if (FindObjectOfType<ServerManager>() && !isLocalPlayer)
-        {
-            if (netId == 1)
-            {
-                print($"{transform.childCount} transform childCount");
-                if (transform.childCount < FindObjectOfType<ServerManager>().Inventory1.Count)
-                {
-                    print($"id {netId} need update inventory");
-                    GameObject card = Instantiate(FindObjectOfType<GameManagerScript>().CardPref, transform, false);
-                    card.GetComponent<CardInfoScripts>().ShowCardInfo(FindObjectOfType<ServerManager>().Inventory1[FindObjectOfType<ServerManager>().Inventory1.Count - 1]);
-                }
-            }
-            if (netId == 2)
-            {
-                print($"{transform.childCount} transform childCount");
-                if (transform.childCount < FindObjectOfType<ServerManager>().Inventory2.Count)
-                {
-                    print($"id {netId} need update inventory");
-                    GameObject card = Instantiate(FindObjectOfType<GameManagerScript>().CardPref, transform, false);
-                    card.GetComponent<CardInfoScripts>().ShowCardInfo(FindObjectOfType<ServerManager>().Inventory2[FindObjectOfType<ServerManager>().Inventory2.Count - 1]);
-                }
-            }
-            if (netId == 3)
-            {
-                print($"{transform.childCount} transform childCount");
-                if (transform.childCount < FindObjectOfType<ServerManager>().Inventory3.Count)
-                {
-                    print($"id {netId} need update inventory");
-                    GameObject card = Instantiate(FindObjectOfType<GameManagerScript>().CardPref, transform, false);
-                    card.GetComponent<CardInfoScripts>().ShowCardInfo(FindObjectOfType<ServerManager>().Inventory3[FindObjectOfType<ServerManager>().Inventory3.Count - 1]);
-                }
-            }
-        }
+        FindObjectOfType<GameManagerScript>().DetectInventory(netId, transform);
     }
     public void setPlayerPosition(Vector2 pos)
     {
@@ -72,21 +39,10 @@ public class PlayerNetworkController : NetworkBehaviour
     [Server]
     public void UpdateInventory(CardAttributes card, uint id)
     {
-        if(id == 1)
-        {
-
-            FindObjectOfType<ServerManager>().Inventory1.Add(card);
-        }
-        if(id == 2)
-        {
-
-            FindObjectOfType<ServerManager>().Inventory2.Add(card);
-        }
-        if(id == 3)
-        {
-
-            FindObjectOfType<ServerManager>().Inventory3.Add(card);
-        }
+        if(id == 1) FindObjectOfType<ServerManager>().Inventory1.Add(card);
+        if(id == 2) FindObjectOfType<ServerManager>().Inventory2.Add(card);
+        if(id == 3) FindObjectOfType<ServerManager>().Inventory3.Add(card);
+        
         UpdateInvClientRpc();
     }
     private void OnTransformChildrenChanged()

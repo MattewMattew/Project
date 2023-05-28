@@ -7,19 +7,11 @@ using Mirror;
 
 public class GameManagerScript : MonoBehaviour // Колода
 {
-    public bool isPackReady;
     public Transform SelfHand;
     public GameObject CardPref;
     // int Move, MoveTime = 30;
     // public TextMeshProUGUI MoveTimeTxt;
     // public Button EndMoveBtn;
-    ServerManager ServerCard;
-    
-    // public List<CardInfoScripts> PlayerHandCards = new List<CardInfoScripts>(),
-    //                              PlayerFieldCards = new List<CardInfoScripts>();
-    //                              EnemyHandCards = new List<CardInfoScripts>(),
-    //                              EnemyFieldCards = new List<CardInfoScripts>();
-
     // public bool IsPlayerMove
     // {
     //     get
@@ -29,11 +21,6 @@ public class GameManagerScript : MonoBehaviour // Колода
             
     // }
 
-
-    void Update()
-    {   
-
-    }
     void Awake()
     {
         
@@ -51,7 +38,6 @@ public class GameManagerScript : MonoBehaviour // Колода
                 GiveHandCards(gameObject.GetComponent<ServerManager>().Hand3);
 
         }
-        // GiveHandCards(ServerCard.PackCards, SelfHand);
     }
 
     void GiveHandCards (SyncList<CardAttributes> hand)
@@ -65,38 +51,24 @@ public class GameManagerScript : MonoBehaviour // Колода
             }
         }
     }
-    
-    // void GiveHandCards(List<CardAttributes> pack, Transform hand) // Количество карт в руке
-    // {
-    //     int i = 0;
-    //     while (i++ < 4)
-    //         GiveCardToHand(pack, hand);
-    // }
+    public void DetectInventory (uint id, Transform inventory)
+    {
+        if (!inventory.GetComponent<NetworkIdentity>().isLocalPlayer)
+        {
+            if (id == 1) GiveInventoryCard(FindObjectOfType<ServerManager>().Inventory1, inventory);
+            if (id == 2) GiveInventoryCard(FindObjectOfType<ServerManager>().Inventory2, inventory);
+            if (id == 3) GiveInventoryCard(FindObjectOfType<ServerManager>().Inventory3, inventory);
+        }
+    }
 
-    // void GiveCardToHand(CardAttributes card, Transform hand) // Выдача карты в руку
-    // {
-    //     // if (pack.Count == 0)
-    //     //     return;
-
-    //     GameObject cardGo = Instantiate(CardPref, hand, false);
-
-    //     cardGo.GetComponent<CardInfoScripts>().HideCardInfo(card);
-    //     // PlayerHandCards.Add(cardGo.GetComponent<CardInfoScripts>());
-
-    //     // if (hand == EnemyHand)
-    //     // {
-    //     //     cardGo.GetComponent<CardInfoScripts>().HideCardInfo(card);
-    //     //     // EnemyHandCards.Add(cardGo.GetComponent<CardInfoScripts>());
-    //     // }
-    //     // else
-    //     // {
-    //     //     cardGo.GetComponent<CardInfoScripts>().ShowCardInfo(card);
-    //     //     // PlayerHandCards.Add(cardGo.GetComponent<CardInfoScripts>());
-    //     // }
-        
-    //     // pack.RemoveAt(0);     
-
-    // }
+    void GiveInventoryCard(SyncList<CardAttributes> cardInventory, Transform inventory)
+    {
+        if (inventory.childCount < cardInventory.Count)
+        {
+            GameObject card = Instantiate(FindObjectOfType<GameManagerScript>().CardPref, inventory, false);
+            card.GetComponent<CardInfoScripts>().ShowCardInfo(cardInventory[cardInventory.Count - 1]);
+        }
+    }
 
     /*IEnumerator MoveFunc ()
     {
