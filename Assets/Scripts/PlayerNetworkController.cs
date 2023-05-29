@@ -19,10 +19,10 @@ public class PlayerNetworkController : NetworkBehaviour
 
 
     [ClientRpc]
-    public void UpdateInvClientRpc(uint id)
+    public void UpdateInvClientRpc(uint id, CardAttributes card)
     {
         print($"{id} player need update inventory!");
-        FindObjectOfType<GameManagerScript>().DetectInventory(id, transform);
+        FindObjectOfType<GameManagerScript>().DetectInventory(id, transform, card);
     }
     public void setPlayerPosition(Vector2 pos)
     {
@@ -33,41 +33,12 @@ public class PlayerNetworkController : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void CmdUpdateInventory(CardAttributes card, uint id)
     {
-        UpdateInventory(card, id);
+        FindObjectOfType<ServerManager>().UpdateInventory(card, id);
     }
-    [Server]
-    public void UpdateInventory(CardAttributes card, uint id)
-    {
-        bool check = false;
-        List<CardAttributes> list = new List<CardAttributes>{ card };
-        foreach (var item in FindObjectOfType<ServerManager>().Inventorys)
-        {
-            if(id == item.Id)
-            {
-                check = true; break;
-            }
-        }
-        print(check);
-        if (check)
-        {
-            foreach (var inventory in FindObjectOfType<ServerManager>().Inventorys)
-            {
-                if (inventory.Id == id)
-                {
-                    inventory.Cards.Add(card);
-                }
-            }            
-        }
-        else
-        {
-            FindObjectOfType<ServerManager>().Inventorys.Add(new ServerManager.CardList(id, list));
-        }
-
-        UpdateInvClientRpc(id);
-    }
+    
     private void OnTransformChildrenChanged()
     {
-        if (isLocalPlayer)
+        if (isLocalPlayer && isClient)
         {
             List<CardAttributes> childCards = new List<CardAttributes>();
             foreach (Transform child in transform)

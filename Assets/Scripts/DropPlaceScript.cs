@@ -31,7 +31,7 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
             card = GameObject.FindGameObjectsWithTag("Card");
             foreach (var item in card)
             {
-                if (item.GetComponent<CardScript>().TempCard != null && item.GetComponent<CardInfoScripts>().InfoTypeCard == CardInfoScripts.TypeCard.PERMANENT_CARD)
+                if (item.GetComponent<CardScript>().TempCard != null /*&& item.GetComponent<CardInfoScripts>().InfoTypeCard == CardInfoScripts.TypeCard.PERMANENT_CARD*/)
                 {
                     item.transform.SetParent(gameObject.transform);
                     item.GetComponent<CardScript>().TempCard = null;

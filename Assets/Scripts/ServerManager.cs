@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using UnityEngine.XR;
+using System;
 
 public class ServerManager : NetworkBehaviour
 {
@@ -45,7 +46,7 @@ public class ServerManager : NetworkBehaviour
             List<CardAttributes> list = new List<CardAttributes>();
             for (int i = 0; i < 22; i++)
             {
-                int card = Random.Range(0, CardDesk.AllServerCards.Count);
+                int card = UnityEngine.Random.Range(0, CardDesk.AllServerCards.Count);
                 list.Add(CardDesk.AllServerCards[card]);
                 CardDesk.AllServerCards.RemoveAt(card);
             }
@@ -240,6 +241,43 @@ public class ServerManager : NetworkBehaviour
         }*/
         pack.RemoveAt(0);
 
+    }
+    [Server]
+    public void UpdateInventory(CardAttributes card, uint id)
+    {
+        bool check = false;
+        List<CardAttributes> list = new List<CardAttributes> { card };
+        foreach (var item in Inventorys)
+        {
+            if (id == item.Id)
+            {
+                check = true; break;
+            }
+        }
+        print(check);
+        if (check)
+        {
+            foreach (var inventory in Inventorys)
+            {
+                if (inventory.Id == id)
+                {
+                    FindObjectOfType<ServerManager>().Inventorys[Convert.ToInt32(id) - 1].Cards.Add(list[0]);
+                }
+            }
+        }
+        else
+        {
+            FindObjectOfType<ServerManager>().Inventorys.Add(new ServerManager.CardList(id, list));
+        }
+        var players = FindObjectsOfType<PlayerNetworkController>();
+        foreach (var player in players)
+        {
+            if (player.GetComponent<NetworkIdentity>().netId == id)
+            {
+                player.GetComponent<PlayerNetworkController>().UpdateInvClientRpc(id, card);
+            }
+            
+        }
     }
     /*    public override void OnStartClient()
         {

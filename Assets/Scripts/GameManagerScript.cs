@@ -50,8 +50,9 @@ public class GameManagerScript : MonoBehaviour // Колода
             cardGo.GetComponent<CardInfoScripts>().ShowCardInfo(item);
         }
     }
-    public void DetectInventory (uint id, Transform inventory)
+    public void DetectInventory (uint id, Transform inventory, CardAttributes card)
     {
+        List<CardAttributes> list = new List<CardAttributes>() { card };
         if (!inventory.GetComponent<NetworkIdentity>().isLocalPlayer)
         {
             foreach (var inv in FindObjectOfType<ServerManager>().Inventorys)
@@ -60,7 +61,7 @@ public class GameManagerScript : MonoBehaviour // Колода
                 if (inv.Id == id)
                 {
                     print($"Player {id} get {inv.Cards.Count} cards");
-                    GiveInventoryCard(inv.Cards, inventory);
+                    GiveInventoryCard(list, inventory);
                 }
             }
         }
