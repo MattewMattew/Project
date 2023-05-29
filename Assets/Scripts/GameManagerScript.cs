@@ -69,11 +69,9 @@ public class GameManagerScript : MonoBehaviour // Колода
 
     void GiveInventoryCard(List<CardAttributes> cardInventory, Transform inventory)
     {
-        if (inventory.childCount < cardInventory.Count)
-        {
-            GameObject card = Instantiate(FindObjectOfType<GameManagerScript>().CardPref, inventory, false);
-            card.GetComponent<CardInfoScripts>().ShowCardInfo(cardInventory[cardInventory.Count - 1]);
-        }
+        print($"i give {cardInventory[cardInventory.Count - 1].Name} to {inventory.GetComponent<NetworkIdentity>().netId}");
+        GameObject card = Instantiate(FindObjectOfType<GameManagerScript>().CardPref, inventory, false);
+        card.GetComponent<CardInfoScripts>().ShowCardInfo(cardInventory[cardInventory.Count - 1]);
     }
 
 }
