@@ -89,7 +89,7 @@ public class CardInfoScripts : MonoBehaviour
          case "General":
          {
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/General");
-            Type.GetComponent<Image>().color = Color.blue;
+            Type.GetComponent<Image>().color = Color.red;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
             break;
          }
