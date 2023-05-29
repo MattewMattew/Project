@@ -31,7 +31,7 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
             card = GameObject.FindGameObjectsWithTag("Card");
             foreach (var item in card)
             {
-                if (item.GetComponent<CardScript>().TempCard != null)
+                if (item.GetComponent<CardScript>().TempCard != null && item.GetComponent<CardInfoScripts>().InfoTypeCard == CardInfoScripts.TypeCard.PERMANENT_CARD)
                 {
                     item.transform.SetParent(gameObject.transform);
                     item.GetComponent<CardScript>().TempCard = null;
@@ -39,7 +39,20 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
                 }
             }
         }
-        else print($"Now be turn is {FindObjectOfType<ServerManager>().turnPlayerId} player!");
+        else if(FindObjectOfType<ServerManager>().turnPlayerId == transform.GetComponent<NetworkIdentity>().netId)
+        {
+            card = GameObject.FindGameObjectsWithTag("Card");
+            foreach (var item in card)
+            {
+                if (item.GetComponent<CardScript>().TempCard != null && item.GetComponent<CardInfoScripts>().InfoTypeCard == CardInfoScripts.TypeCard.DISPOSABLE_CARD)
+                {
+                    Destroy(item); 
+                    item.GetComponent<CardScript>().TempCard = null;
+                }
+            }
+            
+        }
+        // print($"Now be turn is {FindObjectOfType<ServerManager>().turnPlayerId} player!");
     }
     void Awake()
     {

@@ -90,7 +90,7 @@ public class CardInfoScripts : MonoBehaviour
          {
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/General");
             Type.GetComponent<Image>().color = Color.blue;
-            InfoTypeCard = TypeCard.PERMANENT_CARD;
+            InfoTypeCard = TypeCard.DISPOSABLE_CARD;
             break;
          }
          case "Indians":
