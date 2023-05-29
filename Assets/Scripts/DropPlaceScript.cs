@@ -19,70 +19,10 @@ public enum FieldType
 public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
                                IPointerExitHandler, IPointerClickHandler
 {
-    /*public readonly SyncList<GameObject> cards = new SyncList<GameObject>();*/
     public FieldType Type;
     GameObject[] card;
     private Vector2 pos1;
     private Vector2 pos2;
-/*    public List<GameObject> TransformVars;
-
-    [Server]
-    public void ChildrenAdded(GameObject item)
-    {
-        Debug.Log(item);
-        cards.Add(item);
-    }
-    [Command]
-    public void CmdChildrenAdded(GameObject item)
-    {
-        ChildrenAdded(item);
-    }*/
-
-    /*public override void OnStartClient()
-    {
-        
-        base.OnStartClient();
-
-        cards.Callback += SyncTransformVars; //вместо hook, для SyncList используем подписку на Callback
-
-        TransformVars = new List<GameObject>(cards.Count); //так как Callback действует только на изменение массива,  
-        for (int i = 0; i < cards.Count; i++) //а у нас на момент подключения уже могут быть какие-то данные в массиве, нам нужно эти данные внести в локальный массив
-        {
-            TransformVars.Add(cards[i]);
-        }
-    }
-
-    void SyncTransformVars(SyncList<GameObject>.Operation op, int index, GameObject oldItem, GameObject newItem)
-    {
-        switch (op)
-        {
-            case SyncList<GameObject>.Operation.OP_ADD:
-                {
-                    TransformVars.Add(newItem);
-                    break;
-                }
-            case SyncList<GameObject>.Operation.OP_CLEAR:
-                {
-
-                    break;
-                }
-            case SyncList<GameObject>.Operation.OP_INSERT:
-                {
-
-                    break;
-                }   
-            case SyncList<GameObject>.Operation.OP_REMOVEAT:
-                {
-
-                    break;
-                }
-            case SyncList<GameObject>.Operation.OP_SET:
-                {
-
-                    break;
-                }
-        }
-    }*/
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -96,13 +36,6 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
                     item.transform.SetParent(gameObject.transform);
                     item.GetComponent<CardScript>().TempCard = null;
                     item.transform.localScale = new Vector2(1f, 1f);
-
-                    // item.GetComponent<CardScript>().GameManager.PlayerHandCards.Remove(item.GetComponent<CardInfoScripts>());
-                    // item.GetComponent<CardScript>().GameManager.PlayerFieldCards.Add(item.GetComponent<CardInfoScripts>());
-                    /*                if (isServer)
-                                        ChildrenAdded(item);
-                                    else
-                                        CmdChildrenAdded(item);*/
                 }
             }
         }

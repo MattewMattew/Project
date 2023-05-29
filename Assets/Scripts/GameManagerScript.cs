@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Mirror;
+using System;
 
 public class GameManagerScript : MonoBehaviour // Колода
 {
@@ -30,41 +31,40 @@ public class GameManagerScript : MonoBehaviour // Колода
         GameObject[] players = GameObject.FindGameObjectsWithTag("Field");
         foreach (var player in players)
         {
-            if (player.GetComponent<NetworkIdentity>().netId == 1 && player.GetComponent<NetworkIdentity>().isLocalPlayer)
-                GiveHandCards(gameObject.GetComponent<ServerManager>().Hand1);
-            if (player.GetComponent<NetworkIdentity>().netId == 2 && player.GetComponent<NetworkIdentity>().isLocalPlayer)
-                GiveHandCards(gameObject.GetComponent<ServerManager>().Hand2);
-            if (player.GetComponent<NetworkIdentity>().netId == 3 && player.GetComponent<NetworkIdentity>().isLocalPlayer)
-                GiveHandCards(gameObject.GetComponent<ServerManager>().Hand3);
-            if (player.GetComponent<NetworkIdentity>().netId == 4 && player.GetComponent<NetworkIdentity>().isLocalPlayer)
-                GiveHandCards(gameObject.GetComponent<ServerManager>().Hand4);
-
+            foreach (var hand in FindObjectOfType<ServerManager>().Hands)
+            {
+                if (hand.Id == player.GetComponent<NetworkIdentity>().netId && player.GetComponent<NetworkIdentity>().isLocalPlayer)
+                {
+                    GiveHandCards(hand.Cards);
+                }
+            }
         }
     }
 
-    void GiveHandCards (SyncList<CardAttributes> hand)
+    void GiveHandCards (List<CardAttributes> hand)
     {
-        if(hand.Count == 4)
+        foreach (var item in hand)
         {
-            foreach (var item in hand)
-            {
-                GameObject cardGo = Instantiate(CardPref, SelfHand, false);
-                cardGo.GetComponent<CardInfoScripts>().ShowCardInfo(item);
-            }
+            print($"Card given {item.Name}");
+            GameObject cardGo = Instantiate(CardPref, SelfHand, false);
+            cardGo.GetComponent<CardInfoScripts>().ShowCardInfo(item);
         }
     }
     public void DetectInventory (uint id, Transform inventory)
     {
         if (!inventory.GetComponent<NetworkIdentity>().isLocalPlayer)
         {
-            if (id == 1) GiveInventoryCard(FindObjectOfType<ServerManager>().Inventory1, inventory);
-            if (id == 2) GiveInventoryCard(FindObjectOfType<ServerManager>().Inventory2, inventory);
-            if (id == 3) GiveInventoryCard(FindObjectOfType<ServerManager>().Inventory3, inventory);
-            if (id == 4) GiveInventoryCard(FindObjectOfType<ServerManager>().Inventory4, inventory);
+            foreach (var inv in FindObjectOfType<ServerManager>().Inventorys)
+            {
+                if (inv.Id == id)
+                {
+                    GiveInventoryCard(inv.Cards, inventory);
+                }
+            }
         }
     }
 
-    void GiveInventoryCard(SyncList<CardAttributes> cardInventory, Transform inventory)
+    void GiveInventoryCard(List<CardAttributes> cardInventory, Transform inventory)
     {
         if (inventory.childCount < cardInventory.Count)
         {
@@ -72,38 +72,5 @@ public class GameManagerScript : MonoBehaviour // Колода
             card.GetComponent<CardInfoScripts>().ShowCardInfo(cardInventory[cardInventory.Count - 1]);
         }
     }
-
-    /*IEnumerator MoveFunc ()
-    {
-        MoveTime = 1;
-        *//*MoveTimeTxt.text = MoveTime.ToString();*//*
-
-        while (MoveTime-- > 0)
-        {
-            *//*MoveTimeTxt.text = MoveTime.ToString();*//*
-            yield return new WaitForSeconds(1); //Ожидание секунда  
-        }
-        *//*ChangeMove();*//*
-    }
-
-    public void ChangeMove() 
-    {
-        StopAllCoroutines();
-        Move++;
-
-        EndMoveBtn.interactable = IsPlayerMove;
-
-        if (IsPlayerMove)
-            GiveNewCards();
-        
-        StartCoroutine(MoveFunc());
-    }
-
-    void GiveNewCards()
-    {
-        int i=0;
-        while(i++ < 2)
-            GiveCardToHand(CardVars, SelfHand);
-    }*/
 
 }

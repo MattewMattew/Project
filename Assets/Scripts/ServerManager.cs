@@ -2,20 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using UnityEngine.XR;
 
 public class ServerManager : NetworkBehaviour
 {
     public readonly SyncList<CardAttributes> PackCards = new SyncList<CardAttributes>();
     public GameCard CurrentGame;
     public List<CardAttributes> CardVars;
-    public readonly SyncList<CardAttributes> Hand1 = new SyncList<CardAttributes>();
-    public readonly SyncList<CardAttributes> Hand2 = new SyncList<CardAttributes>();
-    public readonly SyncList<CardAttributes> Hand3 = new SyncList<CardAttributes>();
-    public readonly SyncList<CardAttributes> Hand4 = new SyncList<CardAttributes>();
-    public readonly SyncList<CardAttributes> Inventory1 = new SyncList<CardAttributes>();
-    public readonly SyncList<CardAttributes> Inventory2 = new SyncList<CardAttributes>();
-    public readonly SyncList<CardAttributes> Inventory3 = new SyncList<CardAttributes>();
-    public readonly SyncList<CardAttributes> Inventory4 = new SyncList<CardAttributes>();
+    public readonly SyncList<CardList> Inventorys = new SyncList<CardList>();
+    public readonly SyncList<CardList> Hands = new SyncList<CardList>();
+
+    public struct CardList
+    {
+        public List<CardAttributes> Cards;
+        public uint Id;
+
+        public CardList(uint id, List<CardAttributes> inv)
+        {
+            Id = id;
+            Cards = inv;
+        }
+    }
+
 
     [SyncVar]
     public uint turnPlayerId;
@@ -113,7 +121,14 @@ public class ServerManager : NetworkBehaviour
     {
         print(PackCards.Count+" "+"ServerManager");
         print($"{turnPlayerId}");
-
+        foreach (var item in Hands)
+        {
+            print($"{item.Id} hand id");
+            foreach (var item1 in item.Cards)
+            {
+                print($"{item1.Name} card in hand {item.Id}");
+            }
+        }
     }
     void Start()
     {
@@ -164,18 +179,35 @@ public class ServerManager : NetworkBehaviour
     {
         turnPlayerId = newValue;
     }*/
-    void GiveHandCards(SyncList<CardAttributes> pack, GameObject hand) // Количество карт в руке
+    void GiveHandCards(SyncList<CardAttributes> pack, GameObject player) // Количество карт в руке
     {
         int i = 0;
         while (i++ < 4)
-            GiveCardToHand(pack, hand);
+            GiveCardToHand(pack, player);
     }
 
-    void GiveCardToHand(SyncList<CardAttributes> pack, GameObject hand) // Выдача карты в руку
+    void GiveCardToHand(SyncList<CardAttributes> pack, GameObject player) // Выдача карты в руку
     {
         if (pack.Count == 0)
             return;
-        if(hand.GetComponent<NetworkIdentity>().netId == 1)
+
+        List<CardAttributes> list = new List<CardAttributes> { pack[0] };
+
+        if (Hands.Contains(new CardList(player.GetComponent<NetworkIdentity>().netId, new List<CardAttributes>())))
+        {
+            foreach (var hand in Hands)
+            {
+                if (hand.Id == player.GetComponent<NetworkIdentity>().netId)
+                {
+                    hand.Cards.Add(pack[0]);
+                }
+            }
+        }
+        else
+        {
+            Hands.Add(new CardList(player.GetComponent<NetworkIdentity>().netId, list));
+        }
+        /*if(hand.GetComponent<NetworkIdentity>().netId == 1)
         {
             Hand1.Add(pack[0]);
         }
@@ -190,7 +222,7 @@ public class ServerManager : NetworkBehaviour
         else if(hand.GetComponent<NetworkIdentity>().netId == 4)
         {
             Hand4.Add(pack[0]);
-        }
+        }*/
         pack.RemoveAt(0);
 
     }

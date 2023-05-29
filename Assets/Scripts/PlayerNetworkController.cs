@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using System;
 
 public class PlayerNetworkController : NetworkBehaviour
 {
@@ -36,11 +37,23 @@ public class PlayerNetworkController : NetworkBehaviour
     [Server]
     public void UpdateInventory(CardAttributes card, uint id)
     {
-        if(id == 1) FindObjectOfType<ServerManager>().Inventory1.Add(card);
-        if(id == 2) FindObjectOfType<ServerManager>().Inventory2.Add(card);
-        if(id == 3) FindObjectOfType<ServerManager>().Inventory3.Add(card);
-        if(id == 4) FindObjectOfType<ServerManager>().Inventory4.Add(card);
-        
+        List<CardAttributes> list = new List<CardAttributes>{ card };
+
+        if (FindObjectOfType<ServerManager>().Inventorys.Contains(new ServerManager.CardList(id, new List<CardAttributes>())))
+        {
+            foreach (var inventory in FindObjectOfType<ServerManager>().Inventorys)
+            {
+                if (inventory.Id == id)
+                {
+                    inventory.Cards.Add(card);
+                }
+            }            
+        }
+        else
+        {
+            FindObjectOfType<ServerManager>().Inventorys.Add(new ServerManager.CardList(id, list));
+        }
+
         UpdateInvClientRpc();
     }
     private void OnTransformChildrenChanged()
@@ -53,38 +66,8 @@ public class PlayerNetworkController : NetworkBehaviour
                 childCards.Add(child.GetComponent<CardInfoScripts>().SelfCard);
                 print($"{child.GetComponent<CardInfoScripts>().SelfCard.Name} name of cards in id {GetComponent<NetworkIdentity>().netId}");
             }
-            if(GetComponent<NetworkIdentity>().netId == 1)
-            {
-                CmdUpdateInventory(childCards[childCards.Count-1], netId);
-            }
-            if(GetComponent<NetworkIdentity>().netId == 2)
-            {
-                CmdUpdateInventory(childCards[childCards.Count - 1], netId);
-            }
-            if(GetComponent<NetworkIdentity>().netId == 3)
-            {
-                CmdUpdateInventory(childCards[childCards.Count - 1], netId);
-            }
-            if(GetComponent<NetworkIdentity>().netId == 4)
-            {
-                CmdUpdateInventory(childCards[childCards.Count - 1], netId);
-            }
+            CmdUpdateInventory(childCards[childCards.Count-1], netId);
         }
-/*        GameObject[] players = GameObject.FindGameObjectsWithTag("Field");
-        foreach (var item in players)
-        {
-            if(item.GetComponent<NetworkIdentity>().netId == 1 && !item.GetComponent<NetworkIdentity>().isLocalPlayer)
-            {
-                item.GetComponent<PlayerNetworkController>().UpdateInventory(FindObjectOfType<ServerManager>().Inventory1);
-            }
-            if(item.GetComponent<NetworkIdentity>().netId == 2 && !item.GetComponent<NetworkIdentity>().isLocalPlayer)
-            {
-                item.GetComponent<PlayerNetworkController>().UpdateInventory(FindObjectOfType<ServerManager>().Inventory2);
-            }
-            if(item.GetComponent<NetworkIdentity>().netId == 3 && !item.GetComponent<NetworkIdentity>().isLocalPlayer)
-            {
-                item.GetComponent<PlayerNetworkController>().UpdateInventory(FindObjectOfType<ServerManager>().Inventory3);
-            }
-        }*/
+
     }
 }
