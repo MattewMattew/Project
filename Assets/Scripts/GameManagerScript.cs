@@ -56,8 +56,10 @@ public class GameManagerScript : MonoBehaviour // Колода
         {
             foreach (var inv in FindObjectOfType<ServerManager>().Inventorys)
             {
+                print($"Game manager get {id} id");
                 if (inv.Id == id)
                 {
+                    print($"Player {id} get {inv.Cards.Count} cards");
                     GiveInventoryCard(inv.Cards, inventory);
                 }
             }

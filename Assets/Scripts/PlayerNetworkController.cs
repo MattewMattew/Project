@@ -19,9 +19,10 @@ public class PlayerNetworkController : NetworkBehaviour
 
 
     [ClientRpc]
-    public void UpdateInvClientRpc()
+    public void UpdateInvClientRpc(uint id)
     {
-        FindObjectOfType<GameManagerScript>().DetectInventory(netId, transform);
+        print($"{id} player need update inventory!");
+        FindObjectOfType<GameManagerScript>().DetectInventory(id, transform);
     }
     public void setPlayerPosition(Vector2 pos)
     {
@@ -37,9 +38,17 @@ public class PlayerNetworkController : NetworkBehaviour
     [Server]
     public void UpdateInventory(CardAttributes card, uint id)
     {
+        bool check = false;
         List<CardAttributes> list = new List<CardAttributes>{ card };
-
-        if (FindObjectOfType<ServerManager>().Inventorys.Contains(new ServerManager.CardList(id, new List<CardAttributes>())))
+        foreach (var item in FindObjectOfType<ServerManager>().Inventorys)
+        {
+            if(id == item.Id)
+            {
+                check = true; break;
+            }
+        }
+        print(check);
+        if (check)
         {
             foreach (var inventory in FindObjectOfType<ServerManager>().Inventorys)
             {
@@ -54,7 +63,7 @@ public class PlayerNetworkController : NetworkBehaviour
             FindObjectOfType<ServerManager>().Inventorys.Add(new ServerManager.CardList(id, list));
         }
 
-        UpdateInvClientRpc();
+        UpdateInvClientRpc(id);
     }
     private void OnTransformChildrenChanged()
     {

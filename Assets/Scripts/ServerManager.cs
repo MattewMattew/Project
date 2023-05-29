@@ -129,6 +129,15 @@ public class ServerManager : NetworkBehaviour
                 print($"{item1.Name} card in hand {item.Id}");
             }
         }
+        print($"{Inventorys.Count} количество инвентарей");
+        foreach (var item in Inventorys)
+        {
+            print($"{item.Cards.Count} cards have {item.Id} player in inventory");
+            foreach (var item1 in item.Cards)
+            {
+                print($"{item.Id} player inventory have {item1.Name} card. In array {item.Cards.Count} cards");
+            }
+        }
     }
     void Start()
     {
@@ -190,10 +199,16 @@ public class ServerManager : NetworkBehaviour
     {
         if (pack.Count == 0)
             return;
-
+        bool check = false;
         List<CardAttributes> list = new List<CardAttributes> { pack[0] };
-
-        if (Hands.Contains(new CardList(player.GetComponent<NetworkIdentity>().netId, new List<CardAttributes>())))
+        foreach (var item in Hands)
+        {
+            if(player.GetComponent<NetworkIdentity>().netId == item.Id)
+            {
+                check = true; break;
+            }
+        }
+        if (check)
         {
             foreach (var hand in Hands)
             {
