@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
-[RequireComponent(typeof(Dropdown))]
+
 public class MainMenuUI : MonoBehaviour
 {
     
