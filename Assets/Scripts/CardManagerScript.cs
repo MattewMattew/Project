@@ -104,7 +104,7 @@ public class CardManagerScript : MonoBehaviour // Список карт и св�
 
         CardDesk.AllServerCards.Add(new CardAttributes("Beer", "6", "Hearts"));
 
-        CardDesk.AllServerCards.Add(new CardAttributes("Carbin", "A", "Clubs"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Carbine", "A", "Clubs"));
 
         CardDesk.AllServerCards.Add(new CardAttributes("Diligence", "9", "Spades"));
 
