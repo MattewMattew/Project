@@ -23,6 +23,7 @@ public class ServerManager : NetworkBehaviour
         {
             Id = id;
             Cards = inv;
+
         }
     }
 
