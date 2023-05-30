@@ -10,9 +10,8 @@ public enum FieldType
 {
     SELF_HAND,
     SELF_FIELD,
-    // ENEMY_HAND,
-    ENEMY_FIELD,
-    PACK
+    PACK,
+    DISCARD
 
 }
 
@@ -46,6 +45,7 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
             {
                 if (item.GetComponent<CardScript>().TempCard != null && item.GetComponent<CardInfoScripts>().InfoTypeCard == CardInfoScripts.TypeCard.DISPOSABLE_CARD)
                 {
+                    FindObjectOfType<PlayerNetworkController>().CmdGiveCardToDiscard(item.GetComponent<CardInfoScripts>().SelfCard);
                     Destroy(item); 
                     item.GetComponent<CardScript>().TempCard = null;
                 }
@@ -54,6 +54,8 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
         }
         // print($"Now be turn is {FindObjectOfType<ServerManager>().turnPlayerId} player!");
     }
+
+
     void Awake()
     {
 /*        if (!isLocalPlayer)

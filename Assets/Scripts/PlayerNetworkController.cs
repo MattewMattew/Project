@@ -36,4 +36,10 @@ public class PlayerNetworkController : NetworkBehaviour
     {
         FindObjectOfType<ServerManager>().UpdateInventory(card, playerController, playerInventory);
     }
+
+    [Command(requiresAuthority = false)]
+    public void CmdGiveCardToDiscard(CardAttributes card)
+    {
+        FindObjectOfType<ServerManager>().GiveCardToDiscard(card);
+    }
 }

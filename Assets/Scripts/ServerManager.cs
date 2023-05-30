@@ -10,6 +10,7 @@ public class ServerManager : NetworkBehaviour
     public readonly SyncList<CardAttributes> PackCards = new SyncList<CardAttributes>();
     public GameCard CurrentGame;
     public List<CardAttributes> CardVars;
+    public readonly SyncList<CardAttributes> Discard = new SyncList<CardAttributes>();
     public readonly SyncList<CardList> Inventorys = new SyncList<CardList>();
     public readonly SyncList<CardList> Hands = new SyncList<CardList>();
 
@@ -130,7 +131,7 @@ public class ServerManager : NetworkBehaviour
                 print($"{item1.Name} card in hand {item.Id}");
             }
         }
-        print($"{Inventorys.Count} количество инвентарей");
+        print($"{Inventorys.Count} пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
         foreach (var item in Inventorys)
         {
             print($"{item.Cards.Count} cards have {item.Id} player in inventory");
@@ -166,7 +167,7 @@ public class ServerManager : NetworkBehaviour
         MoveTime = 5;
         while (MoveTime-- > 0)
         {
-            yield return new WaitForSeconds(1); //Ожидание секунда  
+            yield return new WaitForSeconds(1); //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ  
         }
         ChangeMove();
     }
@@ -191,14 +192,14 @@ public class ServerManager : NetworkBehaviour
     {
         turnPlayerId = newValue;
     }*/
-    void GiveHandCards(SyncList<CardAttributes> pack, GameObject player) // Количество карт в руке
+    void GiveHandCards(SyncList<CardAttributes> pack, GameObject player) // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ
     {
         int i = 0;
         while (i++ < 4)
             GiveCardToHand(pack, player);
     }
 
-    void GiveCardToHand(SyncList<CardAttributes> pack, GameObject player) // Выдача карты в руку
+    void GiveCardToHand(SyncList<CardAttributes> pack, GameObject player) // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ
     {
         if (pack.Count == 0)
             return;
@@ -281,20 +282,27 @@ public class ServerManager : NetworkBehaviour
             
         }
     }
+    
+    [Server]
+    public void GiveCardToDiscard (CardAttributes card)
+    {
+        Discard.Add(card);
+        print($"Discard: {Discard.Count}");
+    }
     /*    public override void OnStartClient()
         {
 
             base.OnStartClient();
 
-            Cards.Callback += SyncTransformVars; //вместо hook, для SyncList используем подписку на Callback
-            CardVars = new List<Card>(Cards.Count); //так как Callback действует только на изменение массива,  
-            for (int i = 0; i < Cards.Count; i++) //а у нас на момент подключения уже могут быть какие-то данные в массиве, нам нужно эти данные внести в локальный массив
+            Cards.Callback += SyncTransformVars; //пїЅпїЅпїЅпїЅпїЅпїЅ hook, пїЅпїЅпїЅ SyncList пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ Callback
+            CardVars = new List<Card>(Cards.Count); //пїЅпїЅпїЅ пїЅпїЅпїЅ Callback пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ,  
+            for (int i = 0; i < Cards.Count; i++) //пїЅ пїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             {
                 print(Cards[i].Name);
                 CardVars.Add(Cards[i]);
             }
-            Debug.Log(CardVars.Count + " " + "До выдачи");
+            Debug.Log(CardVars.Count + " " + "пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ");
             GiveHandCards(CardVars, SelfHand);
-            print(CardVars.Count + " " + "После выдачи");
+            print(CardVars.Count + " " + "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ");
         }*/
 }
