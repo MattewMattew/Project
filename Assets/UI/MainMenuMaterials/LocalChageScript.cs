@@ -5,12 +5,11 @@ using UnityEngine.Localization.Settings;
 
 public class LocalChageScript : MonoBehaviour
 {
-    private bool active = false;
     private void Start(){
         int ID = PlayerPrefs.GetInt("LocalId", 0);
         ChangeLocale(ID);
-        
     }
+    private bool active = false;
     public void ChangeLocale(int localeID){
         if (active == true)
           return; 
@@ -19,8 +18,8 @@ public class LocalChageScript : MonoBehaviour
 
 IEnumerator SetLocale(int _localeID){
     active = true;
+    LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[_localeID];
     yield return LocalizationSettings.InitializationOperation;
-    LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[_localeID]; 
     PlayerPrefs.SetInt("LocalId", _localeID);
     active = false;
 }
