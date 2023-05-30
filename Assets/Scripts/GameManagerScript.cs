@@ -28,7 +28,7 @@ public class GameManagerScript : MonoBehaviour // Колода
     }
     void Start()
     {
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Field");
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         foreach (var player in players)
         {
             foreach (var hand in FindObjectOfType<ServerManager>().Hands)
@@ -45,32 +45,30 @@ public class GameManagerScript : MonoBehaviour // Колода
     {
         foreach (var item in hand)
         {
-            print($"Card given {item.Name}");
             GameObject cardGo = Instantiate(CardPref, SelfHand, false);
             cardGo.GetComponent<CardInfoScripts>().ShowCardInfo(item);
         }
     }
-    public void DetectInventory (uint id, Transform inventory, CardAttributes card)
+    public void DetectInventory (PlayerNetworkController playerController, Transform inventory, CardAttributes card)
     {
+        print($"{playerController.isLocalPlayer} in GameManager");
         List<CardAttributes> list = new List<CardAttributes>() { card };
-        if (!inventory.GetComponent<NetworkIdentity>().isLocalPlayer)
+        if (!playerController.isLocalPlayer)
         {
             foreach (var inv in FindObjectOfType<ServerManager>().Inventorys)
             {
-                print($"Game manager get {id} id");
-                if (inv.Id == id)
+                if (inv.Id == playerController.netId)
                 {
-                    print($"Player {id} get {inv.Cards.Count} cards");
-                    GiveInventoryCard(list, inventory);
+                    GiveInventoryCard(list, playerController);
                 }
             }
         }
     }
 
-    void GiveInventoryCard(List<CardAttributes> cardInventory, Transform inventory)
+    void GiveInventoryCard(List<CardAttributes> cardInventory, PlayerNetworkController playerController)    
     {
-        print($"i give {cardInventory[cardInventory.Count - 1].Name} to {inventory.GetComponent<NetworkIdentity>().netId}");
-        GameObject card = Instantiate(FindObjectOfType<GameManagerScript>().CardPref, inventory, false);
+        print($"Give to {playerController.netId} inventory");
+        GameObject card = Instantiate(FindObjectOfType<GameManagerScript>().CardPref, playerController.GetComponentInChildren<DropPlaceScript>().transform, false);
         card.GetComponent<CardInfoScripts>().ShowCardInfo(cardInventory[cardInventory.Count - 1]);
     }
 

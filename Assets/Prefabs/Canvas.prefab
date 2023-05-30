@@ -755,6 +755,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  turnPlayerId: 0
 --- !u!114 &4138922310632747799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -767,17 +768,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159c9a59d05834439fecc42edc0d03a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EndTurn: 0
   SelfHand: {fileID: 8176276488691115915}
-  EnemyHand: {fileID: 0}
   CardPref: {fileID: 1793064928002630346, guid: 3f755444af9b42147b63e3fbcee4ee99, type: 3}
-  MoveTimeTxt: {fileID: 0}
-  EndMoveBtn: {fileID: 8176276488995756599}
-  spawnPoint:
-  - {x: 0, y: -237}
-  - {x: -696, y: -77}
-  - {x: 0, y: 421}
-  PlayerHandCards: []
-  PlayerFieldCards: []
-  EnemyHandCards: []
-  EnemyFieldCards: []

@@ -26,7 +26,7 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (FindObjectOfType<ServerManager>().turnPlayerId == transform.GetComponent<NetworkIdentity>().netId && transform.GetComponent<NetworkIdentity>().isLocalPlayer)
+        if (FindObjectOfType<ServerManager>().turnPlayerId == GetComponentInParent<NetworkIdentity>().netId && GetComponentInParent<NetworkIdentity>().isLocalPlayer)
         {
             card = GameObject.FindGameObjectsWithTag("Card");
             foreach (var item in card)
@@ -39,7 +39,7 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
                 }
             }
         }
-        else if(FindObjectOfType<ServerManager>().turnPlayerId == transform.GetComponent<NetworkIdentity>().netId)
+        else if(FindObjectOfType<ServerManager>().turnPlayerId == GetComponentInParent<NetworkIdentity>().netId)
         {
             card = GameObject.FindGameObjectsWithTag("Card");
             foreach (var item in card)
@@ -90,6 +90,20 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
             t +=Time.deltaTime;
             yield return null;
         } while (t<=time);
+
+    }
+    private void OnTransformChildrenChanged()
+    {
+        if (GetComponentInParent<NetworkIdentity>().isLocalPlayer && GetComponentInParent<NetworkIdentity>().isClient)
+        {
+            List<CardAttributes> childCards = new List<CardAttributes>();
+            foreach (Transform child in transform)
+            {
+                childCards.Add(child.GetComponent<CardInfoScripts>().SelfCard);
+                print($"{child.GetComponent<CardInfoScripts>().SelfCard.Name} name of cards in id {GetComponentInParent<NetworkIdentity>().netId}");
+            }
+            GetComponentInParent<PlayerNetworkController>().CmdUpdateInventory(childCards[childCards.Count - 1], GetComponentInParent<PlayerNetworkController>(), transform);
+        }
 
     }
 }

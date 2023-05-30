@@ -19,35 +19,21 @@ public class PlayerNetworkController : NetworkBehaviour
 
 
     [ClientRpc]
-    public void UpdateInvClientRpc(uint id, CardAttributes card)
+    public void UpdateInvClientRpc(PlayerNetworkController playerController, CardAttributes card, Transform playerInventory)
     {
-        print($"{id} player need update inventory!");
-        FindObjectOfType<GameManagerScript>().DetectInventory(id, transform, card);
+        print($"{playerController.netId} player need update inventory!");
+        FindObjectOfType<GameManagerScript>().DetectInventory(playerController, playerInventory, card);
     }
     public void setPlayerPosition(Vector2 pos)
     {
+        print(pos);
         transform.SetParent(GameObject.Find("Background").transform);
         transform.localScale = new Vector3(1,1,1);
         transform.localPosition = pos;
     }
     [Command(requiresAuthority = false)]
-    public void CmdUpdateInventory(CardAttributes card, uint id)
+    public void CmdUpdateInventory(CardAttributes card, PlayerNetworkController playerController, Transform playerInventory)
     {
-        FindObjectOfType<ServerManager>().UpdateInventory(card, id);
-    }
-    
-    private void OnTransformChildrenChanged()
-    {
-        if (isLocalPlayer && isClient)
-        {
-            List<CardAttributes> childCards = new List<CardAttributes>();
-            foreach (Transform child in transform)
-            {
-                childCards.Add(child.GetComponent<CardInfoScripts>().SelfCard);
-                print($"{child.GetComponent<CardInfoScripts>().SelfCard.Name} name of cards in id {GetComponent<NetworkIdentity>().netId}");
-            }
-            CmdUpdateInventory(childCards[childCards.Count-1], netId);
-        }
-
+        FindObjectOfType<ServerManager>().UpdateInventory(card, playerController, playerInventory);
     }
 }

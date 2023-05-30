@@ -104,7 +104,7 @@ public class ServerManager : NetworkBehaviour
             }
         }
 
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Field");
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         foreach (var player in players)
         {
             if (isServer)
@@ -122,7 +122,7 @@ public class ServerManager : NetworkBehaviour
     {
         print(PackCards.Count+" "+"ServerManager");
         print($"{turnPlayerId}");
-        foreach (var item in Hands)
+/*        foreach (var item in Hands)
         {
             print($"{item.Id} hand id");
             foreach (var item1 in item.Cards)
@@ -138,23 +138,25 @@ public class ServerManager : NetworkBehaviour
             {
                 print($"{item.Id} player inventory have {item1.Name} card. In array {item.Cards.Count} cards");
             }
-        }
+        }*/
     }
     void Start()
     {
         if (isServer) CmdCardAdded();
         gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Field");
+        PlayerNetworkController[] players = FindObjectsOfType<PlayerNetworkController>();
         spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, 0), new Vector2(0, 421), new Vector2(696, 0) };
         foreach (var player in players)
         {
-            if (player.GetComponent<PlayerNetworkController>().isLocalPlayer)
+            if (player.isLocalPlayer)
             {
-                player.GetComponent<PlayerNetworkController>().setPlayerPosition(spawnPoint[0]);
+                print($"{player.isLocalPlayer} {player.netId} PlayerNetworkController {spawnPoint[0]}");
+                player.setPlayerPosition(spawnPoint[0]);
             }
             else
             {
-                player.GetComponent<PlayerNetworkController>().setPlayerPosition(spawnPoint[1]);
+                print($"{player.isLocalPlayer} {player.netId} PlayerNetworkController {spawnPoint[1]}");
+                player.setPlayerPosition(spawnPoint[1]);
                 spawnPoint.RemoveAt(1);
             }
         }
@@ -243,13 +245,13 @@ public class ServerManager : NetworkBehaviour
 
     }
     [Server]
-    public void UpdateInventory(CardAttributes card, uint id)
+    public void UpdateInventory(CardAttributes card, PlayerNetworkController playerController, Transform playerInventory)
     {
         bool check = false;
         List<CardAttributes> list = new List<CardAttributes> { card };
         foreach (var item in Inventorys)
         {
-            if (id == item.Id)
+            if (playerController.netId == item.Id)
             {
                 check = true; break;
             }
@@ -259,22 +261,22 @@ public class ServerManager : NetworkBehaviour
         {
             foreach (var inventory in Inventorys)
             {
-                if (inventory.Id == id)
+                if (inventory.Id == playerController.netId)
                 {
-                    FindObjectOfType<ServerManager>().Inventorys[Convert.ToInt32(id) - 1].Cards.Add(list[0]);
+                    FindObjectOfType<ServerManager>().Inventorys[Convert.ToInt32(playerController.netId) - 1].Cards.Add(list[0]);
                 }
             }
         }
         else
         {
-            FindObjectOfType<ServerManager>().Inventorys.Add(new ServerManager.CardList(id, list));
+            FindObjectOfType<ServerManager>().Inventorys.Add(new ServerManager.CardList(playerController.netId, list));
         }
         var players = FindObjectsOfType<PlayerNetworkController>();
         foreach (var player in players)
         {
-            if (player.GetComponent<NetworkIdentity>().netId == id)
+            if (player.GetComponent<NetworkIdentity>().netId == playerController.netId)
             {
-                player.GetComponent<PlayerNetworkController>().UpdateInvClientRpc(id, card);
+                player.UpdateInvClientRpc(playerController, card, playerInventory);
             }
             
         }
