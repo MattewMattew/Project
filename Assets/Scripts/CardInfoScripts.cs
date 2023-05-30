@@ -14,7 +14,7 @@ public class CardInfoScripts : MonoBehaviour
    public enum TypeCard {DISPOSABLE_CARD, PERMANENT_CARD}
    public TypeCard InfoTypeCard;
    
-   
+   //Test
    public void HideCardInfo (CardAttributes card)
    {
       SelfCard = card;
