@@ -297,6 +297,12 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  Materials:
+  - {fileID: 2100000, guid: b9156e185d5f4dd4e80b4c98043b3e0e, type: 2}
+  - {fileID: 2100000, guid: 605892199d738ce4b98388139b222e04, type: 2}
+  - {fileID: 2100000, guid: 95294fcab1d15e64090397609fae1e6b, type: 2}
+  - {fileID: 2100000, guid: 37fbaf4ebba663044b8fd828c3d67508, type: 2}
+  - {fileID: 2100000, guid: 25e01d0f579ba6446868e1cf8c2ef603, type: 2}
 --- !u!1 &5621470554831182054
 GameObject:
   m_ObjectHideFlags: 0

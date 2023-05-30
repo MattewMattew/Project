@@ -6,6 +6,7 @@ using System;
 
 public class PlayerNetworkController : NetworkBehaviour
 {
+    public List<Material> Materials; 
     // Start is called before the first frame update
     void Start()
     {
