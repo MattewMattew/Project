@@ -27,7 +27,7 @@ public class PlayerNetworkController : NetworkBehaviour
     public void setPlayerPosition(Vector2 pos)
     {
         print(pos);
-        transform.SetParent(GameObject.Find("Background").transform);
+        transform.SetParent(GameObject.Find("Players").transform);
         transform.localScale = new Vector3(1,1,1);
         transform.localPosition = pos;
     }
