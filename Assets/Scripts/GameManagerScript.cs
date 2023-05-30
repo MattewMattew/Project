@@ -8,8 +8,10 @@ using System;
 
 public class GameManagerScript : MonoBehaviour // Колода
 {
-    public Transform SelfHand;
+    public Transform SelfHand, DiscardTransform;
     public GameObject CardPref;
+    public TextMeshProUGUI CountCards;
+    GameObject CardDiscard;
     // int Move, MoveTime = 30;
     // public TextMeshProUGUI MoveTimeTxt;
     // public Button EndMoveBtn;
@@ -25,6 +27,11 @@ public class GameManagerScript : MonoBehaviour // Колода
     void Awake()
     {
         
+    }
+
+    void Update()
+    {
+        CountCards.text = (FindObjectOfType<ServerManager>().PackCards.Count).ToString();
     }
     void Start()
     {
@@ -72,4 +79,10 @@ public class GameManagerScript : MonoBehaviour // Колода
         card.GetComponent<CardInfoScripts>().ShowCardInfo(cardInventory[cardInventory.Count - 1]);
     }
 
+    public void IdentifyCardInDiscard(CardAttributes card)
+    {
+        if (CardDiscard == null) 
+            CardDiscard = Instantiate(CardPref, DiscardTransform, false);
+        CardDiscard.GetComponent<CardInfoScripts>().ShowCardInfo(card);
+    }
 }

@@ -42,4 +42,10 @@ public class PlayerNetworkController : NetworkBehaviour
     {
         FindObjectOfType<ServerManager>().GiveCardToDiscard(card);
     }
+
+    [ClientRpc]
+    public void UpdateDiscardClientRpc(CardAttributes card)
+    {
+        FindObjectOfType<GameManagerScript>().IdentifyCardInDiscard(card);
+    }
 }

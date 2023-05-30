@@ -287,7 +287,7 @@ public class ServerManager : NetworkBehaviour
     public void GiveCardToDiscard (CardAttributes card)
     {
         Discard.Add(card);
-        print($"Discard: {Discard.Count}");
+        FindObjectOfType<PlayerNetworkController>().UpdateDiscardClientRpc(card);
     }
     /*    public override void OnStartClient()
         {
