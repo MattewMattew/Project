@@ -58,7 +58,7 @@ public class ServerManager : NetworkBehaviour
     }
     void SyncPackList(SyncList<CardAttributes>.Operation op, int index, CardAttributes oldItem, CardAttributes newItem)
     {
-        print($"{oldItem}, {newItem}");
+        // print($"{oldItem}, {newItem}");
         switch (op)
         {
             case SyncList<CardAttributes>.Operation.OP_ADD:
@@ -249,7 +249,7 @@ public class ServerManager : NetworkBehaviour
             {
                 if (inventory.Id == playerController.netId)
                 {
-                    FindObjectOfType<ServerManager>().Inventorys[Convert.ToInt32(playerController.netId) - 1].Cards.Add(list[0]);
+                    inventory.Cards.Add(list[0]);
                 }
             }
         }
@@ -267,58 +267,75 @@ public class ServerManager : NetworkBehaviour
 
         }
     }
-    [ClientRpc]
-    void CheckClientRpc(List<CardAttributes> cardAttributes, CardAttributes card, uint id)
-    {
-/*        print($"{card.Name} {card.Suit} {card.Dignity} || {id}");
-        foreach (var item in Hands)
-        {
-            print($"{item.Cards.Count} cound cards of {item.Id} player");
-            foreach (var item1 in item.Cards)
-            {
-                print($"{item1.Name} {item1.Suit} {item1.Dignity} $$$ {id}");
-            }
-        }*/
-        foreach (var item in cardAttributes)
-        {
-            print($"{item.Name}");
-        }
-    }
+//     [ClientRpc]
+//     void CheckClientRpc(List<CardAttributes> cardAttributes, CardAttributes card, uint id)
+//     {
+// /*        print($"{card.Name} {card.Suit} {card.Dignity} || {id}");
+//         foreach (var item in Hands)
+//         {
+//             print($"{item.Cards.Count} cound cards of {item.Id} player");
+//             foreach (var item1 in item.Cards)
+//             {
+//                 print($"{item1.Name} {item1.Suit} {item1.Dignity} $$$ {id}");
+//             }
+//         }*/
+//         foreach (var item in cardAttributes)
+//         {
+//             print($"{item.Name}");
+//         }
+//     }
 
     [ClientRpc]
-    void Check2ClientRpc()
+    void Check2ClientRpc(List<CardAttributes> hand)
     {
-        foreach (var item in Hands)
-        {
-            print($"{item.Cards.Count} cound cards of {item.Id} player");
-            foreach (var item1 in item.Cards)
-            {
-                print($"{item1.Name} {item1.Suit} {item1.Dignity} ^^^ ");
-            }
-        }
+        // foreach (var item in Hands)
+        // {
+        //     print($"{item.Cards.Count} cound cards of {item.Id} player");
+        //     foreach (var item1 in item.Cards)
+        //     {
+        //         print($"{item1.Name} {item1.Suit} {item1.Dignity} ^^^ ");
+        //     }
+        // }
+        print(hand.Count);
     }
     [Server]
-    public void GiveCardToDiscard(CardAttributes card, uint id)
+    public void GiveCardToDiscard(CardAttributes card)
     {
-        Check2ClientRpc();
-        foreach (var hand in Hands)
-        {
-            if (hand.Id == id)
-            {
-                print($"{card.Name} {card.Suit} {card.Dignity} % {id}");
-                CheckClientRpc(hand.Cards, card, id);
-                hand.Cards.Remove(card);
+        // Check2ClientRpc();
+        // foreach (var hand in Hands)
+        // {
+        //     if (hand.Id == id)
+        //     {
+        //         print($"{card.Name} {card.Suit} {card.Dignity} % {id}");
+        //         CheckClientRpc(hand.Cards, card, id);
+        //         hand.Cards.Remove(card);
                 Discard.Add(card);
-                Check2ClientRpc();
+        //         Check2ClientRpc();
                 FindObjectOfType<PlayerNetworkController>().UpdateDiscardClientRpc(card);
-            }
-        }
+        //     }
+        // }
     }
-    public IEnumerator DeleteCard(CardAttributes cardd, uint id)
-    {
-        yield return new WaitForSeconds(4);
-        GiveCardToDiscard(cardd, id);
-    }
+    // [Server]
+    // public void RemoveCard(CardAttributes card, uint id)
+    // {
+    //     foreach (var hand in Hands)
+    //     {
+    //         if (hand.Id == id)
+    //         {
+    //             hand.Cards.Remove(card);
+    //             print($"hand {hand.Id} {hand.Cards.Count}");
+    //             FindObjectOfType<PlayerNetworkController>().UpdateCountCardPlayerClientRpc(hand.Cards, id);
+
+    //         }
+            
+    //     }
+    // }
+
+    // public IEnumerator DeleteCard(CardAttributes cardd, uint id)
+    // {
+    //     yield return new WaitForSeconds(4);
+    //     GiveCardToDiscard(cardd, id);
+    // }
 /*    public void DeleteCard(CardAttributes cardd, uint id)
     {
         foreach (var hand in Hands)
