@@ -5,6 +5,7 @@ using Mirror;
 using System;
 using TMPro;
 using System.Linq;
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 
 public class PlayerNetworkController : NetworkBehaviour
 {
@@ -65,11 +66,10 @@ public class PlayerNetworkController : NetworkBehaviour
     {
         FindObjectOfType<ServerManager>().UpdateInventory(card, playerController, playerInventory);
     }
-
     [Command(requiresAuthority = false)]
-    public void CmdGiveCardToDiscard(CardAttributes card)
+    public void CmdGiveCardToDiscard(CardAttributes card, uint id)
     {
-        FindObjectOfType<ServerManager>().GiveCardToDiscard(card);
+        StartCoroutine(FindObjectOfType<ServerManager>().DeleteCard(card, id));
     }
 
     [ClientRpc]
