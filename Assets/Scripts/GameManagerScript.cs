@@ -31,12 +31,7 @@ public class GameManagerScript : MonoBehaviour // Колода
     void Update()
     {
         CountCards.text = (FindObjectOfType<ServerManager>().PackCards.Count).ToString();
-        var players = GameObject.FindGameObjectsWithTag("Player");
-        foreach (var player in players)
-            foreach (var hand in FindObjectOfType<ServerManager>().Hands)
-                if (hand.Id == player.GetComponent<NetworkIdentity>().netId)
-                    foreach (var textMesh in player.GetComponentsInChildren<TextMeshProUGUI>())
-                        if (textMesh.tag != "Timer") textMesh.text = hand.Cards.Count.ToString();
+
     }
     void Start()
     {

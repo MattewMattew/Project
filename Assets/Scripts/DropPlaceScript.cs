@@ -31,7 +31,7 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
         {
             if (player.netId == FindObjectOfType<ServerManager>().turnPlayerId) turnedPlayer = player;
         }
-        print($"{turnedPlayer.isLocalPlayer} is localplayer is turned");
+        // print($"{turnedPlayer.isLocalPlayer} is localplayer is turned");
         card = GameObject.FindGameObjectsWithTag("Card");
         if (FindObjectOfType<ServerManager>().turnPlayerId == GetComponentInParent<NetworkIdentity>().netId && GetComponentInParent<NetworkIdentity>().isLocalPlayer)
         {
@@ -42,6 +42,8 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
                     item.transform.SetParent(transform);
                     item.GetComponent<CardScript>().TempCard = null;
                     item.transform.localScale = new Vector2(1f, 1f);
+                    
+                    // FindObjectOfType<PlayerNetworkController>().CmdRemoveCard(item.GetComponent<CardInfoScripts>().SelfCard, turnedPlayer.netId);
                 }
                 
             }
@@ -53,8 +55,11 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
             {
                 if (item.GetComponent<CardScript>().TempCard != null && item.GetComponent<CardInfoScripts>().InfoTypeCard == CardInfoScripts.TypeCard.DISPOSABLE_CARD)
                 {
-                    print($"{turnedPlayer.netId} DropPlace");
-                    FindObjectOfType<PlayerNetworkController>().CmdGiveCardToDiscard(item.GetComponent<CardInfoScripts>().SelfCard, turnedPlayer.netId);
+                    // print($"{turnedPlayer.netId} DropPlace");
+                    FindObjectOfType<PlayerNetworkController>().CmdGiveCardToDiscard(item.GetComponent<CardInfoScripts>().SelfCard);
+                    
+                    // FindObjectOfType<PlayerNetworkController>().CmdRemoveCard(item.GetComponent<CardInfoScripts>().SelfCard, turnedPlayer.netId);
+
                     Destroy(item);
                     item.GetComponent<CardScript>().TempCard = null;
                 }

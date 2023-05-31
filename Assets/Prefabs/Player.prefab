@@ -560,7 +560,7 @@ GameObject:
   - component: {fileID: 5621470556028773671}
   - component: {fileID: 5621470556028773668}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: CardCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -5,7 +5,7 @@ using Mirror;
 using System;
 using TMPro;
 using System.Linq;
-using UnityEditor.Localization.Plugins.XLIFF.V20;
+// using UnityEditor.Localization.Plugins.XLIFF.V20;
 
 public class PlayerNetworkController : NetworkBehaviour
 {
@@ -30,7 +30,7 @@ public class PlayerNetworkController : NetworkBehaviour
             {
                 if(value.tag == "Timer")
                 {
-                    print($"ative {id} {value.GetComponent<TextMeshProUGUI>().gameObject.activeSelf}");
+                    // print($"ative {id} {value.GetComponent<TextMeshProUGUI>().gameObject.activeSelf}");
                     if (!value.GetComponent<TextMeshProUGUI>().enabled)
                         value.GetComponent<TextMeshProUGUI>().enabled = true;
                     value.GetComponent<TextMeshProUGUI>().text = timer.ToString();
@@ -49,32 +49,52 @@ public class PlayerNetworkController : NetworkBehaviour
 
        
     }
-
     [ClientRpc]
     public void UpdateInvClientRpc(PlayerNetworkController playerController, CardAttributes card, Transform playerInventory)
     {
         FindObjectOfType<GameManagerScript>().DetectInventory(playerController, playerInventory, card);
     }
+    [ClientRpc]
+    public void UpdateDiscardClientRpc(CardAttributes card)
+    {
+        FindObjectOfType<GameManagerScript>().IdentifyCardInDiscard(card);
+    }
+    // [ClientRpc]
+    // public void UpdateCountCardPlayerClientRpc(CardAttributes cards)
+    // {
+    //     var players = GameObject.FindGameObjectsWithTag("Player");
+    //     foreach (var player in players)
+    //         foreach (var hand in FindObjectOfType<ServerManager>().Hands)
+    //             if (hand.Id == player.GetComponent<NetworkIdentity>().netId)
+    //                 foreach (var textMesh in player.GetComponentsInChildren<TextMeshProUGUI>())
+    //                     if (textMesh.tag != "Timer") textMesh.text = hand.Cards.Count.ToString();
+    // }
+
+
     public void setPlayerPosition(Vector2 pos)
     {
         transform.SetParent(GameObject.Find("Players").transform);
         transform.localScale = new Vector3(1,1,1);
         transform.localPosition = pos;
     }
+
     [Command(requiresAuthority = false)]
     public void CmdUpdateInventory(CardAttributes card, PlayerNetworkController playerController, Transform playerInventory)
     {
         FindObjectOfType<ServerManager>().UpdateInventory(card, playerController, playerInventory);
     }
     [Command(requiresAuthority = false)]
-    public void CmdGiveCardToDiscard(CardAttributes card, uint id)
+    public void CmdGiveCardToDiscard(CardAttributes card)
     {
-        StartCoroutine(FindObjectOfType<ServerManager>().DeleteCard(card, id));
+        // StartCoroutine(FindObjectOfType<ServerManager>().DeleteCard(card, id));
+        FindObjectOfType<ServerManager>().GiveCardToDiscard(card);
     }
+    // [Command(requiresAuthority = false)]
+    // public void CmdRemoveCard(CardAttributes card, uint id)
+    // {
+    //     FindObjectOfType<ServerManager>().RemoveCard(card, id);   
+    // }
 
-    [ClientRpc]
-    public void UpdateDiscardClientRpc(CardAttributes card)
-    {
-        FindObjectOfType<GameManagerScript>().IdentifyCardInDiscard(card);
-    }
+
+
 }
