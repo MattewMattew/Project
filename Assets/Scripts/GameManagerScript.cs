@@ -28,7 +28,6 @@ public class GameManagerScript : MonoBehaviour // Колода
     {
         
     }
-
     void Update()
     {
         CountCards.text = (FindObjectOfType<ServerManager>().PackCards.Count).ToString();
@@ -58,7 +57,6 @@ public class GameManagerScript : MonoBehaviour // Колода
     }
     public void DetectInventory (PlayerNetworkController playerController, Transform inventory, CardAttributes card)
     {
-        print($"{playerController.isLocalPlayer} in GameManager");
         List<CardAttributes> list = new List<CardAttributes>() { card };
         if (!playerController.isLocalPlayer)
         {
@@ -74,7 +72,6 @@ public class GameManagerScript : MonoBehaviour // Колода
 
     void GiveInventoryCard(List<CardAttributes> cardInventory, PlayerNetworkController playerController)    
     {
-        print($"Give to {playerController.netId} inventory");
         GameObject card = Instantiate(FindObjectOfType<GameManagerScript>().CardPref, playerController.GetComponentInChildren<DropPlaceScript>().transform, false);
         card.GetComponent<CardInfoScripts>().ShowCardInfo(cardInventory[cardInventory.Count - 1]);
     }

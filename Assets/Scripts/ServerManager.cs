@@ -120,6 +120,7 @@ public class ServerManager : NetworkBehaviour
             }
         }
     }
+    [Client]
     void Update()
     {
         print(PackCards.Count+" "+"ServerManager");
@@ -152,12 +153,10 @@ public class ServerManager : NetworkBehaviour
         {
             if (player.isLocalPlayer)
             {
-                print($"{player.isLocalPlayer} {player.netId} PlayerNetworkController {spawnPoint[0]}");
                 player.setPlayerPosition(spawnPoint[0]);
             }
             else
             {
-                print($"{player.isLocalPlayer} {player.netId} PlayerNetworkController {spawnPoint[1]}");
                 player.setPlayerPosition(spawnPoint[1]);
                 spawnPoint.RemoveAt(1);
             }
@@ -168,7 +167,12 @@ public class ServerManager : NetworkBehaviour
         MoveTime = 5;
         while (MoveTime-- > 0)
         {
-            yield return new WaitForSeconds(1); //�������� �������  
+            PlayerNetworkController[] players = FindObjectsOfType<PlayerNetworkController>();
+            foreach (var player in players)
+            {
+                player.TimerUpdateClientRpc(MoveTime ,turnPlayerId);
+            }
+            yield return new WaitForSeconds(1);
         }
         ChangeMove();
     }
@@ -258,7 +262,6 @@ public class ServerManager : NetworkBehaviour
                 check = true; break;
             }
         }
-        print(check);
         if (check)
         {
             foreach (var inventory in Inventorys)
