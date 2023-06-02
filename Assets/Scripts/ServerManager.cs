@@ -316,42 +316,42 @@ public class ServerManager : NetworkBehaviour
         print(hand.Count);
     }
     [Server]
-    public void GiveCardToDiscard(CardAttributes card, uint id, uint target)
+    public void GiveCardToDiscard(CardAttributes card/*, uint id, uint target*/)
     {
         // Check2ClientRpc();
-        foreach (var hand in Hands)
-        {
-            if (hand.Id == id)
-            {
-                hand.Cards.Remove(card);
-                Discard.Add(card);
-                //         Check2ClientRpc();
-                FindObjectOfType<PlayerNetworkController>().UpdateDiscardClientRpc(card);
-            }
-        }
-        var players = FindObjectsOfType<PlayerNetworkController>();
-        foreach (var player in players)
-        {
-            if (player.netId == target)
-            {
-                switch (card.Name)
-                {
-                    case "Bang":
-                        {
-                            player.AttackClientRpc(card.Name);
-                            GiveTurn(player.netId, true);
-                            break;
-                        }
-                    case "Beer":
-                        {
+            Discard.Add(card);
+            FindObjectOfType<PlayerNetworkController>().UpdateDiscardClientRpc(card);
+        // foreach (var hand in Hands)
+        // {
+        //     if (hand.Id == id)
+        //     {
+        //         hand.Cards.Remove(card);
+        //         //         Check2ClientRpc();
+        //     }
+        // }
+        // var players = FindObjectsOfType<PlayerNetworkController>();
+        // foreach (var player in players)
+        // {
+        //     if (player.netId == target)
+        //     {
+        //         switch (card.Name)
+        //         {
+        //             case "Bang":
+        //                 {
+        //                     player.AttackClientRpc(card.Name);
+        //                     GiveTurn(player.netId, true);
+        //                     break;
+        //                 }
+        //             case "Beer":
+        //                 {
 
-                            break;
-                        }
-                }
+        //                     break;
+        //                 }
+        //         }
 /*                player.GetActionClientRpc(card.Name);
                 break;*/
-            }
-        }
+        //     }
+        // }
     }
 
     // [Server]

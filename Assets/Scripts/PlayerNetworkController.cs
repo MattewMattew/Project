@@ -84,10 +84,10 @@ public class PlayerNetworkController : NetworkBehaviour
         FindObjectOfType<ServerManager>().UpdateInventory(card, playerController, playerInventory);
     }
     [Command(requiresAuthority = false)]
-    public void CmdGiveCardToDiscard(CardAttributes card, uint id, uint target)
+    public void CmdGiveCardToDiscard(CardAttributes card/*, uint id, uint target*/)
     {
         // StartCoroutine(FindObjectOfType<ServerManager>().DeleteCard(card, id));
-        FindObjectOfType<ServerManager>().GiveCardToDiscard(card, id, target);
+        FindObjectOfType<ServerManager>().GiveCardToDiscard(card/*, id, target*/);
     }
     [ClientRpc]
     public void GetActionClientRpc(string action)

@@ -59,8 +59,8 @@ public class GameManagerScript : MonoBehaviour // Колода
     public void DetectInventory (PlayerNetworkController playerController, Transform inventory, CardAttributes card)
     {
         List<CardAttributes> list = new List<CardAttributes>() { card };
-        if (!playerController.isLocalPlayer)
-        {
+        // if (!playerController.isLocalPlayer || FindObjectOfType<ServerManager>().turnPlayerId != playerController.netId)
+        // {
             foreach (var inv in FindObjectOfType<ServerManager>().Inventorys)
             {
                 if (inv.Id == playerController.netId)
@@ -68,7 +68,7 @@ public class GameManagerScript : MonoBehaviour // Колода
                     GiveInventoryCard(list, playerController);
                 }
             }
-        }
+        // }
     }
 
     void GiveInventoryCard(List<CardAttributes> cardInventory, PlayerNetworkController playerController)    

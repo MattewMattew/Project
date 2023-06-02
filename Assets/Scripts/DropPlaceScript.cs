@@ -19,7 +19,6 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
                                IPointerExitHandler, IPointerClickHandler
 {
     public FieldType Type;
-    GameObject[] card;
     private Vector2 pos1;
     private Vector2 pos2;
 
@@ -32,48 +31,39 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
             if (player.netId == FindObjectOfType<ServerManager>().turnPlayerId) turnedPlayer = player;
         }*/
         // print($"{turnedPlayer.isLocalPlayer} is localplayer is turned");
-        card = GameObject.FindGameObjectsWithTag("Card");
-        foreach (var item in card)
+        GameObject[] cards = GameObject.FindGameObjectsWithTag("Card");
+        foreach (var card in cards)
         {
-            if (GetComponentInParent<NetworkIdentity>().isLocalPlayer)
+            if (!GetComponentInParent<NetworkIdentity>().isLocalPlayer)
             {
-                if (item.GetComponent<CardScript>().TempCard != null && item.GetComponent<CardInfoScripts>().InfoTypeCard == CardInfoScripts.TypeCard.PERMANENT_CARD)
+                if (card.GetComponent<CardScript>().TempCard != null)
                 {
-                    item.transform.SetParent(transform);
-                    item.GetComponent<CardScript>().TempCard = null;
-                    item.transform.localScale = new Vector2(1f, 1f);
-                    
+                    if(card.GetComponent<CardInfoScripts>().Name.text == "Jail")
+                    {
+                        card.transform.SetParent(transform);
+                        card.GetComponent<CardScript>().TempCard = null;
+                        card.transform.localScale = new Vector2(1f, 1f);
+                        GetComponentInParent<PlayerNetworkController>().CmdUpdateInventory(card.GetComponent<CardInfoScripts>().SelfCard, 
+                                                                            GetComponentInParent<PlayerNetworkController>(), transform);
+                        Destroy(card);
+                    }
+                    else
+                    {
+                        FindObjectOfType<PlayerNetworkController>().CmdGiveCardToDiscard(card.GetComponent<CardInfoScripts>().SelfCard);
+                            // FindObjectOfType<ServerManager>().turnPlayerId, 
+                            // GetComponentInParent<NetworkIdentity>().netId);
+                        Destroy(card);
+                        card.GetComponent<CardScript>().TempCard = null;
+                        
+                    }
                     // FindObjectOfType<PlayerNetworkController>().CmdRemoveCard(item.GetComponent<CardInfoScripts>().SelfCard, turnedPlayer.netId);
-                }
-                
-            }
-            else
-            {
-                if (item.GetComponent<CardScript>().TempCard != null && item.GetComponent<CardInfoScripts>().InfoTypeCard == CardInfoScripts.TypeCard.DISPOSABLE_CARD)
-                {
-                    FindObjectOfType<PlayerNetworkController>().CmdGiveCardToDiscard(item.GetComponent<CardInfoScripts>().SelfCard,
-                        FindObjectOfType<ServerManager>().turnPlayerId, 
-                        GetComponentInParent<NetworkIdentity>().netId);
-
-                    // FindObjectOfType<PlayerNetworkController>().CmdRemoveCard(item.GetComponent<CardInfoScripts>().SelfCard, turnedPlayer.netId);
-
-                    Destroy(item);
-                    item.GetComponent<CardScript>().TempCard = null;
-                }
+                }   
             }
         }
-        
-
-
     }
-
 
     void Awake()
     {
-/*        if (!isLocalPlayer)
-        {
-            Type = FieldType.ENEMY_FIELD;
-        }*/
         pos1 = transform.localPosition;
         pos2 = new Vector2(0,transform.localPosition.y+99f);
     }
@@ -87,7 +77,7 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
         }
     }
 
-    public void OnPointerEnter(PointerEventData eventData) // Когда зажимаем ЛКМ на карту
+    public void OnPointerEnter(PointerEventData eventData)
     {
         if (Type == FieldType.SELF_HAND)
         {
@@ -104,19 +94,6 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
             t +=Time.deltaTime;
             yield return null;
         } while (t<=time);
-
-    }
-    private void OnTransformChildrenChanged()
-    {
-        if (GetComponentInParent<NetworkIdentity>().isLocalPlayer && GetComponentInParent<NetworkIdentity>().isClient)
-        {
-            List<CardAttributes> childCards = new List<CardAttributes>();
-            foreach (Transform child in transform)
-            {
-                childCards.Add(child.GetComponent<CardInfoScripts>().SelfCard);
-            }
-            GetComponentInParent<PlayerNetworkController>().CmdUpdateInventory(childCards[childCards.Count - 1], GetComponentInParent<PlayerNetworkController>(), transform);
-        }
 
     }
 }

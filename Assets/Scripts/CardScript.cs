@@ -28,25 +28,161 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
         }
         if(transform.parent.tag == "Hand" && turnedPlayer)
         {
-            CardScript[] check = FindObjectsOfType<CardScript>();
-
-            foreach (var item in check)
+            switch (GetComponent<CardInfoScripts>().Name.text)
             {
-                if (item.TempCard != null)
+                case "Bang":
                 {
-                    item.TempCard = null;
-                    item.transform.localScale = new Vector2(1f, 1f);
+                    UseCardOnEnemy();
+                    break;
                 }
-
-                else if (item.transform == gameObject.transform)
+                case "Barrel":
                 {
-                    item.TempCard = gameObject;
-                    transform.localScale = new Vector2(1.2f, 1.2f);
+                    AddCardInventory();
+                    break;
                 }
+                case "Beer":
+                {
+                    UseCard();
+                    break;
+                }
+                case "Carbine":
+                {
+                    AddCardInventory();
+                    break;
+                }
+                case "Diligence":
+                {
+                    UseCard();
+                    break;
+                }
+                case "Duel":
+                {
+                    UseCardOnEnemy();
+                    break;
+                }
+                case "Dynamite":
+                {
+                    AddCardInventory();
+                    break;
+                }
+                case "Gatling":
+                {
+                    UseCard();
+                    break;
+                }
+                case "General":
+                {
+                    UseCard();
+                    break;
+                }
+                case "Indians":
+                {
+                    UseCard();
+                    break;
+                }
+                case "Jail":
+                {
+                    UseCardOnEnemy();
+                    break;
+                }
+                case "Missed":
+                {
 
+                    break;
+                }
+                case "Mustang":
+                {
+                    AddCardInventory();
+                    break;
+                }
+                case "Panic":
+                {
+                    UseCardOnEnemy();
+                    break;
+                }
+                case "Remington":
+                {
+                    AddCardInventory();
+                    break;
+                }
+                case "Saloon":
+                {
+                    UseCard();
+                    break;
+                }
+                case "Scofield":
+                {
+                    AddCardInventory();
+                    break;
+                }
+                case "Volcanic":
+                {
+                    AddCardInventory();
+                    break;
+                }
+                case "WellsFargo":
+                {
+                    UseCard();
+                    break;
+                }
+                case "Winchester":
+                {
+                    AddCardInventory();
+                    break;
+                }
+                case "Women":
+                {
+                    UseCardOnEnemy();
+                    break;
+                }
+                case "Roach":
+                {
+                    AddCardInventory();
+                    break;
+                }
+            } 
+        }
+    }
+
+    void AddCardInventory()
+    {
+        var players = FindObjectsOfType<PlayerNetworkController>();
+        foreach (var player in players)
+        {
+            if (player.isLocalPlayer)
+            {
+                player.CmdUpdateInventory(GetComponent<CardInfoScripts>().SelfCard, player ,player.transform);
+                Destroy(gameObject);
             }
         }
     }
+
+    void UseCard()
+    {
+        FindObjectOfType<PlayerNetworkController>().CmdGiveCardToDiscard(GetComponent<CardInfoScripts>().SelfCard);
+        Destroy(gameObject);
+    }
+
+    void UseCardOnEnemy()
+    {
+        CardScript[] cardsHand = GameObject.Find("SelfHand").GetComponentsInChildren<CardScript>();
+
+        foreach (var item in cardsHand)
+        {
+            if (item.TempCard != null)
+            {
+                item.TempCard = null;
+                item.transform.localScale = new Vector2(1f, 1f);
+            }
+
+            else if (item.transform == gameObject.transform)
+            {
+                item.TempCard = gameObject;
+                transform.localScale = new Vector2(1.2f, 1.2f);
+            }
+        }
+    }
+
     public void EndTurn()
     {
         TempCard = null;
