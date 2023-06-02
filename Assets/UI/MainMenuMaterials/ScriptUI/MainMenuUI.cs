@@ -4,17 +4,43 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
+using Mirror;
 
-public class MainMenuUI : MonoBehaviour
+public class MainMenuUI :  MonoBehaviour
 {
-    
-    public TMPro.TMP_Dropdown Dropdown;
+    [Header("Name")]
+    public string DisplayName;
+    public Button SetNameButton;
+    public TMP_InputField InputName;
+    public TextMeshProUGUI TexB;
+    [Header("Screen")]
+    public TMP_Dropdown Dropdown;
     
     private void Start(){
         if (!PlayerPrefs.HasKey("ScreenSize"))
         PlayerPrefs.SetInt("ScreenSize", 0);
         
         Dropdown.value = PlayerPrefs.GetInt("ScreenSize", 0);
+
+
+
+        if(!PlayerPrefs.HasKey("Name"))
+        PlayerPrefs.SetString("Name", "NameChange");
+        
+        string defaultName = PlayerPrefs.GetString("Name");
+        InputName.text = defaultName;
+        DisplayName = defaultName;
+        TexB.text = defaultName;
+        SetName(defaultName);
+    }
+    public void SetName(string name){
+        SetNameButton.interactable = !string.IsNullOrEmpty(name);
+    }
+    public void SaveName(){
+
+        DisplayName = InputName.text;
+        PlayerPrefs.SetString("Name", DisplayName);
+        TexB.text = DisplayName;
     }
     void Awake(){
          Dropdown.onValueChanged.AddListener(new UnityAction<int>(index =>
@@ -45,6 +71,10 @@ public class MainMenuUI : MonoBehaviour
         
     }
     public void CloseGame(){
-         Application.Quit();}
+        Application.Quit();
+    }
+    
+
+    
 
 }

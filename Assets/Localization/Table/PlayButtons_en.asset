@@ -64,11 +64,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 12154922754048
-    m_Localized: 'Music Volume '
+    m_Localized: Music
     m_Metadata:
       m_Items: []
   - m_Id: 12496536231936
-    m_Localized: Sound Volume
+    m_Localized: Sound
     m_Metadata:
       m_Items: []
   - m_Id: 12724408573952
