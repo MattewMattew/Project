@@ -303,7 +303,7 @@ GameObject:
   - component: {fileID: 8176276488691115919}
   m_Layer: 5
   m_Name: SelfHand
-  m_TagString: Untagged
+  m_TagString: Hand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1047,6 +1047,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   turnPlayerId: 0
+  turnModificator: 
 --- !u!114 &4138922310632747799
 MonoBehaviour:
   m_ObjectHideFlags: 0

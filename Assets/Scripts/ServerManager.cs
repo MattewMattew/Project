@@ -31,6 +31,9 @@ public class ServerManager : NetworkBehaviour
     [SyncVar]
     public uint turnPlayerId;
 
+    [SyncVar]
+    public string turnModificator;
+
     int Move, MoveTime = 30;
     private List<Vector2> spawnPoint;
     public class GameCard
@@ -114,7 +117,7 @@ public class ServerManager : NetworkBehaviour
                 GiveHandCards(PackCards, player);
                 if (player.GetComponent<NetworkIdentity>().netId == 1)
                 {
-                    GiveTurn(player.GetComponent<NetworkIdentity>().netId);
+                    GiveTurn(player.GetComponent<NetworkIdentity>().netId, false);
                     StartCoroutine(MoveFunc());
                 }
             }
@@ -162,6 +165,7 @@ public class ServerManager : NetworkBehaviour
             }
         }
     }
+    [Server]
     IEnumerator MoveFunc()
     {
         MoveTime = 5;
@@ -176,22 +180,35 @@ public class ServerManager : NetworkBehaviour
         }
         ChangeMove();
     }
-    [Command(requiresAuthority = false)]
+    [Server]
     public void ChangeMove()
     {
         StopAllCoroutines();
-
+        foreach (var player in FindObjectsOfType<PlayerNetworkController>())
+        {
+            if(player.netId == turnPlayerId)
+            {
+                player.EndTurnClientRpc();
+                break;
+            }
+        }
         if (turnPlayerId + 1 > FindObjectOfType<NetworkManagerCard>().numPlayers)
-            GiveTurn(1);
-        else GiveTurn(turnPlayerId + 1);
-
-        StartCoroutine(MoveFunc());
-
+            GiveTurn(1, false);
+        else GiveTurn(turnPlayerId + 1, false);
     }
     [Server]
-    void GiveTurn(uint id)
+    void GiveTurn(uint id, bool target)
     {
-        turnPlayerId = id;
+        if(!target)
+        {
+            turnPlayerId = id;
+        }
+        else
+        {
+            turnPlayerId = id;
+            turnModificator = "Attack";
+        }
+        StartCoroutine(MoveFunc());
     }
     [Server]
     void GiveHandCards(SyncList<CardAttributes> pack, GameObject player) // ���������� ���� � ����
@@ -299,22 +316,44 @@ public class ServerManager : NetworkBehaviour
         print(hand.Count);
     }
     [Server]
-    public void GiveCardToDiscard(CardAttributes card)
+    public void GiveCardToDiscard(CardAttributes card, uint id, uint target)
     {
         // Check2ClientRpc();
-        // foreach (var hand in Hands)
-        // {
-        //     if (hand.Id == id)
-        //     {
-        //         print($"{card.Name} {card.Suit} {card.Dignity} % {id}");
-        //         CheckClientRpc(hand.Cards, card, id);
-        //         hand.Cards.Remove(card);
+        foreach (var hand in Hands)
+        {
+            if (hand.Id == id)
+            {
+                hand.Cards.Remove(card);
                 Discard.Add(card);
-        //         Check2ClientRpc();
+                //         Check2ClientRpc();
                 FindObjectOfType<PlayerNetworkController>().UpdateDiscardClientRpc(card);
-        //     }
-        // }
+            }
+        }
+        var players = FindObjectsOfType<PlayerNetworkController>();
+        foreach (var player in players)
+        {
+            if (player.netId == target)
+            {
+                switch (card.Name)
+                {
+                    case "Bang":
+                        {
+                            player.AttackClientRpc(card.Name);
+                            GiveTurn(player.netId, true);
+                            break;
+                        }
+                    case "Beer":
+                        {
+
+                            break;
+                        }
+                }
+/*                player.GetActionClientRpc(card.Name);
+                break;*/
+            }
+        }
     }
+
     // [Server]
     // public void RemoveCard(CardAttributes card, uint id)
     // {

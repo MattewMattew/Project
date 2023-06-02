@@ -16,25 +16,40 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(transform.parent.tag == "Field")
-            return;
-
-        CardScript[] check = FindObjectsOfType<CardScript>();
-
-        foreach (var item in check)
+        var players = FindObjectsOfType<PlayerNetworkController>();
+        bool turnedPlayer = false;
+        foreach (var player in players)
         {
-            if(item.TempCard != null)
+            if (player.netId == FindObjectOfType<ServerManager>().turnPlayerId && player.isLocalPlayer)
             {
-                item.TempCard = null;
-                item.transform.localScale = new Vector2(1f, 1f);
+                turnedPlayer = true;
+                break;
             }
-
-            else if(item.transform == gameObject.transform)
-            {
-                item.TempCard = gameObject;
-                transform.localScale = new Vector2(1.2f, 1.2f);
-            }
-
         }
+        if(transform.parent.tag == "Hand" && turnedPlayer)
+        {
+            CardScript[] check = FindObjectsOfType<CardScript>();
+
+            foreach (var item in check)
+            {
+                if (item.TempCard != null)
+                {
+                    item.TempCard = null;
+                    item.transform.localScale = new Vector2(1f, 1f);
+                }
+
+                else if (item.transform == gameObject.transform)
+                {
+                    item.TempCard = gameObject;
+                    transform.localScale = new Vector2(1.2f, 1.2f);
+                }
+
+            }
+        }
+    }
+    public void EndTurn()
+    {
+        TempCard = null;
+        transform.localScale = new Vector2(1f, 1f);
     }
 }

@@ -25,17 +25,17 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        var players = FindObjectsOfType<PlayerNetworkController>();
+/*        var players = FindObjectsOfType<PlayerNetworkController>();
         PlayerNetworkController turnedPlayer = new PlayerNetworkController();
         foreach (var player in players)
         {
             if (player.netId == FindObjectOfType<ServerManager>().turnPlayerId) turnedPlayer = player;
-        }
+        }*/
         // print($"{turnedPlayer.isLocalPlayer} is localplayer is turned");
         card = GameObject.FindGameObjectsWithTag("Card");
-        if (FindObjectOfType<ServerManager>().turnPlayerId == GetComponentInParent<NetworkIdentity>().netId && GetComponentInParent<NetworkIdentity>().isLocalPlayer)
+        foreach (var item in card)
         {
-            foreach (var item in card)
+            if (GetComponentInParent<NetworkIdentity>().isLocalPlayer)
             {
                 if (item.GetComponent<CardScript>().TempCard != null && item.GetComponent<CardInfoScripts>().InfoTypeCard == CardInfoScripts.TypeCard.PERMANENT_CARD)
                 {
@@ -47,17 +47,14 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
                 }
                 
             }
-        }
-        else if(turnedPlayer.isLocalPlayer)
-        {
-
-            foreach (var item in card)
+            else
             {
                 if (item.GetComponent<CardScript>().TempCard != null && item.GetComponent<CardInfoScripts>().InfoTypeCard == CardInfoScripts.TypeCard.DISPOSABLE_CARD)
                 {
-                    // print($"{turnedPlayer.netId} DropPlace");
-                    FindObjectOfType<PlayerNetworkController>().CmdGiveCardToDiscard(item.GetComponent<CardInfoScripts>().SelfCard);
-                    
+                    FindObjectOfType<PlayerNetworkController>().CmdGiveCardToDiscard(item.GetComponent<CardInfoScripts>().SelfCard,
+                        FindObjectOfType<ServerManager>().turnPlayerId, 
+                        GetComponentInParent<NetworkIdentity>().netId);
+
                     // FindObjectOfType<PlayerNetworkController>().CmdRemoveCard(item.GetComponent<CardInfoScripts>().SelfCard, turnedPlayer.netId);
 
                     Destroy(item);
@@ -65,6 +62,9 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
                 }
             }
         }
+        
+
+
     }
 
 

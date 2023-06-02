@@ -84,10 +84,47 @@ public class PlayerNetworkController : NetworkBehaviour
         FindObjectOfType<ServerManager>().UpdateInventory(card, playerController, playerInventory);
     }
     [Command(requiresAuthority = false)]
-    public void CmdGiveCardToDiscard(CardAttributes card)
+    public void CmdGiveCardToDiscard(CardAttributes card, uint id, uint target)
     {
         // StartCoroutine(FindObjectOfType<ServerManager>().DeleteCard(card, id));
-        FindObjectOfType<ServerManager>().GiveCardToDiscard(card);
+        FindObjectOfType<ServerManager>().GiveCardToDiscard(card, id, target);
+    }
+    [ClientRpc]
+    public void GetActionClientRpc(string action)
+    {
+        switch (action)
+        {
+            case "Bang":
+                {
+
+                    break;
+                }
+            case "Beer":
+                {
+
+                    break;
+                }
+        }
+    }
+
+    [ClientRpc]
+    public void AttackClientRpc(string action)
+    {
+        if(action == "Bang")
+        {
+
+        }
+    }
+
+
+    [ClientRpc]
+    public void EndTurnClientRpc()
+    {
+        CardScript[] check = FindObjectsOfType<CardScript>();
+        foreach (var item in check)
+        {
+            item.EndTurn();
+        }
     }
     // [Command(requiresAuthority = false)]
     // public void CmdRemoveCard(CardAttributes card, uint id)
