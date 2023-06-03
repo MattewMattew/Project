@@ -94,7 +94,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                     }
                     case "Diligence":
                     {
-                        turnPlayer.CmdGiveHandCards(FindObjectOfType<ServerManager>().PackCards, turnPlayer.netId, 2);
+                        turnPlayer.CmdGiveHandCards(turnPlayer.netId, 2);
                         UseCard();
                         break;
                     }
@@ -110,6 +110,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                     }
                     case "Gatling":
                     {
+                        GetComponentInParent<PlayerNetworkController>().CmdAttack(GetComponent<CardInfoScripts>().SelfCard.Name);
                         UseCard();
                         break;
                     }
@@ -120,6 +121,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                     }
                     case "Indians":
                     {
+                        GetComponentInParent<PlayerNetworkController>().CmdAttack(GetComponent<CardInfoScripts>().SelfCard.Name);
                         UseCard();
                         break;
                     }
@@ -171,7 +173,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                     }
                     case "WellsFargo":
                     {
-                        turnPlayer.CmdGiveHandCards(FindObjectOfType<ServerManager>().PackCards, turnPlayer.netId, 3);
+                        turnPlayer.CmdGiveHandCards(turnPlayer.netId, 3);
                         UseCard();
                         break;
                     }
@@ -202,16 +204,18 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
         {
             if (player.isLocalPlayer)
             {
-                // if (GetComponent<CardInfoScripts>().SelfCard.Name == "Winchester" || GetComponent<CardInfoScripts>().SelfCard.Name == "Volcanic" || 
-                //     GetComponent<CardInfoScripts>().SelfCard.Name == "Scofield" ||GetComponent<CardInfoScripts>().SelfCard.Name == "Remington" ||
-                //     GetComponent<CardInfoScripts>().SelfCard.Name == "Carbine")
-                // {
-                //     GameObject[] CardsInventory = player.GetComponentsInChildren<GameObject>();
-                //     foreach (var card in CardsInventory)
-                //     {
-                        
-                //     }
-                // }
+                if (GetComponent<CardInfoScripts>().InfoTypeCard == CardInfoScripts.TypeCard.WEAPON_CARD)
+                {
+                    CardScript[] CardsInventory = GameObject.Find("Inventory").GetComponentsInChildren<CardScript>();
+                    
+                    foreach (var card in CardsInventory)
+                    {
+                        if (card.GetComponent<CardInfoScripts>().InfoTypeCard == CardInfoScripts.TypeCard.WEAPON_CARD)
+                        {
+                            Destroy(card.gameObject);
+                        }
+                    }
+                }
                 player.CmdUpdateInventory(GetComponent<CardInfoScripts>().SelfCard, player ,player.transform);
                 Destroy(gameObject);
             }

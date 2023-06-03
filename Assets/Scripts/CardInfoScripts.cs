@@ -11,7 +11,7 @@ public class CardInfoScripts : MonoBehaviour
    public Image Logo, Suit;
    public GameObject Type;
    Sprite LogoSprite;
-   public enum TypeCard {DISPOSABLE_CARD, PERMANENT_CARD}
+   public enum TypeCard {DISPOSABLE_CARD, PERMANENT_CARD, WEAPON_CARD}
    public TypeCard InfoTypeCard;
    
    //Test
@@ -55,7 +55,7 @@ public class CardInfoScripts : MonoBehaviour
          {
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Carbine");
             Type.GetComponent<Image>().color = Color.blue;
-            InfoTypeCard = TypeCard.PERMANENT_CARD;
+            InfoTypeCard = TypeCard.WEAPON_CARD;
             break;
          }
          case "Diligence":
@@ -132,7 +132,7 @@ public class CardInfoScripts : MonoBehaviour
          {
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Remington");
             Type.GetComponent<Image>().color = Color.blue;
-            InfoTypeCard = TypeCard.PERMANENT_CARD;
+            InfoTypeCard = TypeCard.WEAPON_CARD;
             break;
          }
          case "Saloon":
@@ -146,14 +146,14 @@ public class CardInfoScripts : MonoBehaviour
          {
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Scofield");
             Type.GetComponent<Image>().color = Color.blue;
-            InfoTypeCard = TypeCard.PERMANENT_CARD;
+            InfoTypeCard = TypeCard.WEAPON_CARD;
             break;
          }
          case "Volcanic":
          {
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Volcanic");
             Type.GetComponent<Image>().color = Color.blue;
-            InfoTypeCard = TypeCard.PERMANENT_CARD;
+            InfoTypeCard = TypeCard.WEAPON_CARD;
             break;
          }
          case "WellsFargo":
@@ -167,7 +167,7 @@ public class CardInfoScripts : MonoBehaviour
          {
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Winchester");
             Type.GetComponent<Image>().color = Color.blue;
-            InfoTypeCard = TypeCard.PERMANENT_CARD;
+            InfoTypeCard = TypeCard.WEAPON_CARD;
             break;
          }
          case "Women":

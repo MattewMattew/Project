@@ -51,7 +51,10 @@ public class CardManagerScript : MonoBehaviour // Список карт и св�
 
         CardDesk.AllServerCards.Add(new CardAttributes("Beer", "6", "Hearts"));
 
-        // CardDesk.AllServerCards.Add(new CardAttributes("Carbine", "A", "Clubs"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Carbine", "A", "Clubs"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Carbine", "A", "Clubs"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Carbine", "A", "Clubs"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Carbine", "A", "Clubs"));
 
         // CardDesk.AllServerCards.Add(new CardAttributes("Diligence", "9", "Spades"));
 
@@ -83,17 +86,27 @@ public class CardManagerScript : MonoBehaviour // Список карт и св�
 
         // CardDesk.AllServerCards.Add(new CardAttributes("Panic", "8", "Diamonds"));
 
-        // CardDesk.AllServerCards.Add(new CardAttributes("Remington","K", "Clubs"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Remington","K", "Clubs"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Remington","K", "Clubs"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Remington","K", "Clubs"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Remington","K", "Clubs"));
 
         CardDesk.AllServerCards.Add(new CardAttributes("Saloon", "5", "Hearts"));
 
-        // CardDesk.AllServerCards.Add(new CardAttributes("Scofield", "J", "Clubs"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Scofield", "J", "Clubs"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Scofield", "J", "Clubs"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Scofield", "J", "Clubs"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Scofield", "J", "Clubs"));
 
-        // CardDesk.AllServerCards.Add(new CardAttributes("Volcanic", "10", "Clubs"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Volcanic", "10", "Clubs"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Volcanic", "10", "Clubs"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Volcanic", "10", "Clubs"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Volcanic", "10", "Clubs"));
 
         // CardDesk.AllServerCards.Add(new CardAttributes("WellsFargo", "3", "Hearts"));
 
-        // CardDesk.AllServerCards.Add(new CardAttributes("Winchester", "8", "Spades"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Winchester", "8", "Spades"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Winchester", "8", "Spades"));
 
         // CardDesk.AllServerCards.Add(new CardAttributes("Women", "9", "Diamonds"));
 
