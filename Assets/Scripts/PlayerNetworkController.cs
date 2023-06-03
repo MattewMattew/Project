@@ -129,6 +129,12 @@ public class PlayerNetworkController : NetworkBehaviour
         }
     }
 
+    [Command(requiresAuthority = false)]
+    public void CmdRegenerationHealth(uint id, CardAttributes card)
+    {
+        FindObjectOfType<ServerManager>().RegenerationHealth(id, card);
+    }
+
     [ClientRpc]
     public void EndTurnClientRpc()
     {
@@ -138,4 +144,12 @@ public class PlayerNetworkController : NetworkBehaviour
             item.EndTurn();
         }
     }
+
+    [Command(requiresAuthority = false)]
+    public void CmdGiveHandCards(SyncList<CardAttributes> pack, uint id, int cardsCount)
+    {
+        FindObjectOfType<ServerManager>().GiveHandCards(FindObjectOfType<ServerManager>().PackCards, id, cardsCount);
+    }
+    
+
 }

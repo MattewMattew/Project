@@ -83,4 +83,6 @@ public class GameManagerScript : MonoBehaviour // Колода
             CardDiscard = Instantiate(CardPref, DiscardTransform, false);
         CardDiscard.GetComponent<CardInfoScripts>().ShowCardInfo(card);
     }
+
+
 }

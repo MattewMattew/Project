@@ -174,22 +174,7 @@ public class ServerManager : NetworkBehaviour
             }
             yield return new WaitForSeconds(1);
         }
-        if(attackedPlayerId != 0)
-        {
-            foreach (var item in Healths)
-            {
-                print($"now {item.Id} and attacked {attackedPlayerId}");
-                if (item.Id == attackedPlayerId)
-                {
-                    Healths[Healths.IndexOf(item)]= new HealthList(attackedPlayerId, item.Health-1);
-                    foreach (var item1 in players)
-                    {
-                        item1.HealthUpdateClientRpc(attackedPlayerId, item.Health - 1);
-                    }
-                }
-            }
-            GiveTurn(turnPlayerId, false);
-        }else ChangeMove();
+        ChangeMove();
     }
 
     [Server]
@@ -204,13 +189,30 @@ public class ServerManager : NetworkBehaviour
                 break;
             }
         }
-        if (turnPlayerId + 1 > FindObjectOfType<NetworkManagerCard>().numPlayers)
+
+        if (attackedPlayerId != 0)
+        {
+            foreach (var item in Healths)
+            {
+                print($"now {item.Id} and attacked {attackedPlayerId}");
+                if (item.Id == attackedPlayerId)
+                {
+                    Healths[Healths.IndexOf(item)]= new HealthList(attackedPlayerId, item.Health-1);
+                    foreach (var item1 in FindObjectsOfType<PlayerNetworkController>())
+                    {
+                        item1.HealthUpdateClientRpc(attackedPlayerId, item.Health - 1);
+                    }
+                }
+            }
+            GiveTurn(turnPlayerId, false);
+        }
+        else if (turnPlayerId + 1 > FindObjectOfType<NetworkManagerCard>().numPlayers)
             GiveTurn(1, false);
         else GiveTurn(turnPlayerId + 1, false);
-        
 
         GiveHandCards(PackCards, turnPlayerId, 2);
     }
+
     [Server]
     public void GiveTurn(uint id, bool target)
     {
@@ -230,7 +232,7 @@ public class ServerManager : NetworkBehaviour
         StartCoroutine(MoveFunc());
     }
     [Server]
-    void GiveHandCards(SyncList<CardAttributes> pack, uint id, int cardsCount) // ���������� ���� � ����
+    public void GiveHandCards(SyncList<CardAttributes> pack, uint id, int cardsCount) // ���������� ���� � ����
     {
         int i = 0;
         while (i++ < cardsCount)
@@ -319,5 +321,41 @@ public class ServerManager : NetworkBehaviour
     {
         Discard.Add(card);
         FindObjectOfType<PlayerNetworkController>().UpdateDiscardClientRpc(card);
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdChangeMove()
+    {
+        FindObjectOfType<ServerManager>().ChangeMove();
+    }
+
+    public void RegenerationHealth(uint id, CardAttributes card)
+    {
+        foreach (var item in Healths)
+        {
+            if (item.Health+1 < 5)
+            {
+                if (card.Name == "Saloon")
+                {
+                    foreach (var item1 in FindObjectsOfType<PlayerNetworkController>())
+                    {
+                        if (item.Id == item1.netId)
+                        {
+                            Healths[Healths.IndexOf(item)] = new HealthList(item1.netId, item.Health+1);
+                            item1.HealthUpdateClientRpc(item1.netId, item.Health + 1);
+                        }
+                    }
+                }
+                else if (item.Id == id)
+                {
+                    Healths[Healths.IndexOf(item)] = new HealthList(id, item.Health+1);
+                    foreach (var item1 in FindObjectsOfType<PlayerNetworkController>())
+                    {
+                        item1.HealthUpdateClientRpc(id, item.Health + 1);
+                    }
+                }
+            }
+
+        }
     }
 }

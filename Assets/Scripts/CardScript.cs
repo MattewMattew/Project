@@ -17,51 +17,51 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         var players = FindObjectsOfType<PlayerNetworkController>();
-        bool turnedPlayer = false;
+        // bool turnedPlayer = false;
         PlayerNetworkController turnPlayer = new PlayerNetworkController();
         foreach (var player in players)
         {
             if (player.netId == FindObjectOfType<ServerManager>().turnPlayerId && player.isLocalPlayer)
             {
-                turnedPlayer = true;
+                turnPlayer = player;
                 break;
             }
             if (player.netId == FindObjectOfType<ServerManager>().attackedPlayerId && player.isLocalPlayer)
             {
                 turnPlayer = player;
-                turnedPlayer = true;
+                // turnedPlayer = true;
                 break;
             }
 
         }
-        if (FindObjectOfType<ServerManager>().turnModificator == "Attack")
+//         if (FindObjectOfType<ServerManager>().turnModificator == "Attack")
+//         {
+//             if (transform.parent.tag == "Hand" && turnPlayer)
+//             {
+//                 switch (GetComponent<CardInfoScripts>().Name.text)
+//                 {
+// /*                    case "Bang":
+//                         {
+//                             UseCardOnEnemy();
+//                             break;
+//                         }*/
+//                     case "Missed":
+//                         {
+//                             UseCard();
+//                             turnPlayer.CmdDefense();
+//                             break;
+//                         }
+//                     default:
+//                         {
+//                             print("You has been attacked");
+//                             break;
+//                         }
+//                 }
+//             }
+//         }
+        // else
         {
-            if (transform.parent.tag == "Hand" && turnedPlayer)
-            {
-                switch (GetComponent<CardInfoScripts>().Name.text)
-                {
-/*                    case "Bang":
-                        {
-                            UseCardOnEnemy();
-                            break;
-                        }*/
-                    case "Missed":
-                        {
-                            UseCard();
-                            turnPlayer.CmdDefense();
-                            break;
-                        }
-                    default:
-                        {
-                            print("You has been attacked");
-                            break;
-                        }
-                }
-            }
-        }
-        else
-        {
-            if(transform.parent.tag == "Hand" && turnedPlayer)
+            if(transform.parent.tag == "Hand" && turnPlayer)
             {
                 switch (GetComponent<CardInfoScripts>().Name.text)
                 {
@@ -83,6 +83,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                     }
                     case "Beer":
                     {
+                        turnPlayer.CmdRegenerationHealth(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                         UseCard();
                         break;
                     }
@@ -93,6 +94,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                     }
                     case "Diligence":
                     {
+                        turnPlayer.CmdGiveHandCards(FindObjectOfType<ServerManager>().PackCards, turnPlayer.netId, 2);
                         UseCard();
                         break;
                     }
@@ -153,6 +155,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                     }
                     case "Saloon":
                     {
+                        turnPlayer.CmdRegenerationHealth(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                         UseCard();
                         break;
                     }
@@ -168,6 +171,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                     }
                     case "WellsFargo":
                     {
+                        turnPlayer.CmdGiveHandCards(FindObjectOfType<ServerManager>().PackCards, turnPlayer.netId, 3);
                         UseCard();
                         break;
                     }
@@ -198,6 +202,16 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
         {
             if (player.isLocalPlayer)
             {
+                // if (GetComponent<CardInfoScripts>().SelfCard.Name == "Winchester" || GetComponent<CardInfoScripts>().SelfCard.Name == "Volcanic" || 
+                //     GetComponent<CardInfoScripts>().SelfCard.Name == "Scofield" ||GetComponent<CardInfoScripts>().SelfCard.Name == "Remington" ||
+                //     GetComponent<CardInfoScripts>().SelfCard.Name == "Carbine")
+                // {
+                //     GameObject[] CardsInventory = player.GetComponentsInChildren<GameObject>();
+                //     foreach (var card in CardsInventory)
+                //     {
+                        
+                //     }
+                // }
                 player.CmdUpdateInventory(GetComponent<CardInfoScripts>().SelfCard, player ,player.transform);
                 Destroy(gameObject);
             }

@@ -36,67 +36,67 @@ public class CardManagerScript : MonoBehaviour // Список карт и св�
     public void Awake() 
     {
         CardDesk.AllServerCards.Add(new CardAttributes("Bang", "2", "Diamonds"));
-        CardDesk.AllServerCards.Add(new CardAttributes("Bang", "2", "Diamonds"));
-        CardDesk.AllServerCards.Add(new CardAttributes("Bang", "2", "Diamonds"));
-        CardDesk.AllServerCards.Add(new CardAttributes("Bang", "2", "Diamonds"));
-        CardDesk.AllServerCards.Add(new CardAttributes("Bang", "2", "Diamonds"));
-        CardDesk.AllServerCards.Add(new CardAttributes("Bang", "2", "Diamonds"));
-        CardDesk.AllServerCards.Add(new CardAttributes("Bang", "2", "Diamonds"));
-        CardDesk.AllServerCards.Add(new CardAttributes("Bang", "2", "Diamonds"));
-        CardDesk.AllServerCards.Add(new CardAttributes("Bang", "2", "Diamonds"));
-        CardDesk.AllServerCards.Add(new CardAttributes("Bang", "2", "Diamonds"));
-        CardDesk.AllServerCards.Add(new CardAttributes("Bang", "2", "Diamonds"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Bang", "2", "Diamonds"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Bang", "2", "Diamonds"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Bang", "2", "Diamonds"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Bang", "2", "Diamonds"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Bang", "2", "Diamonds"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Bang", "2", "Diamonds"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Bang", "2", "Diamonds"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Bang", "2", "Diamonds"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Bang", "2", "Diamonds"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Bang", "2", "Diamonds"));
 
-/*        CardDesk.AllServerCards.Add(new CardAttributes("Barrel", "Q", "Spades"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Barrel", "Q", "Spades"));
 
         CardDesk.AllServerCards.Add(new CardAttributes("Beer", "6", "Hearts"));
 
-        CardDesk.AllServerCards.Add(new CardAttributes("Carbine", "A", "Clubs"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Carbine", "A", "Clubs"));
 
-        CardDesk.AllServerCards.Add(new CardAttributes("Diligence", "9", "Spades"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Diligence", "9", "Spades"));
 
-        CardDesk.AllServerCards.Add(new CardAttributes("Duel", "8", "Clubs"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Duel", "8", "Clubs"));
 
-        CardDesk.AllServerCards.Add(new CardAttributes("Dynamite", "2", "Hearts"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Dynamite", "2", "Hearts"));
 
-        CardDesk.AllServerCards.Add(new CardAttributes("Gatling", "10", "Hearts"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Gatling", "10", "Hearts"));
 
-        CardDesk.AllServerCards.Add(new CardAttributes("General", "9", "Hearts"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("General", "9", "Hearts"));
 
-        CardDesk.AllServerCards.Add(new CardAttributes("Indians", "K", "Diamonds"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Indians", "K", "Diamonds"));
 
-        CardDesk.AllServerCards.Add(new CardAttributes("Jail", "10", "Spades"));*/
+        // CardDesk.AllServerCards.Add(new CardAttributes("Jail", "10", "Spades"));
 
         CardDesk.AllServerCards.Add(new CardAttributes("Missed", "2", "Spades"));
-        CardDesk.AllServerCards.Add(new CardAttributes("Missed", "2", "Spades"));
-        CardDesk.AllServerCards.Add(new CardAttributes("Missed", "2", "Spades"));
-        CardDesk.AllServerCards.Add(new CardAttributes("Missed", "2", "Spades"));
-        CardDesk.AllServerCards.Add(new CardAttributes("Missed", "2", "Spades"));
-        CardDesk.AllServerCards.Add(new CardAttributes("Missed", "2", "Spades"));
-        CardDesk.AllServerCards.Add(new CardAttributes("Missed", "2", "Spades"));
-        CardDesk.AllServerCards.Add(new CardAttributes("Missed", "2", "Spades"));
-        CardDesk.AllServerCards.Add(new CardAttributes("Missed", "2", "Spades"));
-        CardDesk.AllServerCards.Add(new CardAttributes("Missed", "2", "Spades"));
-        CardDesk.AllServerCards.Add(new CardAttributes("Missed", "2", "Spades"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Missed", "2", "Spades"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Missed", "2", "Spades"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Missed", "2", "Spades"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Missed", "2", "Spades"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Missed", "2", "Spades"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Missed", "2", "Spades"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Missed", "2", "Spades"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Missed", "2", "Spades"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Missed", "2", "Spades"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Missed", "2", "Spades"));
 
-/*        CardDesk.AllServerCards.Add(new CardAttributes("Mustang", "8", "Hearts"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Mustang", "8", "Hearts"));
 
-        CardDesk.AllServerCards.Add(new CardAttributes("Panic", "8", "Diamonds"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Panic", "8", "Diamonds"));
 
-        CardDesk.AllServerCards.Add(new CardAttributes("Remington","K", "Clubs"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Remington","K", "Clubs"));
 
         CardDesk.AllServerCards.Add(new CardAttributes("Saloon", "5", "Hearts"));
 
-        CardDesk.AllServerCards.Add(new CardAttributes("Scofield", "J", "Clubs"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Scofield", "J", "Clubs"));
 
-        CardDesk.AllServerCards.Add(new CardAttributes("Volcanic", "10", "Clubs"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Volcanic", "10", "Clubs"));
 
-        CardDesk.AllServerCards.Add(new CardAttributes("WellsFargo", "3", "Hearts"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("WellsFargo", "3", "Hearts"));
 
-        CardDesk.AllServerCards.Add(new CardAttributes("Winchester", "8", "Spades"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Winchester", "8", "Spades"));
 
-        CardDesk.AllServerCards.Add(new CardAttributes("Women", "9", "Diamonds"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Women", "9", "Diamonds"));
 
-        CardDesk.AllServerCards.Add(new CardAttributes("Roach", "A", "Spades"));*/
+        // CardDesk.AllServerCards.Add(new CardAttributes("Roach", "A", "Spades"));
     }
 }
