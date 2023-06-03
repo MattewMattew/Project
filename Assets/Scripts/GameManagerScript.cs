@@ -35,32 +35,24 @@ public class GameManagerScript : MonoBehaviour // Колода
     }
     void Start()
     {
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        foreach (var player in players)
-        {
-            foreach (var hand in FindObjectOfType<ServerManager>().Hands)
-            {
-                if (hand.Id == player.GetComponent<NetworkIdentity>().netId && player.GetComponent<NetworkIdentity>().isLocalPlayer)
-                {
-                    GiveHandCards(hand.Cards);
-                }
-            }
-        }
+
     }
 
-    void GiveHandCards (List<CardAttributes> hand)
+    public void GiveHandCards (uint id, CardAttributes card)
     {
-        foreach (var item in hand)
+        foreach (var item in FindObjectsOfType<PlayerNetworkController>())
         {
-            GameObject cardGo = Instantiate(CardPref, SelfHand, false);
-            cardGo.GetComponent<CardInfoScripts>().ShowCardInfo(item);
+            if(item.netId == id && item.isLocalPlayer)
+            {
+                GameObject cardGo = Instantiate(CardPref, SelfHand, false);
+                cardGo.GetComponent<CardInfoScripts>().ShowCardInfo(card);  
+            }
         }
     }
     public void DetectInventory (PlayerNetworkController playerController, Transform inventory, CardAttributes card)
     {
         List<CardAttributes> list = new List<CardAttributes>() { card };
-        // if (!playerController.isLocalPlayer || FindObjectOfType<ServerManager>().turnPlayerId != playerController.netId)
-        // {
+
             foreach (var inv in FindObjectOfType<ServerManager>().Inventorys)
             {
                 if (inv.Id == playerController.netId)
@@ -68,7 +60,21 @@ public class GameManagerScript : MonoBehaviour // Колода
                     GiveInventoryCard(list, playerController);
                 }
             }
-        // }
+    }
+
+    public void RemoveCardFromInventory(uint id, CardAttributes card)
+    {
+        foreach (var item in GameObject.FindGameObjectsWithTag("Field"))
+        {
+            if (item.GetComponentInParent<PlayerNetworkController>().netId == id)
+            {
+                foreach (Transform chield in item.transform)
+                {
+                    if (chield.GetComponent<CardInfoScripts>().SelfCard.Name == card.Name)
+                        Destroy(chield.gameObject);
+                }
+            }
+        }
     }
 
     void GiveInventoryCard(List<CardAttributes> cardInventory, PlayerNetworkController playerController)    

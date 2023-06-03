@@ -68,6 +68,11 @@ public class PlayerNetworkController : NetworkBehaviour
                
     }
     [ClientRpc]
+    public void RemoveCardFromInventoryClientRpc(uint id, CardAttributes card)
+    {
+        FindObjectOfType<GameManagerScript>().RemoveCardFromInventory(id, card);
+    }
+    [ClientRpc]
     public void UpdateInvClientRpc(PlayerNetworkController playerController, CardAttributes card, Transform playerInventory)
     {
         FindObjectOfType<GameManagerScript>().DetectInventory(playerController, playerInventory, card);
@@ -115,6 +120,11 @@ public class PlayerNetworkController : NetworkBehaviour
     }
 
     [Command(requiresAuthority = false)]
+    public void CmdRemoveCardFromInventory(CardAttributes card, uint id)
+    {
+        FindObjectOfType<ServerManager>().RemoveCardFromInventory(card, id);
+    }
+    [Command(requiresAuthority = false)]
     public void CmdDefense()
     {
         FindObjectOfType<ServerManager>().GiveTurn(FindObjectOfType<ServerManager>().turnPlayerId, false);
@@ -143,6 +153,12 @@ public class PlayerNetworkController : NetworkBehaviour
         {
             item.EndTurn();
         }
+    }
+
+    [ClientRpc]
+    public void GiveHandCardsClientRpc(uint id, CardAttributes card)
+    {
+        FindObjectOfType<GameManagerScript>().GiveHandCards(id, card);
     }
 
     [Command(requiresAuthority = false)]

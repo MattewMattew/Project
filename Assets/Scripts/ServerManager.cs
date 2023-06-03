@@ -250,6 +250,7 @@ public class ServerManager : NetworkBehaviour
         int i = 0;
         while (i++ < cardsCount)
             GiveCardToHand(pack, id);
+        
     }
     [Server]
     void GiveCardToHand(SyncList<CardAttributes> pack, uint id) // ������ ����� � ����
@@ -285,6 +286,7 @@ public class ServerManager : NetworkBehaviour
         {
             Hands.Add(new HandList(id, list));
         }
+        FindObjectOfType<PlayerNetworkController>().GiveHandCardsClientRpc(id, pack[0]);
         pack.Remove(pack[0]);
 
     }
@@ -359,6 +361,26 @@ public class ServerManager : NetworkBehaviour
                 Hands[Hands.IndexOf(item)] = new HandList(id, list);
             }
         }
+    }
+    [Server]
+    public void RemoveCardFromInventory(CardAttributes card, uint id)
+    {
+        foreach (var item in Inventorys)
+        {
+            if(item.Id == id)
+            {
+                List<CardAttributes> list = new List<CardAttributes>();
+                foreach(var item1 in item.Cards)
+                {
+                    if(item1.Name != card.Name || item1.Suit != card.Suit || item1.Dignity != card.Dignity)
+                    {
+                        list.Add(item1);
+                    }
+                }
+                Inventorys[Inventorys.IndexOf(item)] = new CardList(id, list);
+            }
+        }
+        FindObjectOfType<PlayerNetworkController>().RemoveCardFromInventoryClientRpc(id, card);
     }
     [Server]
     public void GiveCardToDiscard(CardAttributes card)

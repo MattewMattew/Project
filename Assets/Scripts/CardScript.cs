@@ -210,6 +210,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                     {
                         if (card.GetComponent<CardInfoScripts>().InfoTypeCard == CardInfoScripts.TypeCard.WEAPON_CARD)
                         {
+                            player.CmdRemoveCardFromInventory(GetComponent<CardInfoScripts>().SelfCard, player.netId);
                             Destroy(card.gameObject);
                         }
                     }
