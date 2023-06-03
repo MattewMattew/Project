@@ -79,6 +79,30 @@ MonoBehaviour:
     m_Localized: Play
     m_Metadata:
       m_Items: []
+  - m_Id: 2181432853815296
+    m_Localized: Search
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2181651192504320
+    m_Localized: Create public
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2182017317494784
+    m_Localized: Create private
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2182203989188608
+    m_Localized: Join
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2182434780766208
+    m_Localized: ID ROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2183190279774208
+    m_Localized: Save
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
