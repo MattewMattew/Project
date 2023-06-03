@@ -54,6 +54,7 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
                             // GetComponentInParent<NetworkIdentity>().netId);
                         GetComponentInParent<PlayerNetworkController>().CmdAttack(card.GetComponent<CardInfoScripts>().SelfCard.Name);
                         card.GetComponent<CardScript>().TempCard = null;
+                        FindObjectOfType<PlayerNetworkController>().CmdRemoveCardFromHand(FindObjectOfType<ServerManager>().turnPlayerId, card.GetComponent<CardInfoScripts>().SelfCard);
                         Destroy(card);
                     }
                     // FindObjectOfType<PlayerNetworkController>().CmdRemoveCard(item.GetComponent<CardInfoScripts>().SelfCard, turnedPlayer.netId);

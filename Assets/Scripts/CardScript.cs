@@ -69,11 +69,11 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                         {
                             if (FindObjectOfType<ServerManager>().turnModificator == "Attack")
                             {
-                                UseCard();
+                                UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                                 turnPlayer.CmdDefense();
 
                             }
-                            else UseCardOnEnemy();
+                            else UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                             break;
                         }
                     case "Barrel":
@@ -84,7 +84,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                     case "Beer":
                     {
                         turnPlayer.CmdRegenerationHealth(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
-                        UseCard();
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                         break;
                     }
                     case "Carbine":
@@ -95,12 +95,12 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                     case "Diligence":
                     {
                         turnPlayer.CmdGiveHandCards(turnPlayer.netId, 2);
-                        UseCard();
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                         break;
                     }
                     case "Duel":
                     {
-                        UseCardOnEnemy();
+                        UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                         break;
                     }
                     case "Dynamite":
@@ -110,31 +110,29 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                     }
                     case "Gatling":
                     {
-                        GetComponentInParent<PlayerNetworkController>().CmdAttack(GetComponent<CardInfoScripts>().SelfCard.Name);
-                        UseCard();
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                         break;
                     }
                     case "General":
                     {
-                        UseCard();
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                         break;
                     }
                     case "Indians":
                     {
-                        GetComponentInParent<PlayerNetworkController>().CmdAttack(GetComponent<CardInfoScripts>().SelfCard.Name);
-                        UseCard();
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                         break;
                     }
                     case "Jail":
                     {
-                        UseCardOnEnemy();
+                        UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                         break;
                     }
                     case "Missed":
                         {
                             if (FindObjectOfType<ServerManager>().turnModificator == "Attack")
                             {
-                                UseCard();
+                                UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                                 turnPlayer.CmdDefense();
                                 
                             }
@@ -147,7 +145,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                     }
                     case "Panic":
                     {
-                        UseCardOnEnemy();
+                        UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                         break;
                     }
                     case "Remington":
@@ -158,7 +156,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                     case "Saloon":
                     {
                         turnPlayer.CmdRegenerationHealth(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
-                        UseCard();
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                         break;
                     }
                     case "Scofield":
@@ -174,7 +172,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                     case "WellsFargo":
                     {
                         turnPlayer.CmdGiveHandCards(turnPlayer.netId, 3);
-                        UseCard();
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                         break;
                     }
                     case "Winchester":
@@ -184,7 +182,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                     }
                     case "Women":
                     {
-                        UseCardOnEnemy();
+                        UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                         break;
                     }
                     case "Roach":
@@ -222,13 +220,14 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    void UseCard()
+    void UseCard(uint id, CardAttributes card)
     {
+        FindObjectOfType<PlayerNetworkController>().CmdRemoveCardFromHand(id, card);
         FindObjectOfType<PlayerNetworkController>().CmdGiveCardToDiscard(GetComponent<CardInfoScripts>().SelfCard);
         Destroy(gameObject);
     }
 
-    void UseCardOnEnemy()
+    void UseCardOnEnemy(uint id, CardAttributes card)
     {
         CardScript[] cardsHand = GameObject.Find("SelfHand").GetComponentsInChildren<CardScript>();
 

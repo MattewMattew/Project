@@ -150,6 +150,10 @@ public class PlayerNetworkController : NetworkBehaviour
     {
         FindObjectOfType<ServerManager>().GiveHandCards(FindObjectOfType<ServerManager>().PackCards, id, cardsCount);
     }
-    
+    [Command(requiresAuthority =false)]
+    public void CmdRemoveCardFromHand(uint id, CardAttributes card)
+    {
+        FindObjectOfType<ServerManager>().RemoveCardFromHand(card, id);
+    }
 
 }

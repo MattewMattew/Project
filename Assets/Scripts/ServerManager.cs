@@ -4,6 +4,7 @@ using UnityEngine;
 using Mirror;
 using UnityEngine.XR;
 using System;
+using static UnityEditor.Progress;
 
 public class ServerManager : NetworkBehaviour
 {
@@ -12,7 +13,7 @@ public class ServerManager : NetworkBehaviour
     public List<CardAttributes> CardVars;
     public readonly SyncList<CardAttributes> Discard = new SyncList<CardAttributes>();
     public readonly SyncList<CardList> Inventorys = new SyncList<CardList>();
-    public readonly SyncList<CardList> Hands = new SyncList<CardList>();
+    public readonly SyncList<HandList> Hands = new SyncList<HandList>();
     public readonly SyncList<HealthList> Healths = new SyncList<HealthList>();
 
     private int TempHealth;
@@ -23,6 +24,18 @@ public class ServerManager : NetworkBehaviour
         public uint Id;
 
         public CardList(uint id, List<CardAttributes> inv)
+        {
+            Id = id;
+            Cards = inv;
+
+        }
+    }
+    public struct HandList
+    {
+        public List<CardAttributes> Cards;
+        public uint Id;
+
+        public HandList(uint id, List<CardAttributes> inv)
         {
             Id = id;
             Cards = inv;
@@ -110,29 +123,29 @@ public class ServerManager : NetworkBehaviour
     [Client]
     void Update()
     {
-        foreach (var item in Healths)
-        {
-            print($"{item.Id} have {item.Health} health   {Healths.Count}");
-        }
+        /*        foreach (var item in Healths)
+                {
+                    print($"{item.Id} have {item.Health} health   {Healths.Count}");
+                }*/
         /*        print(PackCards.Count + " " + "ServerManager");
                 print($"{turnPlayerId}");
-                print($"{Discard.Count} Discard");
-                foreach (var item in Hands)
+                print($"{Discard.Count} Discard");*/
+        /*        foreach (var item in Hands)
                 {
-                    print($"{item.Id} hand id");
+                    print($"{item.Cards.Count} in {item.Id} hand");
                     foreach (var item1 in item.Cards)
                     {
                         print($"{item1.Name} card in hand {item.Id}");
                     }
                 }*/
-        /*        foreach (var item in Inventorys)
-                {
-                    print($"{item.Cards.Count} cards have {item.Id} player in inventory");
-                    foreach (var item1 in item.Cards)
-                    {
-                        print($"{item.Id} player inventory have {item1.Name} card. In array {item.Cards.Count} cards");
-                    }
-                }*/
+        foreach (var item in Inventorys)
+        {
+            print($"{item.Cards.Count} cards have {item.Id} player in inventory");
+            foreach (var item1 in item.Cards)
+            {
+                print($"{item.Id} player inventory have {item1.Name} card. In array {item.Cards.Count} cards");
+            }
+        }
     }
     void Start()
     {
@@ -258,13 +271,19 @@ public class ServerManager : NetworkBehaviour
             {
                 if (hand.Id == id)
                 {
-                    hand.Cards.Add(pack[0]);
+                    List<CardAttributes> dumpList = new List<CardAttributes>();
+                    foreach (var card in hand.Cards)
+                    {
+                        dumpList.Add(card);
+                    }
+                    dumpList.Add(pack[0]);
+                    Hands[Hands.IndexOf(hand)] = new HandList(id, dumpList);
                 }
             }
         }
         else
         {
-            Hands.Add(new CardList(id, list));
+            Hands.Add(new HandList(id, list));
         }
         pack.Remove(pack[0]);
 
@@ -287,13 +306,19 @@ public class ServerManager : NetworkBehaviour
             {
                 if (inventory.Id == playerController.netId)
                 {
-                    inventory.Cards.Add(list[0]);
+                    List<CardAttributes> dumpList = new List<CardAttributes>();
+                    foreach (var item in inventory.Cards)
+                    {
+                        dumpList.Add(item);
+                    }
+                    dumpList.Add(card);
+                    Inventorys[Inventorys.IndexOf(inventory)] = new CardList(playerController.netId, dumpList);
                 }
             }
         }
         else
         {
-            FindObjectOfType<ServerManager>().Inventorys.Add(new ServerManager.CardList(playerController.netId, list));
+            FindObjectOfType<ServerManager>().Inventorys.Add(new CardList(playerController.netId, list));
         }
         var players = FindObjectsOfType<PlayerNetworkController>();
         foreach (var player in players)
@@ -317,7 +342,26 @@ public class ServerManager : NetworkBehaviour
         print(hand.Count);
     }
     [Server]
-    public void GiveCardToDiscard(CardAttributes card/*, uint id, uint target*/)
+    public void RemoveCardFromHand(CardAttributes card, uint id)
+    {
+        foreach (var item in Hands)
+        {
+            if(item.Id == id)
+            {
+                List<CardAttributes> list = new List<CardAttributes>();
+                foreach(var item1 in item.Cards)
+                {
+                    if(item1.Name != card.Name || item1.Suit != card.Suit || item1.Dignity != card.Dignity)
+                    {
+                        list.Add(item1);
+                    }
+                }
+                Hands[Hands.IndexOf(item)] = new HandList(id, list);
+            }
+        }
+    }
+    [Server]
+    public void GiveCardToDiscard(CardAttributes card)
     {
         Discard.Add(card);
         FindObjectOfType<PlayerNetworkController>().UpdateDiscardClientRpc(card);
@@ -328,7 +372,7 @@ public class ServerManager : NetworkBehaviour
     {
         FindObjectOfType<ServerManager>().ChangeMove();
     }
-
+    [Server]
     public void RegenerationHealth(uint id, CardAttributes card)
     {
         foreach (var item in Healths)
