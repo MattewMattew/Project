@@ -18,6 +18,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
     {
         var players = FindObjectsOfType<PlayerNetworkController>();
         bool turnedPlayer = false;
+        PlayerNetworkController turnPlayer = new PlayerNetworkController();
         foreach (var player in players)
         {
             if (player.netId == FindObjectOfType<ServerManager>().turnPlayerId && player.isLocalPlayer)
@@ -25,122 +26,168 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 turnedPlayer = true;
                 break;
             }
-        }
-        if(transform.parent.tag == "Hand" && turnedPlayer)
-        {
-            switch (GetComponent<CardInfoScripts>().Name.text)
+            if (player.netId == FindObjectOfType<ServerManager>().attackedPlayerId && player.isLocalPlayer)
             {
-                case "Bang":
-                {
-                    UseCardOnEnemy();
-                    break;
-                }
-                case "Barrel":
-                {
-                    AddCardInventory();
-                    break;
-                }
-                case "Beer":
-                {
-                    UseCard();
-                    break;
-                }
-                case "Carbine":
-                {
-                    AddCardInventory();
-                    break;
-                }
-                case "Diligence":
-                {
-                    UseCard();
-                    break;
-                }
-                case "Duel":
-                {
-                    UseCardOnEnemy();
-                    break;
-                }
-                case "Dynamite":
-                {
-                    AddCardInventory();
-                    break;
-                }
-                case "Gatling":
-                {
-                    UseCard();
-                    break;
-                }
-                case "General":
-                {
-                    UseCard();
-                    break;
-                }
-                case "Indians":
-                {
-                    UseCard();
-                    break;
-                }
-                case "Jail":
-                {
-                    UseCardOnEnemy();
-                    break;
-                }
-                case "Missed":
-                {
+                turnPlayer = player;
+                turnedPlayer = true;
+                break;
+            }
 
-                    break;
-                }
-                case "Mustang":
+        }
+        if (FindObjectOfType<ServerManager>().turnModificator == "Attack")
+        {
+            if (transform.parent.tag == "Hand" && turnedPlayer)
+            {
+                switch (GetComponent<CardInfoScripts>().Name.text)
                 {
-                    AddCardInventory();
-                    break;
+/*                    case "Bang":
+                        {
+                            UseCardOnEnemy();
+                            break;
+                        }*/
+                    case "Missed":
+                        {
+                            UseCard();
+                            turnPlayer.CmdDefense();
+                            break;
+                        }
+                    default:
+                        {
+                            print("You has been attacked");
+                            break;
+                        }
                 }
-                case "Panic":
+            }
+        }
+        else
+        {
+            if(transform.parent.tag == "Hand" && turnedPlayer)
+            {
+                switch (GetComponent<CardInfoScripts>().Name.text)
                 {
-                    UseCardOnEnemy();
-                    break;
-                }
-                case "Remington":
-                {
-                    AddCardInventory();
-                    break;
-                }
-                case "Saloon":
-                {
-                    UseCard();
-                    break;
-                }
-                case "Scofield":
-                {
-                    AddCardInventory();
-                    break;
-                }
-                case "Volcanic":
-                {
-                    AddCardInventory();
-                    break;
-                }
-                case "WellsFargo":
-                {
-                    UseCard();
-                    break;
-                }
-                case "Winchester":
-                {
-                    AddCardInventory();
-                    break;
-                }
-                case "Women":
-                {
-                    UseCardOnEnemy();
-                    break;
-                }
-                case "Roach":
-                {
-                    AddCardInventory();
-                    break;
-                }
-            } 
+                    case "Bang":
+                        {
+                            if (FindObjectOfType<ServerManager>().turnModificator == "Attack")
+                            {
+                                UseCard();
+                                turnPlayer.CmdDefense();
+
+                            }
+                            else UseCardOnEnemy();
+                            break;
+                        }
+                    case "Barrel":
+                    {
+                        AddCardInventory();
+                        break;
+                    }
+                    case "Beer":
+                    {
+                        UseCard();
+                        break;
+                    }
+                    case "Carbine":
+                    {
+                        AddCardInventory();
+                        break;
+                    }
+                    case "Diligence":
+                    {
+                        UseCard();
+                        break;
+                    }
+                    case "Duel":
+                    {
+                        UseCardOnEnemy();
+                        break;
+                    }
+                    case "Dynamite":
+                    {
+                        AddCardInventory();
+                        break;
+                    }
+                    case "Gatling":
+                    {
+                        UseCard();
+                        break;
+                    }
+                    case "General":
+                    {
+                        UseCard();
+                        break;
+                    }
+                    case "Indians":
+                    {
+                        UseCard();
+                        break;
+                    }
+                    case "Jail":
+                    {
+                        UseCardOnEnemy();
+                        break;
+                    }
+                    case "Missed":
+                        {
+                            if (FindObjectOfType<ServerManager>().turnModificator == "Attack")
+                            {
+                                UseCard();
+                                turnPlayer.CmdDefense();
+                                
+                            }
+                            break;
+                        }
+                    case "Mustang":
+                    {
+                        AddCardInventory();
+                        break;
+                    }
+                    case "Panic":
+                    {
+                        UseCardOnEnemy();
+                        break;
+                    }
+                    case "Remington":
+                    {
+                        AddCardInventory();
+                        break;
+                    }
+                    case "Saloon":
+                    {
+                        UseCard();
+                        break;
+                    }
+                    case "Scofield":
+                    {
+                        AddCardInventory();
+                        break;
+                    }
+                    case "Volcanic":
+                    {
+                        AddCardInventory();
+                        break;
+                    }
+                    case "WellsFargo":
+                    {
+                        UseCard();
+                        break;
+                    }
+                    case "Winchester":
+                    {
+                        AddCardInventory();
+                        break;
+                    }
+                    case "Women":
+                    {
+                        UseCardOnEnemy();
+                        break;
+                    }
+                    case "Roach":
+                    {
+                        AddCardInventory();
+                        break;
+                    }
+                } 
+            }
         }
     }
 

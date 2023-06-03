@@ -13,6 +13,9 @@ public class ServerManager : NetworkBehaviour
     public readonly SyncList<CardAttributes> Discard = new SyncList<CardAttributes>();
     public readonly SyncList<CardList> Inventorys = new SyncList<CardList>();
     public readonly SyncList<CardList> Hands = new SyncList<CardList>();
+    public readonly SyncList<HealthList> Healths = new SyncList<HealthList>();
+
+    private int TempHealth;
 
     public struct CardList
     {
@@ -27,12 +30,27 @@ public class ServerManager : NetworkBehaviour
         }
     }
 
+    public struct HealthList
+    {
+        public uint Id;
+        public int Health;
+
+        public HealthList(uint id, int health)
+        {
+            Id = id;
+            Health = health;
+        }
+    }
+
 
     [SyncVar]
     public uint turnPlayerId;
 
     [SyncVar]
-    public string turnModificator;
+    public uint attackedPlayerId;
+
+    [SyncVar]
+    public string turnModificator = "No";
 
     int Move, MoveTime = 30;
     private List<Vector2> spawnPoint;
@@ -59,39 +77,6 @@ public class ServerManager : NetworkBehaviour
         }
 
     }
-    void SyncPackList(SyncList<CardAttributes>.Operation op, int index, CardAttributes oldItem, CardAttributes newItem)
-    {
-        // print($"{oldItem}, {newItem}");
-        switch (op)
-        {
-            case SyncList<CardAttributes>.Operation.OP_ADD:
-                {
-                    CardVars.Add(newItem);
-                    break;
-                }
-            case SyncList<CardAttributes>.Operation.OP_CLEAR:
-                {
-
-                    break;
-                }
-            case SyncList<CardAttributes>.Operation.OP_INSERT:
-                {
-
-                    break;
-                }
-            case SyncList<CardAttributes>.Operation.OP_REMOVEAT:
-                {
-
-                    break;
-                }
-            case SyncList<CardAttributes>.Operation.OP_SET:
-                {
-
-                    break;
-                }
-        }
-    }
-
     [Server]
     public void CardAdded(CardAttributes item)
     {
@@ -114,11 +99,10 @@ public class ServerManager : NetworkBehaviour
         {
             if (isServer)
             {
-                GiveHandCards(PackCards, player);
+                GiveHandCards(PackCards, player.GetComponent<NetworkIdentity>().netId, 4);
                 if (player.GetComponent<NetworkIdentity>().netId == 1)
                 {
                     GiveTurn(player.GetComponent<NetworkIdentity>().netId, false);
-                    StartCoroutine(MoveFunc());
                 }
             }
         }
@@ -126,6 +110,10 @@ public class ServerManager : NetworkBehaviour
     [Client]
     void Update()
     {
+        foreach (var item in Healths)
+        {
+            print($"{item.Id} have {item.Health} health   {Healths.Count}");
+        }
         /*        print(PackCards.Count + " " + "ServerManager");
                 print($"{turnPlayerId}");
                 print($"{Discard.Count} Discard");
@@ -148,12 +136,16 @@ public class ServerManager : NetworkBehaviour
     }
     void Start()
     {
-        if (isServer) CmdCardAdded();
-        gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
         PlayerNetworkController[] players = FindObjectsOfType<PlayerNetworkController>();
+        if (isServer) 
+        {
+            CmdCardAdded();
+        }
+        gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
         spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, 0), new Vector2(0, 421), new Vector2(696, 0) };
         foreach (var player in players)
         {
+            if(isServer) Healths.Add(new HealthList(player.netId, 4));
             if (player.isLocalPlayer)
             {
                 player.setPlayerPosition(spawnPoint[0]);
@@ -164,22 +156,42 @@ public class ServerManager : NetworkBehaviour
                 spawnPoint.RemoveAt(1);
             }
         }
+
     }
     [Server]
     IEnumerator MoveFunc()
     {
-        MoveTime = 5;
+        MoveTime = 15;
+        PlayerNetworkController[] players = FindObjectsOfType<PlayerNetworkController>();
         while (MoveTime-- > 0)
         {
-            PlayerNetworkController[] players = FindObjectsOfType<PlayerNetworkController>();
             foreach (var player in players)
             {
-                player.TimerUpdateClientRpc(MoveTime, turnPlayerId);
+                if(attackedPlayerId != 0)
+                    player.TimerUpdateClientRpc(MoveTime, attackedPlayerId);
+                else
+                    player.TimerUpdateClientRpc(MoveTime, turnPlayerId);
             }
             yield return new WaitForSeconds(1);
         }
-        ChangeMove();
+        if(attackedPlayerId != 0)
+        {
+            foreach (var item in Healths)
+            {
+                print($"now {item.Id} and attacked {attackedPlayerId}");
+                if (item.Id == attackedPlayerId)
+                {
+                    Healths[Healths.IndexOf(item)]= new HealthList(attackedPlayerId, item.Health-1);
+                    foreach (var item1 in players)
+                    {
+                        item1.HealthUpdateClientRpc(attackedPlayerId, item.Health - 1);
+                    }
+                }
+            }
+            GiveTurn(turnPlayerId, false);
+        }else ChangeMove();
     }
+
     [Server]
     public void ChangeMove()
     {
@@ -195,30 +207,37 @@ public class ServerManager : NetworkBehaviour
         if (turnPlayerId + 1 > FindObjectOfType<NetworkManagerCard>().numPlayers)
             GiveTurn(1, false);
         else GiveTurn(turnPlayerId + 1, false);
+        
+
+        GiveHandCards(PackCards, turnPlayerId, 2);
     }
     [Server]
-    void GiveTurn(uint id, bool target)
+    public void GiveTurn(uint id, bool target)
     {
-        if(!target)
+        StopAllCoroutines();
+        attackedPlayerId = 0;
+        turnModificator = "No";
+        if (!target)
         {
             turnPlayerId = id;
         }
         else
         {
-            turnPlayerId = id;
+            attackedPlayerId = id;
             turnModificator = "Attack";
         }
+
         StartCoroutine(MoveFunc());
     }
     [Server]
-    void GiveHandCards(SyncList<CardAttributes> pack, GameObject player) // ���������� ���� � ����
+    void GiveHandCards(SyncList<CardAttributes> pack, uint id, int cardsCount) // ���������� ���� � ����
     {
         int i = 0;
-        while (i++ < 4)
-            GiveCardToHand(pack, player);
+        while (i++ < cardsCount)
+            GiveCardToHand(pack, id);
     }
     [Server]
-    void GiveCardToHand(SyncList<CardAttributes> pack, GameObject player) // ������ ����� � ����
+    void GiveCardToHand(SyncList<CardAttributes> pack, uint id) // ������ ����� � ����
     {
         if (pack.Count == 0)
             return;
@@ -226,7 +245,7 @@ public class ServerManager : NetworkBehaviour
         List<CardAttributes> list = new List<CardAttributes> { pack[0] };
         foreach (var item in Hands)
         {
-            if (player.GetComponent<NetworkIdentity>().netId == item.Id)
+            if (id == item.Id)
             {
                 check = true; break;
             }
@@ -235,7 +254,7 @@ public class ServerManager : NetworkBehaviour
         {
             foreach (var hand in Hands)
             {
-                if (hand.Id == player.GetComponent<NetworkIdentity>().netId)
+                if (hand.Id == id)
                 {
                     hand.Cards.Add(pack[0]);
                 }
@@ -243,7 +262,7 @@ public class ServerManager : NetworkBehaviour
         }
         else
         {
-            Hands.Add(new CardList(player.GetComponent<NetworkIdentity>().netId, list));
+            Hands.Add(new CardList(id, list));
         }
         pack.Remove(pack[0]);
 
@@ -284,125 +303,21 @@ public class ServerManager : NetworkBehaviour
 
         }
     }
-//     [ClientRpc]
-//     void CheckClientRpc(List<CardAttributes> cardAttributes, CardAttributes card, uint id)
-//     {
-// /*        print($"{card.Name} {card.Suit} {card.Dignity} || {id}");
-//         foreach (var item in Hands)
-//         {
-//             print($"{item.Cards.Count} cound cards of {item.Id} player");
-//             foreach (var item1 in item.Cards)
-//             {
-//                 print($"{item1.Name} {item1.Suit} {item1.Dignity} $$$ {id}");
-//             }
-//         }*/
-//         foreach (var item in cardAttributes)
-//         {
-//             print($"{item.Name}");
-//         }
-//     }
-
+    [Server]
+    public void AttackAction(PlayerNetworkController playerController)
+    {
+        print($"{playerController.netId} has been attacked");
+        GiveTurn(playerController.netId, true);
+    }
     [ClientRpc]
     void Check2ClientRpc(List<CardAttributes> hand)
     {
-        // foreach (var item in Hands)
-        // {
-        //     print($"{item.Cards.Count} cound cards of {item.Id} player");
-        //     foreach (var item1 in item.Cards)
-        //     {
-        //         print($"{item1.Name} {item1.Suit} {item1.Dignity} ^^^ ");
-        //     }
-        // }
         print(hand.Count);
     }
     [Server]
     public void GiveCardToDiscard(CardAttributes card/*, uint id, uint target*/)
     {
-        // Check2ClientRpc();
-            Discard.Add(card);
-            FindObjectOfType<PlayerNetworkController>().UpdateDiscardClientRpc(card);
-        // foreach (var hand in Hands)
-        // {
-        //     if (hand.Id == id)
-        //     {
-        //         hand.Cards.Remove(card);
-        //         //         Check2ClientRpc();
-        //     }
-        // }
-        // var players = FindObjectsOfType<PlayerNetworkController>();
-        // foreach (var player in players)
-        // {
-        //     if (player.netId == target)
-        //     {
-        //         switch (card.Name)
-        //         {
-        //             case "Bang":
-        //                 {
-        //                     player.AttackClientRpc(card.Name);
-        //                     GiveTurn(player.netId, true);
-        //                     break;
-        //                 }
-        //             case "Beer":
-        //                 {
-
-        //                     break;
-        //                 }
-        //         }
-/*                player.GetActionClientRpc(card.Name);
-                break;*/
-        //     }
-        // }
+        Discard.Add(card);
+        FindObjectOfType<PlayerNetworkController>().UpdateDiscardClientRpc(card);
     }
-
-    // [Server]
-    // public void RemoveCard(CardAttributes card, uint id)
-    // {
-    //     foreach (var hand in Hands)
-    //     {
-    //         if (hand.Id == id)
-    //         {
-    //             hand.Cards.Remove(card);
-    //             print($"hand {hand.Id} {hand.Cards.Count}");
-    //             FindObjectOfType<PlayerNetworkController>().UpdateCountCardPlayerClientRpc(hand.Cards, id);
-
-    //         }
-            
-    //     }
-    // }
-
-    // public IEnumerator DeleteCard(CardAttributes cardd, uint id)
-    // {
-    //     yield return new WaitForSeconds(4);
-    //     GiveCardToDiscard(cardd, id);
-    // }
-/*    public void DeleteCard(CardAttributes cardd, uint id)
-    {
-        foreach (var hand in Hands)
-        {
-            if (hand.Id == id)
-            {
-                print($"{cardd.Name} {cardd.Suit} {cardd.Dignity} % {id}");
-                CheckClientRpc(hand.Cards, cardd, id);
-                hand.Cards.Remove(cardd);
-                Check2ClientRpc();
-
-            }
-        }
-    }*/
-    /*    public override void OnStartClient()
-        {
-
-            base.OnStartClient();
-
-            Cards.Callback += SyncTransformVars; //������ hook, ��� SyncList ���������� �������� �� Callback
-            CardVars = new List<Card>(Cards.Count); //��� ��� Callback ��������� ������ �� ��������� �������,  
-            for (int i = 0; i < Cards.Count; i++) //� � ��� �� ������ ����������� ��� ����� ���� �����-�� ������ � �������, ��� ����� ��� ������ ������ � ��������� ������
-            {
-                print(Cards[i].Name);
-                CardVars.Add(Cards[i]);
-            }
-            Debug.Log(CardVars.Count + " " + "�� ������");
-            GiveHandCards(CardVars, SelfHand);
-            print(CardVars.Count + " " + "����� ������");
-        }*/
 }

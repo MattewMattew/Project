@@ -5,15 +5,35 @@ using Mirror;
 using System;
 using TMPro;
 using System.Linq;
+using Unity.VisualScripting;
+using UnityEngine.UI;
+using static UnityEditor.Progress;
 // using UnityEditor.Localization.Plugins.XLIFF.V20;
 
 public class PlayerNetworkController : NetworkBehaviour
 {
-    public List<Material> Materials; 
+    public List<Material> Materials;
+    Image materialHP;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        var materialComponents = GetComponentsInChildren<Image>();
+        foreach (var item in materialComponents)
+        {
+            if(item.gameObject.tag == "HpBar")
+            {
+                item.material = Materials[(int)netId - 1];
+                item.material.SetFloat("_RemovedS", 9f - 4f);
+                materialHP = item;
+            }
+        }
+    }
+    [ClientRpc]
+    public void HealthUpdateClientRpc(uint id, int health)
+    {
+        if(netId == id)
+            materialHP.material.SetFloat("_RemovedS", 9f - health);
     }
     /*    void Update()
         {
@@ -45,9 +65,7 @@ public class PlayerNetworkController : NetworkBehaviour
                     value.GetComponent<TextMeshProUGUI>().enabled = false;
             }
         }
-        
-
-       
+               
     }
     [ClientRpc]
     public void UpdateInvClientRpc(PlayerNetworkController playerController, CardAttributes card, Transform playerInventory)
@@ -59,17 +77,6 @@ public class PlayerNetworkController : NetworkBehaviour
     {
         FindObjectOfType<GameManagerScript>().IdentifyCardInDiscard(card);
     }
-    // [ClientRpc]
-    // public void UpdateCountCardPlayerClientRpc(CardAttributes cards)
-    // {
-    //     var players = GameObject.FindGameObjectsWithTag("Player");
-    //     foreach (var player in players)
-    //         foreach (var hand in FindObjectOfType<ServerManager>().Hands)
-    //             if (hand.Id == player.GetComponent<NetworkIdentity>().netId)
-    //                 foreach (var textMesh in player.GetComponentsInChildren<TextMeshProUGUI>())
-    //                     if (textMesh.tag != "Timer") textMesh.text = hand.Cards.Count.ToString();
-    // }
-
 
     public void setPlayerPosition(Vector2 pos)
     {
@@ -107,15 +114,20 @@ public class PlayerNetworkController : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
-    public void AttackClientRpc(string action)
+    [Command(requiresAuthority = false)]
+    public void CmdDefense()
+    {
+        FindObjectOfType<ServerManager>().GiveTurn(FindObjectOfType<ServerManager>().turnPlayerId, false);
+    }
+
+    [Command(requiresAuthority =false)]
+    public void CmdAttack(string action)
     {
         if(action == "Bang")
         {
-
+            FindObjectOfType<ServerManager>().AttackAction(this);
         }
     }
-
 
     [ClientRpc]
     public void EndTurnClientRpc()
@@ -126,12 +138,4 @@ public class PlayerNetworkController : NetworkBehaviour
             item.EndTurn();
         }
     }
-    // [Command(requiresAuthority = false)]
-    // public void CmdRemoveCard(CardAttributes card, uint id)
-    // {
-    //     FindObjectOfType<ServerManager>().RemoveCard(card, id);   
-    // }
-
-
-
 }

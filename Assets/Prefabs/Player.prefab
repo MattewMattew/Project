@@ -1203,6 +1203,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HpBarBG
       objectReference: {fileID: 0}
+    - target: {fileID: 1624381836765239423, guid: d3ea991636d76ad4eb5698edde7d2429, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 1624381837160322721, guid: d3ea991636d76ad4eb5698edde7d2429, type: 3}
       propertyPath: m_Material
       value: 
@@ -1222,6 +1226,10 @@ PrefabInstance:
     - target: {fileID: 1624381837160322722, guid: d3ea991636d76ad4eb5698edde7d2429, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0.000014608
+      objectReference: {fileID: 0}
+    - target: {fileID: 1624381837160322723, guid: d3ea991636d76ad4eb5698edde7d2429, type: 3}
+      propertyPath: m_TagString
+      value: HpBar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3ea991636d76ad4eb5698edde7d2429, type: 3}
