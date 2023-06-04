@@ -342,6 +342,15 @@ public class ServerManager : NetworkBehaviour
         GiveTurn(id, true);
         turnModificator = card;
     }
+
+    [Server]
+    public IEnumerator DuelAction (uint idAttacking, uint idDefenser)
+    {
+        if (idDefenser != attackedPlayerId)
+
+        yield return new WaitForSeconds(1);
+    }
+
     [Server]
     public IEnumerator MassiveAttackAction(string card)
     {
@@ -359,11 +368,6 @@ public class ServerManager : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
-    void Check2ClientRpc(List<CardAttributes> hand)
-    {
-        print(hand.Count);
-    }
     [Server]
     public void RemoveCardFromHand(CardAttributes card, uint id)
     {

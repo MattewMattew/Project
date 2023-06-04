@@ -146,6 +146,7 @@ public class PlayerNetworkController : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void CmdDuel(uint id, string card)
     {
+        
         if (FindObjectOfType<ServerManager>().turnPlayerId == id)
             FindObjectOfType<ServerManager>().AttackAction(FindObjectOfType<ServerManager>().attackedPlayerId, card);
         else if (FindObjectOfType<ServerManager>().attackedPlayerId == id)
