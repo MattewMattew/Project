@@ -75,7 +75,28 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                         else if (FindObjectOfType<ServerManager>().turnModificator == "Duel")
                         {
                             UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
-                            turnPlayer.CmdDuel(turnPlayer.netId, "Duel");
+                                Debug.LogWarning(FindObjectOfType<ServerManager>().duelTargetPlayerId);
+                            if (FindObjectOfType<ServerManager>().duelTargetPlayerId == turnPlayer.netId)
+                            {
+                                foreach (var item in players)
+                                { 
+                                    if(item.netId == FindObjectOfType<ServerManager>().turnPlayerId)
+                                    { 
+                                        item.CmdAttack("Duel");
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                foreach (var item in players)
+                                {
+                                    if (item.netId == FindObjectOfType<ServerManager>().duelTargetPlayerId)
+                                    {
+                                        item.CmdAttack("Duel");
+                                    }
+                                }
+
+                            }
                         }
                         else if (FindObjectOfType<ServerManager>().turnModificator == "No")
                             UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);

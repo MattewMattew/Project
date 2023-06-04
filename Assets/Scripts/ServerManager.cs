@@ -5,6 +5,7 @@ using Mirror;
 using UnityEngine.XR;
 using System;
 using static UnityEditor.Progress;
+using System.IO;
 
 public class ServerManager : NetworkBehaviour
 {
@@ -15,6 +16,9 @@ public class ServerManager : NetworkBehaviour
     public readonly SyncList<CardList> Inventorys = new SyncList<CardList>();
     public readonly SyncList<HandList> Hands = new SyncList<HandList>();
     public readonly SyncList<HealthList> Healths = new SyncList<HealthList>();
+
+
+    private bool checkDuel = false;
 
     private Coroutine Coroutine;
 
@@ -63,6 +67,9 @@ public class ServerManager : NetworkBehaviour
 
     [SyncVar]
     public uint attackedPlayerId;
+
+    [SyncVar]
+    public uint duelTargetPlayerId;
 
     [SyncVar]
     public string turnModificator = "No";
@@ -140,14 +147,14 @@ public class ServerManager : NetworkBehaviour
                         print($"{item1.Name} card in hand {item.Id}");
                     }
                 }*/
-        foreach (var item in Inventorys)
+/*        foreach (var item in Inventorys)
         {
             print($"{item.Cards.Count} cards have {item.Id} player in inventory");
             foreach (var item1 in item.Cards)
             {
                 print($"{item.Id} player inventory have {item1.Name} card. In array {item.Cards.Count} cards");
             }
-        }
+        }*/
     }
     void Start()
     {
@@ -170,6 +177,7 @@ public class ServerManager : NetworkBehaviour
                 player.setPlayerPosition(spawnPoint[1]);
                 spawnPoint.RemoveAt(1);
             }
+
         }
 
     }
@@ -195,6 +203,7 @@ public class ServerManager : NetworkBehaviour
     [Server]
     public void ChangeMove()
     {
+        duelTargetPlayerId = 0;
         if(Coroutine != null) StopCoroutine(Coroutine);
         foreach (var player in FindObjectsOfType<PlayerNetworkController>())
         {
@@ -344,13 +353,12 @@ public class ServerManager : NetworkBehaviour
     }
 
     [Server]
-    public IEnumerator DuelAction (uint idAttacking, uint idDefenser)
+    public void DuelAction (uint idAttacking, uint idDefenser)
     {
-        if (idDefenser != attackedPlayerId)
-
-        yield return new WaitForSeconds(1);
+        duelTargetPlayerId = idDefenser;
+        GiveTurn(idDefenser, true);
+        turnModificator = "Duel";
     }
-
     [Server]
     public IEnumerator MassiveAttackAction(string card)
     {

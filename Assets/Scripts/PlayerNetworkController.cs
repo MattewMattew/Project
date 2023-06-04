@@ -144,15 +144,14 @@ public class PlayerNetworkController : NetworkBehaviour
         FindObjectOfType<ServerManager>().GiveTurn(FindObjectOfType<ServerManager>().turnPlayerId, false);
     }
     [Command(requiresAuthority = false)]
-    public void CmdDuel(uint id, string card)
+    public void CmdDuel(uint idAttacking, uint idDefenser)
     {
-        
-        if (FindObjectOfType<ServerManager>().turnPlayerId == id)
+        FindObjectOfType<ServerManager>().DuelAction(idAttacking, idDefenser);
+/*        if (FindObjectOfType<ServerManager>().turnPlayerId == id)
             FindObjectOfType<ServerManager>().AttackAction(FindObjectOfType<ServerManager>().attackedPlayerId, card);
         else if (FindObjectOfType<ServerManager>().attackedPlayerId == id)
-            FindObjectOfType<ServerManager>().AttackAction(FindObjectOfType<ServerManager>().turnPlayerId, card);
+            FindObjectOfType<ServerManager>().AttackAction(FindObjectOfType<ServerManager>().turnPlayerId, card);*/
     }
-
     [Command(requiresAuthority =false)]
     public void CmdAttack(string card)
     {
