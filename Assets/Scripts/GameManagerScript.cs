@@ -79,6 +79,7 @@ public class GameManagerScript : MonoBehaviour // Колода
 
     void GiveInventoryCard(List<CardAttributes> cardInventory, PlayerNetworkController playerController)    
     {
+        print("Spawn Inv");
         GameObject card = Instantiate(FindObjectOfType<GameManagerScript>().CardPref, playerController.GetComponentInChildren<DropPlaceScript>().transform, false);
         card.GetComponent<CardInfoScripts>().ShowCardInfo(cardInventory[cardInventory.Count - 1]);
     }

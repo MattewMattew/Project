@@ -377,6 +377,7 @@ public class ServerManager : NetworkBehaviour
                         list.Add(item1);
                     }
                 }
+                Debug.LogWarning(list.Count);
                 Inventorys[Inventorys.IndexOf(item)] = new CardList(id, list);
             }
         }

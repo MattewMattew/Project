@@ -204,15 +204,19 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
             {
                 if (GetComponent<CardInfoScripts>().InfoTypeCard == CardInfoScripts.TypeCard.WEAPON_CARD)
                 {
-                    CardScript[] CardsInventory = GameObject.Find("Inventory").GetComponentsInChildren<CardScript>();
-                    
-                    foreach (var card in CardsInventory)
+                    GameObject[] Inventory = GameObject.FindGameObjectsWithTag("Field");
+                    foreach (var inv in Inventory)
                     {
-                        if (card.GetComponent<CardInfoScripts>().InfoTypeCard == CardInfoScripts.TypeCard.WEAPON_CARD)
-                        {
-                            player.CmdRemoveCardFromInventory(GetComponent<CardInfoScripts>().SelfCard, player.netId);
-                            Destroy(card.gameObject);
-                        }
+                        if(inv.GetComponentInParent<PlayerNetworkController>().isLocalPlayer)
+                            foreach (var item in inv.GetComponentsInChildren<CardInfoScripts>())
+                            {
+                                if (item.InfoTypeCard == CardInfoScripts.TypeCard.WEAPON_CARD)
+                                {
+                                    print("Done");
+                                    player.CmdRemoveCardFromInventory(item.SelfCard, player.netId);
+                                    Destroy(item.gameObject);
+                                }
+                            }
                     }
                 }
                 player.CmdUpdateInventory(GetComponent<CardInfoScripts>().SelfCard, player ,player.transform);
