@@ -111,6 +111,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                     case "Gatling":
                     {
                         UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        turnPlayer.CmdMassiveAttackAction();
                         break;
                     }
                     case "General":

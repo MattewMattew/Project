@@ -16,6 +16,8 @@ public class ServerManager : NetworkBehaviour
     public readonly SyncList<HandList> Hands = new SyncList<HandList>();
     public readonly SyncList<HealthList> Healths = new SyncList<HealthList>();
 
+    private Coroutine Coroutine;
+
     private int TempHealth;
 
     public struct CardList
@@ -193,7 +195,8 @@ public class ServerManager : NetworkBehaviour
     [Server]
     public void ChangeMove()
     {
-        StopAllCoroutines();
+        if(Coroutine != null) StopCoroutine(Coroutine);
+        print("Coroutine has been stoped");
         foreach (var player in FindObjectsOfType<PlayerNetworkController>())
         {
             if(player.netId == turnPlayerId)
@@ -229,7 +232,8 @@ public class ServerManager : NetworkBehaviour
     [Server]
     public void GiveTurn(uint id, bool target)
     {
-        StopAllCoroutines();
+        if (Coroutine != null) StopCoroutine(Coroutine);
+        print("Coroutine has been stoped");
         attackedPlayerId = 0;
         turnModificator = "No";
         if (!target)
@@ -242,7 +246,8 @@ public class ServerManager : NetworkBehaviour
             turnModificator = "Attack";
         }
 
-        StartCoroutine(MoveFunc());
+        Coroutine = StartCoroutine(MoveFunc());
+        print("Coroutine has been started");
     }
     [Server]
     public void GiveHandCards(SyncList<CardAttributes> pack, uint id, int cardsCount) // ���������� ���� � ����
@@ -338,6 +343,23 @@ public class ServerManager : NetworkBehaviour
         print($"{playerController.netId} has been attacked");
         GiveTurn(playerController.netId, true);
     }
+    [Server]
+    public IEnumerator MassiveAttackAction()
+    {
+        foreach (var item in FindObjectsOfType<PlayerNetworkController>())
+        {
+            if (item.netId != turnPlayerId)
+            {
+                GiveTurn(item.netId, true);
+                while (attackedPlayerId != 0)
+                {
+                    print("fsad");
+                    yield return new WaitForSeconds(1);
+                }
+            }
+        }
+    }
+
     [ClientRpc]
     void Check2ClientRpc(List<CardAttributes> hand)
     {
@@ -393,7 +415,9 @@ public class ServerManager : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void CmdChangeMove()
     {
-        FindObjectOfType<ServerManager>().ChangeMove();
+        if (Coroutine != null) StopCoroutine(Coroutine);
+        print("Coroutine has been stoped");
+        ChangeMove();
     }
     [Server]
     public void RegenerationHealth(uint id, CardAttributes card)

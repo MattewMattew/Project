@@ -171,5 +171,9 @@ public class PlayerNetworkController : NetworkBehaviour
     {
         FindObjectOfType<ServerManager>().RemoveCardFromHand(card, id);
     }
-
+    [Command(requiresAuthority = false)]
+    public void CmdMassiveAttackAction()
+    {
+        StartCoroutine(FindObjectOfType<ServerManager>().MassiveAttackAction());
+    }
 }
