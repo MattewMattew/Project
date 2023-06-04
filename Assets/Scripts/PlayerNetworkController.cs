@@ -29,17 +29,14 @@ public class PlayerNetworkController : NetworkBehaviour
             }
         }
     }
+
     [ClientRpc]
     public void HealthUpdateClientRpc(uint id, int health)
     {
         if(netId == id)
             materialHP.material.SetFloat("_RemovedS", 9f - health);
     }
-    /*    void Update()
-        {
 
-
-        }*/
     [ClientRpc]
     public void TimerUpdateClientRpc(int timer, uint id)
     {
@@ -67,79 +64,23 @@ public class PlayerNetworkController : NetworkBehaviour
         }
                
     }
+
     [ClientRpc]
     public void RemoveCardFromInventoryClientRpc(uint id, CardAttributes card)
     {
         FindObjectOfType<GameManagerScript>().RemoveCardFromInventory(id, card);
     }
+
     [ClientRpc]
     public void UpdateInvClientRpc(PlayerNetworkController playerController, CardAttributes card, Transform playerInventory)
     {
         FindObjectOfType<GameManagerScript>().DetectInventory(playerController, playerInventory, card);
     }
+
     [ClientRpc]
     public void UpdateDiscardClientRpc(CardAttributes card)
     {
         FindObjectOfType<GameManagerScript>().IdentifyCardInDiscard(card);
-    }
-
-    public void setPlayerPosition(Vector2 pos)
-    {
-        transform.SetParent(GameObject.Find("Players").transform);
-        transform.localScale = new Vector3(1,1,1);
-        transform.localPosition = pos;
-    }
-
-    [Command(requiresAuthority = false)]
-    public void CmdUpdateInventory(CardAttributes card, PlayerNetworkController playerController, Transform playerInventory)
-    {
-        FindObjectOfType<ServerManager>().UpdateInventory(card, playerController, playerInventory);
-    }
-    [Command(requiresAuthority = false)]
-    public void CmdGiveCardToDiscard(CardAttributes card/*, uint id, uint target*/)
-    {
-        // StartCoroutine(FindObjectOfType<ServerManager>().DeleteCard(card, id));
-        FindObjectOfType<ServerManager>().GiveCardToDiscard(card/*, id, target*/);
-    }
-    [ClientRpc]
-    public void GetActionClientRpc(string action)
-    {
-        switch (action)
-        {
-            case "Bang":
-                {
-
-                    break;
-                }
-            case "Beer":
-                {
-
-                    break;
-                }
-        }
-    }
-
-    [Command(requiresAuthority = false)]
-    public void CmdRemoveCardFromInventory(CardAttributes card, uint id)
-    {
-        FindObjectOfType<ServerManager>().RemoveCardFromInventory(card, id);
-    }
-    [Command(requiresAuthority = false)]
-    public void CmdDefense()
-    {
-        FindObjectOfType<ServerManager>().GiveTurn(FindObjectOfType<ServerManager>().turnPlayerId, false);
-    }
-
-    [Command(requiresAuthority =false)]
-    public void CmdAttack(string card)
-    {
-        FindObjectOfType<ServerManager>().AttackAction(this, card);
-    }
-
-    [Command(requiresAuthority = false)]
-    public void CmdRegenerationHealth(uint id, CardAttributes card)
-    {
-        FindObjectOfType<ServerManager>().RegenerationHealth(id, card);
     }
 
     [ClientRpc]
@@ -158,16 +99,83 @@ public class PlayerNetworkController : NetworkBehaviour
         FindObjectOfType<GameManagerScript>().GiveHandCards(id, card);
     }
 
+
+
+
+
+
+
+     public void setPlayerPosition(Vector2 pos)
+    {
+        transform.SetParent(GameObject.Find("Players").transform);
+        transform.localScale = new Vector3(1,1,1);
+        transform.localPosition = pos;
+    }
+
+
+
+
+
+
+
+
+    [Command(requiresAuthority = false)]
+    public void CmdUpdateInventory(CardAttributes card, PlayerNetworkController playerController, Transform playerInventory)
+    {
+        FindObjectOfType<ServerManager>().UpdateInventory(card, playerController, playerInventory);
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdGiveCardToDiscard(CardAttributes card/*, uint id, uint target*/)
+    {
+        // StartCoroutine(FindObjectOfType<ServerManager>().DeleteCard(card, id));
+        FindObjectOfType<ServerManager>().GiveCardToDiscard(card/*, id, target*/);
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdRemoveCardFromInventory(CardAttributes card, uint id)
+    {
+        FindObjectOfType<ServerManager>().RemoveCardFromInventory(card, id);
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdDefense()
+    {
+        FindObjectOfType<ServerManager>().GiveTurn(FindObjectOfType<ServerManager>().turnPlayerId, false);
+    }
+    [Command(requiresAuthority = false)]
+    public void CmdDuel(uint id, string card)
+    {
+        if (FindObjectOfType<ServerManager>().turnPlayerId == id)
+            FindObjectOfType<ServerManager>().AttackAction(FindObjectOfType<ServerManager>().attackedPlayerId, card);
+        else if (FindObjectOfType<ServerManager>().attackedPlayerId == id)
+            FindObjectOfType<ServerManager>().AttackAction(FindObjectOfType<ServerManager>().turnPlayerId, card);
+    }
+
+    [Command(requiresAuthority =false)]
+    public void CmdAttack(string card)
+    {
+        FindObjectOfType<ServerManager>().AttackAction(this.netId, card);
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdRegenerationHealth(uint id, CardAttributes card)
+    {
+        FindObjectOfType<ServerManager>().RegenerationHealth(id, card);
+    }
+
     [Command(requiresAuthority = false)]
     public void CmdGiveHandCards(uint id, int cardsCount)
     {
         FindObjectOfType<ServerManager>().GiveHandCards(FindObjectOfType<ServerManager>().PackCards, id, cardsCount);
     }
+
     [Command(requiresAuthority =false)]
     public void CmdRemoveCardFromHand(uint id, CardAttributes card)
     {
         FindObjectOfType<ServerManager>().RemoveCardFromHand(card, id);
     }
+
     [Command(requiresAuthority = false)]
     public void CmdMassiveAttackAction(string card)
     {

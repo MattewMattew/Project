@@ -66,15 +66,21 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 switch (GetComponent<CardInfoScripts>().Name.text)
                 {
                     case "Bang":
+                    {
+                        if (FindObjectOfType<ServerManager>().turnModificator == "Indians")
                         {
-                            if (FindObjectOfType<ServerManager>().turnModificator == "Indians" || FindObjectOfType<ServerManager>().turnModificator == "Duel")
-                            {
-                                UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
-                                turnPlayer.CmdDefense();
-                            }
-                            else UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
-                            break;
+                            UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                            turnPlayer.CmdDefense();
                         }
+                        else if (FindObjectOfType<ServerManager>().turnModificator == "Duel")
+                        {
+                            UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                            turnPlayer.CmdDuel(turnPlayer.netId, "Duel");
+                        }
+                        else if (FindObjectOfType<ServerManager>().turnModificator == "No")
+                            UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        break;
+                    }
                     case "Barrel":
                     {
                         if (FindObjectOfType<ServerManager>().turnModificator == "No")

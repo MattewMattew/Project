@@ -196,7 +196,6 @@ public class ServerManager : NetworkBehaviour
     public void ChangeMove()
     {
         if(Coroutine != null) StopCoroutine(Coroutine);
-        print("Coroutine has been stoped");
         foreach (var player in FindObjectsOfType<PlayerNetworkController>())
         {
             if(player.netId == turnPlayerId)
@@ -233,7 +232,7 @@ public class ServerManager : NetworkBehaviour
     public void GiveTurn(uint id, bool target)
     {
         if (Coroutine != null) StopCoroutine(Coroutine);
-        print("Coroutine has been stoped");
+
         attackedPlayerId = 0;
         turnModificator = "No";
         if (!target)
@@ -247,7 +246,6 @@ public class ServerManager : NetworkBehaviour
         }
 
         Coroutine = StartCoroutine(MoveFunc());
-        print("Coroutine has been started");
     }
     [Server]
     public void GiveHandCards(SyncList<CardAttributes> pack, uint id, int cardsCount) // ���������� ���� � ����
@@ -338,10 +336,10 @@ public class ServerManager : NetworkBehaviour
         }
     }
     [Server]
-    public void AttackAction(PlayerNetworkController playerController, string card)
+    public void AttackAction(uint id, string card)
     {
-        print($"{playerController.netId} has been attacked");
-        GiveTurn(playerController.netId, true);
+        print($"{id} has been attacked");
+        GiveTurn(id, true);
         turnModificator = card;
     }
     [Server]

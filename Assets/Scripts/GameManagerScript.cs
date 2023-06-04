@@ -12,17 +12,6 @@ public class GameManagerScript : MonoBehaviour // Колода
     public GameObject CardPref;
     public TextMeshProUGUI CountCards;
     GameObject CardDiscard;
-    // int Move, MoveTime = 30;
-    // public TextMeshProUGUI MoveTimeTxt;
-    // public Button EndMoveBtn;
-    // public bool IsPlayerMove
-    // {
-    //     get
-    //     {
-    //     return Move % 2 == 0;
-    //     } 
-            
-    // }
 
     void Awake()
     {
