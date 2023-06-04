@@ -67,128 +67,160 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 {
                     case "Bang":
                         {
-                            if (FindObjectOfType<ServerManager>().turnModificator == "Attack")
+                            if (FindObjectOfType<ServerManager>().turnModificator == "Indians" || FindObjectOfType<ServerManager>().turnModificator == "Duel")
                             {
                                 UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                                 turnPlayer.CmdDefense();
-
                             }
                             else UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                             break;
                         }
                     case "Barrel":
                     {
-                        AddCardInventory();
+                        if (FindObjectOfType<ServerManager>().turnModificator == "No")
+                            AddCardInventory();
                         break;
                     }
                     case "Beer":
                     {
-                        turnPlayer.CmdRegenerationHealth(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        if (FindObjectOfType<ServerManager>().turnModificator == "No")
+                        {
+                            turnPlayer.CmdRegenerationHealth(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                            UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        }
                         break;
                     }
                     case "Carbine":
                     {
-                        AddCardInventory();
+                        if (FindObjectOfType<ServerManager>().turnModificator == "No")
+                            AddCardInventory();
                         break;
                     }
                     case "Diligence":
                     {
-                        turnPlayer.CmdGiveHandCards(turnPlayer.netId, 2);
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        if (FindObjectOfType<ServerManager>().turnModificator == "No")
+                        {
+                            turnPlayer.CmdGiveHandCards(turnPlayer.netId, 2);
+                            UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        }
                         break;
                     }
                     case "Duel":
                     {
-                        UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        if (FindObjectOfType<ServerManager>().turnModificator == "No")
+                            UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                         break;
                     }
                     case "Dynamite":
                     {
-                        AddCardInventory();
+                        if (FindObjectOfType<ServerManager>().turnModificator == "No")
+                            AddCardInventory();
                         break;
                     }
                     case "Gatling":
                     {
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
-                        turnPlayer.CmdMassiveAttackAction();
+                        if (FindObjectOfType<ServerManager>().turnModificator == "No")
+                        {
+                            UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                            turnPlayer.CmdMassiveAttackAction(GetComponent<CardInfoScripts>().SelfCard.Name);
+                        }
                         break;
                     }
                     case "General":
                     {
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        if (FindObjectOfType<ServerManager>().turnModificator == "No")
+                            UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                         break;
                     }
                     case "Indians":
                     {
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        if (FindObjectOfType<ServerManager>().turnModificator == "No")
+                        {
+                            UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                            turnPlayer.CmdMassiveAttackAction(GetComponent<CardInfoScripts>().SelfCard.Name);
+                        }
                         break;
                     }
                     case "Jail":
                     {
-                        UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        if (FindObjectOfType<ServerManager>().turnModificator == "No")
+                            UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                         break;
                     }
                     case "Missed":
+                    {
+                        if (FindObjectOfType<ServerManager>().turnModificator == "Gatling" || FindObjectOfType<ServerManager>().turnModificator == "Bang")
                         {
-                            if (FindObjectOfType<ServerManager>().turnModificator == "Attack")
-                            {
-                                UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
-                                turnPlayer.CmdDefense();
-                                
-                            }
-                            break;
+                            UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                            turnPlayer.CmdDefense();
+                            
                         }
+                        break;
+                    }
                     case "Mustang":
                     {
-                        AddCardInventory();
+                        if (FindObjectOfType<ServerManager>().turnModificator == "No")
+                            AddCardInventory();
                         break;
                     }
                     case "Panic":
                     {
-                        UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        if (FindObjectOfType<ServerManager>().turnModificator == "No")
+                            UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                         break;
                     }
                     case "Remington":
                     {
-                        AddCardInventory();
+                        if (FindObjectOfType<ServerManager>().turnModificator == "No")
+                            AddCardInventory();
                         break;
                     }
                     case "Saloon":
                     {
-                        turnPlayer.CmdRegenerationHealth(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        if (FindObjectOfType<ServerManager>().turnModificator == "No")
+                        {
+                            turnPlayer.CmdRegenerationHealth(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                            UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        }
                         break;
                     }
                     case "Scofield":
                     {
-                        AddCardInventory();
+                        if (FindObjectOfType<ServerManager>().turnModificator == "No")
+                            AddCardInventory();
                         break;
                     }
                     case "Volcanic":
                     {
-                        AddCardInventory();
+                        if (FindObjectOfType<ServerManager>().turnModificator == "No")
+                            AddCardInventory();
                         break;
                     }
                     case "WellsFargo":
                     {
-                        turnPlayer.CmdGiveHandCards(turnPlayer.netId, 3);
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        if (FindObjectOfType<ServerManager>().turnModificator == "No")
+                            {
+                                turnPlayer.CmdGiveHandCards(turnPlayer.netId, 3);
+                                UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                            }
                         break;
                     }
                     case "Winchester":
                     {
-                        AddCardInventory();
+                        if (FindObjectOfType<ServerManager>().turnModificator == "No")
+                            AddCardInventory();
                         break;
                     }
                     case "Women":
                     {
-                        UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        if (FindObjectOfType<ServerManager>().turnModificator == "No")
+                            UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                         break;
                     }
                     case "Roach":
                     {
-                        AddCardInventory();
+                        if (FindObjectOfType<ServerManager>().turnModificator == "No")
+                            AddCardInventory();
                         break;
                     }
                 } 

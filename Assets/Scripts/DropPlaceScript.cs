@@ -52,7 +52,8 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
                         FindObjectOfType<PlayerNetworkController>().CmdGiveCardToDiscard(card.GetComponent<CardInfoScripts>().SelfCard);
                             // FindObjectOfType<ServerManager>().turnPlayerId, 
                             // GetComponentInParent<NetworkIdentity>().netId);
-                        GetComponentInParent<PlayerNetworkController>().CmdAttack(card.GetComponent<CardInfoScripts>().SelfCard.Name);
+                        if (card.GetComponent<CardInfoScripts>().SelfCard.Name == "Bang" || card.GetComponent<CardInfoScripts>().SelfCard.Name == "Duel")
+                            GetComponentInParent<PlayerNetworkController>().CmdAttack(card.GetComponent<CardInfoScripts>().SelfCard.Name);
                         card.GetComponent<CardScript>().TempCard = null;
                         FindObjectOfType<PlayerNetworkController>().CmdRemoveCardFromHand(FindObjectOfType<ServerManager>().turnPlayerId, card.GetComponent<CardInfoScripts>().SelfCard);
                         Destroy(card);

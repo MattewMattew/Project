@@ -131,12 +131,9 @@ public class PlayerNetworkController : NetworkBehaviour
     }
 
     [Command(requiresAuthority =false)]
-    public void CmdAttack(string action)
+    public void CmdAttack(string card)
     {
-        if(action == "Bang")
-        {
-            FindObjectOfType<ServerManager>().AttackAction(this);
-        }
+        FindObjectOfType<ServerManager>().AttackAction(this, card);
     }
 
     [Command(requiresAuthority = false)]
@@ -172,8 +169,8 @@ public class PlayerNetworkController : NetworkBehaviour
         FindObjectOfType<ServerManager>().RemoveCardFromHand(card, id);
     }
     [Command(requiresAuthority = false)]
-    public void CmdMassiveAttackAction()
+    public void CmdMassiveAttackAction(string card)
     {
-        StartCoroutine(FindObjectOfType<ServerManager>().MassiveAttackAction());
+        StartCoroutine(FindObjectOfType<ServerManager>().MassiveAttackAction(card));
     }
 }

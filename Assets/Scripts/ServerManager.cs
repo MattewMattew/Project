@@ -243,7 +243,7 @@ public class ServerManager : NetworkBehaviour
         else
         {
             attackedPlayerId = id;
-            turnModificator = "Attack";
+            // turnModificator = "Attack";
         }
 
         Coroutine = StartCoroutine(MoveFunc());
@@ -338,22 +338,23 @@ public class ServerManager : NetworkBehaviour
         }
     }
     [Server]
-    public void AttackAction(PlayerNetworkController playerController)
+    public void AttackAction(PlayerNetworkController playerController, string card)
     {
         print($"{playerController.netId} has been attacked");
         GiveTurn(playerController.netId, true);
+        turnModificator = card;
     }
     [Server]
-    public IEnumerator MassiveAttackAction()
+    public IEnumerator MassiveAttackAction(string card)
     {
         foreach (var item in FindObjectsOfType<PlayerNetworkController>())
         {
             if (item.netId != turnPlayerId)
             {
                 GiveTurn(item.netId, true);
+                turnModificator = card;
                 while (attackedPlayerId != 0)
                 {
-                    print("fsad");
                     yield return new WaitForSeconds(1);
                 }
             }
