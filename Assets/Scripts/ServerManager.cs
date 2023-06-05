@@ -187,7 +187,29 @@ public class ServerManager : NetworkBehaviour
                 new RangePlayers(1, new Vector2(696, 0))
             };
         }
-/*        spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, 0), new Vector2(0, 421), new Vector2(696, 0) };*/
+        /*        spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, 0), new Vector2(0, 421), new Vector2(696, 0) };*/
+        var localPlayerId = (uint)0;
+        foreach (var item in players)
+        {
+            if (item.isLocalPlayer)
+            {
+                localPlayerId = item.netId; break;
+            }
+        }
+        for (int i = (int)localPlayerId-1; i < FindObjectOfType<NetworkManagerCard>().numPlayers; i++)
+        {
+            foreach (var player in players)
+            {
+                if(player.netId == localPlayerId)
+                {
+                    player.setPlayerPosition(rangePlayers[i].Range, rangePlayers[i].Pos);
+                }
+                else
+                {
+                    player.setPlayerPosition(rangePlayers[i].Range, rangePlayers[i].Pos);
+                }
+            }
+        }
         foreach (var player in players)
         {
             if(isServer) Healths.Add(new HealthList(player.netId, 4));
