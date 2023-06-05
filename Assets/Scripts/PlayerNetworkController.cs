@@ -14,7 +14,7 @@ public class PlayerNetworkController : NetworkBehaviour
 {
     public List<Material> Materials;
     Image materialHP;
-
+    public int Range;
     // Start is called before the first frame update
     void Start()
     {
@@ -105,11 +105,13 @@ public class PlayerNetworkController : NetworkBehaviour
 
 
 
-     public void setPlayerPosition(Vector2 pos)
+     public void setPlayerPosition(int range ,Vector2 pos)
     {
+        print($"{range} | {pos}");
         transform.SetParent(GameObject.Find("Players").transform);
         transform.localScale = new Vector3(1,1,1);
         transform.localPosition = pos;
+        Range = range;
     }
 
 

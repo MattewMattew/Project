@@ -18,7 +18,8 @@ public class ServerManager : NetworkBehaviour
     public readonly SyncList<HealthList> Healths = new SyncList<HealthList>();
 
 
-    private bool checkDuel = false;
+    public List<RangePlayers> rangePlayers = new List<RangePlayers>();
+
 
     private Coroutine Coroutine;
 
@@ -147,14 +148,28 @@ public class ServerManager : NetworkBehaviour
                         print($"{item1.Name} card in hand {item.Id}");
                     }
                 }*/
-/*        foreach (var item in Inventorys)
+        /*        foreach (var item in Inventorys)
+                {
+                    print($"{item.Cards.Count} cards have {item.Id} player in inventory");
+                    foreach (var item1 in item.Cards)
+                    {
+                        print($"{item.Id} player inventory have {item1.Name} card. In array {item.Cards.Count} cards");
+                    }
+                }*/
+        foreach (var item in FindObjectsOfType<PlayerNetworkController>())
         {
-            print($"{item.Cards.Count} cards have {item.Id} player in inventory");
-            foreach (var item1 in item.Cards)
-            {
-                print($"{item.Id} player inventory have {item1.Name} card. In array {item.Cards.Count} cards");
-            }
-        }*/
+            Debug.LogWarning($"range {item.Range} to {item.netId} player");
+        }
+    }
+    public struct RangePlayers
+    {
+        public int Range;
+        public Vector2 Pos;
+        public RangePlayers(int range, Vector2 pos)
+        {
+            Range = range;
+            Pos = pos;
+        }
     }
     void Start()
     {
@@ -164,20 +179,29 @@ public class ServerManager : NetworkBehaviour
             CmdCardAdded();
         }
         gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
-        spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, 0), new Vector2(0, 421), new Vector2(696, 0) };
+        if (FindObjectOfType<NetworkManagerCard>().numPlayers <= 4)
+        {
+            rangePlayers = new List<RangePlayers> { new RangePlayers(0, new Vector2(0, -237)), 
+                new RangePlayers(1, new Vector2(-696, 0)),
+                new RangePlayers(2, new Vector2(0, 421)),
+                new RangePlayers(1, new Vector2(696, 0))
+            };
+        }
+/*        spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, 0), new Vector2(0, 421), new Vector2(696, 0) };*/
         foreach (var player in players)
         {
             if(isServer) Healths.Add(new HealthList(player.netId, 4));
             if (player.isLocalPlayer)
             {
-                player.setPlayerPosition(spawnPoint[0]);
+                print(player.netId);
+                player.setPlayerPosition(rangePlayers[0].Range, rangePlayers[0].Pos);
             }
             else
             {
-                player.setPlayerPosition(spawnPoint[1]);
-                spawnPoint.RemoveAt(1);
+                print(player.netId);
+                player.setPlayerPosition(rangePlayers[1].Range, rangePlayers[1].Pos);
+                rangePlayers.RemoveAt(1);
             }
-
         }
 
     }
