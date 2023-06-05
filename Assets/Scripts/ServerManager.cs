@@ -156,10 +156,11 @@ public class ServerManager : NetworkBehaviour
                         print($"{item.Id} player inventory have {item1.Name} card. In array {item.Cards.Count} cards");
                     }
                 }*/
-        foreach (var item in FindObjectsOfType<PlayerNetworkController>())
-        {
-            Debug.LogWarning($"range {item.Range} to {item.netId} player");
-        }
+        // foreach (var item in FindObjectsOfType<PlayerNetworkController>())
+        // {
+        //     Debug.LogWarning($"range {item.Range} to {item.netId} player");
+        // }
+
     }
     public struct RangePlayers
     {
@@ -179,7 +180,7 @@ public class ServerManager : NetworkBehaviour
             CmdCardAdded();
         }
         gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
-        if (FindObjectOfType<NetworkManagerCard>().numPlayers <= 4)
+        if (players.Length <= 4)
         {
             rangePlayers = new List<RangePlayers> { new RangePlayers(0, new Vector2(0, -237)), 
                 new RangePlayers(1, new Vector2(-696, 0)),
@@ -188,48 +189,79 @@ public class ServerManager : NetworkBehaviour
             };
         }
         /*        spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, 0), new Vector2(0, 421), new Vector2(696, 0) };*/
-        var localPlayerId = (uint)0;
-        foreach (var item in players)
+        if (isClient)
         {
-            if (item.isLocalPlayer)
+            var localPlayerId = (uint)0;
+            bool checkLocalPlayer = false;
+
+            foreach (var item in players)
             {
-                localPlayerId = item.netId; break;
-            }
-        }
-        for (int i = (int)localPlayerId; rangePlayers.Count < 1 ; i++)
-        {
-            if (i >= FindObjectOfType<NetworkManagerCard>().numPlayers) i = 1;
-            foreach (var player in players)
-            {
-                if (player.netId == localPlayerId)
+                if (item.isLocalPlayer)
                 {
-                    player.setPlayerPosition(rangePlayers[0].Range, rangePlayers[0].Pos);
-                    // rangePlayers.RemoveAt(0);
-                    break;
-                }
-                else if (player.netId == i)
-                {
-                    player.setPlayerPosition(rangePlayers[1].Range, rangePlayers[1].Pos);
-                    rangePlayers.RemoveAt(1);
-                    break;
+                    localPlayerId = item.netId; break;
                 }
             }
-        }
-        foreach (var player in players)
-        {
-            if(isServer) Healths.Add(new HealthList(player.netId, 4));
-            if (player.isLocalPlayer)
+            
+            for (int i = (int)localPlayerId; rangePlayers.Count > 0 ; i++)
             {
-                print(player.netId);
-                player.setPlayerPosition(rangePlayers[0].Range, rangePlayers[0].Pos);
-            }
-            else
-            {
-                print(player.netId);
-                player.setPlayerPosition(rangePlayers[1].Range, rangePlayers[1].Pos);
-                rangePlayers.RemoveAt(1);
+                if (i > players.Length) i = 1;
+                foreach (var player in players)
+                {
+                    if (player.netId == localPlayerId && !checkLocalPlayer)
+                    {
+                        checkLocalPlayer = true;
+                        player.setPlayerPosition(rangePlayers[0].Range, rangePlayers[0].Pos);
+                        rangePlayers.RemoveAt(0);
+                        break;
+                    }
+                    else if (player.netId == i)
+                    {
+                        player.setPlayerPosition(rangePlayers[0].Range, rangePlayers[0].Pos);
+                        rangePlayers.RemoveAt(0);
+                        break;
+                    }
+                }
             }
         }
+
+        // int i = (int)localPlayerId;
+        // while (rangePlayers.Count > 0)
+        // {
+        //     if (i > FindObjectOfType<NetworkManagerCard>().numPlayers) i = 1;
+        //     foreach (var player in players)
+        //     {
+        //         if (player.netId == localPlayerId)
+        //         {
+        //             player.setPlayerPosition(rangePlayers[0].Range, rangePlayers[0].Pos);
+        //             rangePlayers.RemoveAt(0);
+        //             i++;
+        //             break;
+        //         }
+        //         else if (player.netId == i)
+        //         {
+        //             player.setPlayerPosition(rangePlayers[0].Range, rangePlayers[0].Pos);
+        //             rangePlayers.RemoveAt(0);
+        //             i++;
+        //             break;
+        //         }
+        //     }
+        // }
+
+        // foreach (var player in players)
+        // {
+        //     if(isServer) Healths.Add(new HealthList(player.netId, 4));
+        //     if (player.isLocalPlayer)
+        //     {
+        //         // print(player.netId);
+        //         player.setPlayerPosition(rangePlayers[0].Range, rangePlayers[0].Pos);
+        //     }
+        //     else
+        //     {
+        //         // print(player.netId);
+        //         player.setPlayerPosition(rangePlayers[1].Range, rangePlayers[1].Pos);
+        //         rangePlayers.RemoveAt(1);
+        //     }
+        // }
 
     }
     [Server]

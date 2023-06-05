@@ -107,7 +107,8 @@ public class PlayerNetworkController : NetworkBehaviour
 
      public void setPlayerPosition(int range ,Vector2 pos)
     {
-        print($"{range} | {pos}");
+        print($"{range} | {pos} | {netId}");
+        
         transform.SetParent(GameObject.Find("Players").transform);
         transform.localScale = new Vector3(1,1,1);
         transform.localPosition = pos;
