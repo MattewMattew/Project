@@ -247,21 +247,11 @@ public class ServerManager : NetworkBehaviour
         //     }
         // }
 
-        // foreach (var player in players)
-        // {
-        //     if(isServer) Healths.Add(new HealthList(player.netId, 4));
-        //     if (player.isLocalPlayer)
-        //     {
-        //         // print(player.netId);
-        //         player.setPlayerPosition(rangePlayers[0].Range, rangePlayers[0].Pos);
-        //     }
-        //     else
-        //     {
-        //         // print(player.netId);
-        //         player.setPlayerPosition(rangePlayers[1].Range, rangePlayers[1].Pos);
-        //         rangePlayers.RemoveAt(1);
-        //     }
-        // }
+        foreach (var player in players)
+        {
+            if(isServer) Healths.Add(new HealthList(player.netId, 4));
+
+        }
 
     }
     [Server]
