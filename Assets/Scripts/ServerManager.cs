@@ -4,7 +4,7 @@ using UnityEngine;
 using Mirror;
 using UnityEngine.XR;
 using System;
-using static UnityEditor.Progress;
+// using static UnityEditor.Progress;
 using System.IO;
 
 public class ServerManager : NetworkBehaviour
@@ -196,17 +196,22 @@ public class ServerManager : NetworkBehaviour
                 localPlayerId = item.netId; break;
             }
         }
-        for (int i = (int)localPlayerId-1; i < FindObjectOfType<NetworkManagerCard>().numPlayers; i++)
+        for (int i = (int)localPlayerId; rangePlayers.Count < 1 ; i++)
         {
+            if (i >= FindObjectOfType<NetworkManagerCard>().numPlayers) i = 1;
             foreach (var player in players)
             {
-                if(player.netId == localPlayerId)
+                if (player.netId == localPlayerId)
                 {
-                    player.setPlayerPosition(rangePlayers[i].Range, rangePlayers[i].Pos);
+                    player.setPlayerPosition(rangePlayers[0].Range, rangePlayers[0].Pos);
+                    // rangePlayers.RemoveAt(0);
+                    break;
                 }
-                else
+                else if (player.netId == i)
                 {
-                    player.setPlayerPosition(rangePlayers[i].Range, rangePlayers[i].Pos);
+                    player.setPlayerPosition(rangePlayers[1].Range, rangePlayers[1].Pos);
+                    rangePlayers.RemoveAt(1);
+                    break;
                 }
             }
         }

@@ -7,7 +7,7 @@ using TMPro;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
+// using static UnityEditor.Progress;
 // using UnityEditor.Localization.Plugins.XLIFF.V20;
 
 public class PlayerNetworkController : NetworkBehaviour
