@@ -24,13 +24,6 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
 
     public void OnPointerClick(PointerEventData eventData)
     {
-/*        var players = FindObjectsOfType<PlayerNetworkController>();
-        PlayerNetworkController turnedPlayer = new PlayerNetworkController();
-        foreach (var player in players)
-        {
-            if (player.netId == FindObjectOfType<ServerManager>().turnPlayerId) turnedPlayer = player;
-        }*/
-        // print($"{turnedPlayer.isLocalPlayer} is localplayer is turned");
         GameObject[] cards = GameObject.FindGameObjectsWithTag("Card");
         foreach (var card in cards)
         {
@@ -50,17 +43,16 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
                     else
                     {
                         FindObjectOfType<PlayerNetworkController>().CmdGiveCardToDiscard(card.GetComponent<CardInfoScripts>().SelfCard);
-                            // FindObjectOfType<ServerManager>().turnPlayerId, 
-                            // GetComponentInParent<NetworkIdentity>().netId);
                         if (card.GetComponent<CardInfoScripts>().SelfCard.Name == "Bang")
                             GetComponentInParent<PlayerNetworkController>().CmdAttack(card.GetComponent<CardInfoScripts>().SelfCard.Name);
                         if (card.GetComponent<CardInfoScripts>().SelfCard.Name == "Duel")
-                            GetComponentInParent<PlayerNetworkController>().CmdDuel(FindObjectOfType<ServerManager>().turnPlayerId, GetComponentInParent<PlayerNetworkController>().netId);
+                            GetComponentInParent<PlayerNetworkController>().CmdDuel(FindObjectOfType<ServerManager>().turnPlayerId, 
+                                                                             GetComponentInParent<PlayerNetworkController>().netId);
                         card.GetComponent<CardScript>().TempCard = null;
-                        FindObjectOfType<PlayerNetworkController>().CmdRemoveCardFromHand(FindObjectOfType<ServerManager>().turnPlayerId, card.GetComponent<CardInfoScripts>().SelfCard);
+                        FindObjectOfType<PlayerNetworkController>().CmdRemoveCardFromHand(FindObjectOfType<ServerManager>().turnPlayerId, 
+                                                                    card.GetComponent<CardInfoScripts>().SelfCard);
                         Destroy(card);
                     }
-                    // FindObjectOfType<PlayerNetworkController>().CmdRemoveCard(item.GetComponent<CardInfoScripts>().SelfCard, turnedPlayer.netId);
                 }   
             }
         }

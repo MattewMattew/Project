@@ -24,7 +24,7 @@ public class GameManagerScript : MonoBehaviour // Колода
     }
     void Start()
     {
-
+        
     }
 
     public void ButtonActivation(uint id)
@@ -101,6 +101,14 @@ public class GameManagerScript : MonoBehaviour // Колода
         if (CardDiscard == null) 
             CardDiscard = Instantiate(CardPref, DiscardTransform, false);
         CardDiscard.GetComponent<CardInfoScripts>().ShowCardInfo(card);
+    }
+    public void UpdateCountCards(int cardCount, uint id)
+    {
+        foreach (var player in GameObject.FindGameObjectsWithTag("CardCount"))
+        {
+            if (player.GetComponentInParent<PlayerNetworkController>().netId == id)
+                player.GetComponent<TextMeshProUGUI>().text = cardCount.ToString();
+        }
     }
 
 

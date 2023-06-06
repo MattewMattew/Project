@@ -209,7 +209,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                         UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
-                        AddCardInventory();
+                        AddCardInventory(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                     break;
                 }
                 case "Dynamite":
@@ -218,7 +218,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                         UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
-                        AddCardInventory();
+                        AddCardInventory(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                     break;
                 }
                 case "Jail":
@@ -236,7 +236,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                         UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
-                        AddCardInventory();
+                        AddCardInventory(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                     break;
                 }
                 case "Roach":
@@ -245,7 +245,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                         UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
-                        AddCardInventory();
+                        AddCardInventory(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                     break;
                 }
 
@@ -257,7 +257,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                         UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
-                        AddCardInventory();
+                        AddCardInventory(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                     break;
                 }
                 case "Remington":
@@ -266,7 +266,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                         UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
-                        AddCardInventory();
+                        AddCardInventory(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                     break;
                 }
                 case "Scofield":
@@ -275,7 +275,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                         UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
-                        AddCardInventory();
+                        AddCardInventory(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                     break;
                 }
                 case "Volcanic":
@@ -284,7 +284,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                         UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
-                        AddCardInventory();
+                        AddCardInventory(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                     break;
                 }
                 case "Winchester":
@@ -293,14 +293,14 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                         UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
-                        AddCardInventory();
+                        AddCardInventory(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                     break;
                 }
             } 
         }
     }
 
-    void AddCardInventory()
+    void AddCardInventory(uint id, CardAttributes card)
     {
         var players = FindObjectsOfType<PlayerNetworkController>();
         foreach (var player in players)
@@ -325,6 +325,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                     }
                 }
                 player.CmdUpdateInventory(GetComponent<CardInfoScripts>().SelfCard, player ,player.transform);
+                FindObjectOfType<PlayerNetworkController>().CmdRemoveCardFromHand(id, card);
                 Destroy(gameObject);
             }
         }

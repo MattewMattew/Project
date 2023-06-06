@@ -282,8 +282,8 @@ GameObject:
   - component: {fileID: 7762287874011710083}
   - component: {fileID: 4991020093963672895}
   m_Layer: 5
-  m_Name: CardCount
-  m_TagString: Untagged
+  m_Name: Range
+  m_TagString: Range
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -300,12 +300,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5621470554599813795}
-  m_RootOrder: 3
+  m_Father: {fileID: 5621470555457454582}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -70.8, y: -82.266}
+  m_AnchoredPosition: {x: -0.000015258789, y: -0.00001335144}
   m_SizeDelta: {x: 52.766, y: 52.767}
   m_Pivot: {x: 0.5, y: 0.50000036}
 --- !u!222 &7762287874011710083
@@ -591,7 +591,6 @@ RectTransform:
   - {fileID: 5621470555457454582}
   - {fileID: 5621470555685250228}
   - {fileID: 5717075150495380322}
-  - {fileID: 8023337944680721431}
   m_Father: {fileID: 5621470554775821630}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -851,7 +850,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8023337944680721431}
   m_Father: {fileID: 5621470554599813795}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -988,7 +988,7 @@ GameObject:
   - component: {fileID: 5621470556028773668}
   m_Layer: 5
   m_Name: CardCount
-  m_TagString: Untagged
+  m_TagString: CardCount
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -38,7 +38,7 @@ public class CardInfoScripts : MonoBehaviour
       /* _________________________________________________ DISPOSABLE CARD _______________________________________________________________ */
          case "Bang":
          {
-            Name.text = "Выстрел";
+            // Name.text = "Выстрел";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Bang");
             Type.GetComponent<Image>().color = Color.red;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
@@ -47,7 +47,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Missed":
          {
-            Name.text = "Промах";
+            // Name.text = "Промах";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Missed");
             Type.GetComponent<Image>().color = Color.red;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
@@ -56,7 +56,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Beer":
          {
-            Name.text = "Пиво";
+            // Name.text = "Пиво";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Beer");
             Type.GetComponent<Image>().color = Color.red;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
@@ -65,7 +65,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Panic":
          {
-            Name.text = "Воровство";
+            // Name.text = "Воровство";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Panic");
             Type.GetComponent<Image>().color = Color.red;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
@@ -74,7 +74,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Gatling":
          {
-            Name.text = "Турель";
+            // Name.text = "Турель";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Gatling");
             Type.GetComponent<Image>().color = Color.red;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
@@ -83,7 +83,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "WellsFargo":
          {
-            Name.text = "Контробанда";
+            // Name.text = "Контробанда";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/WellsFargo");
             Type.GetComponent<Image>().color = Color.red;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
@@ -92,7 +92,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Diligence":
          {
-            Name.text = "Контейнер";
+            // Name.text = "Контейнер";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Diligence");
             Type.GetComponent<Image>().color = Color.red;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
@@ -101,7 +101,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "General":
          {
-            Name.text = "Снабжение";
+            // Name.text = "Снабжение";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/General");
             Type.GetComponent<Image>().color = Color.red;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
@@ -110,7 +110,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Duel":
          {
-            Name.text = "Дуэль";
+            // Name.text = "Дуэль";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Duel");
             Type.GetComponent<Image>().color = Color.red;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
@@ -118,7 +118,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Saloon":
          {
-            Name.text = "Бар";
+            // Name.text = "Бар";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Saloon");
             Type.GetComponent<Image>().color = Color.red;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
@@ -127,7 +127,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Women":
          {
-            Name.text = "Устрашение";
+            // Name.text = "Устрашение";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Women");
             Type.GetComponent<Image>().color = Color.red;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
@@ -136,7 +136,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Indians":
          {
-            Name.text = "Заключенные";
+            // Name.text = "Заключенные";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Indians");
             Type.GetComponent<Image>().color = Color.red;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
@@ -148,7 +148,7 @@ public class CardInfoScripts : MonoBehaviour
 
          case "Barrel":
          {
-            Name.text = "Укрытие";
+            // Name.text = "Укрытие";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Barrel");
             Type.GetComponent<Image>().color = Color.blue;
             InfoTypeCard = TypeCard.PERMANENT_CARD;
@@ -156,7 +156,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Dynamite":
          {
-            Name.text = "Граната";
+            // Name.text = "Граната";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Dynamite");
             Type.GetComponent<Image>().color = Color.blue;
             InfoTypeCard = TypeCard.PERMANENT_CARD;
@@ -164,7 +164,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Jail":
          {
-            Name.text = "Карцер";
+            // Name.text = "Карцер";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Jail");
             Type.GetComponent<Image>().color = Color.blue;
             InfoTypeCard = TypeCard.PERMANENT_CARD;
@@ -172,7 +172,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Mustang":
          {
-            Name.text = "Джетпак";
+            // Name.text = "Джетпак";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Mustang");
             Type.GetComponent<Image>().color = Color.blue;
             InfoTypeCard = TypeCard.PERMANENT_CARD;
@@ -180,7 +180,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Roach":
          {
-            Name.text = "Прицел";
+            // Name.text = "Прицел";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Roach");
             Type.GetComponent<Image>().color = Color.blue;
             InfoTypeCard = TypeCard.PERMANENT_CARD;
@@ -191,7 +191,7 @@ public class CardInfoScripts : MonoBehaviour
 
       case "Carbine":
          {
-            Name.text = "Blast-1";
+            // Name.text = "Blast-1";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Carbine");
             Type.GetComponent<Image>().color = Color.blue;
             InfoTypeCard = TypeCard.WEAPON_CARD;
@@ -200,7 +200,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Remington":
          {
-            Name.text = "SL-9";
+            // Name.text = "SL-9";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Remington");
             Type.GetComponent<Image>().color = Color.blue;
             InfoTypeCard = TypeCard.WEAPON_CARD;
@@ -209,7 +209,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Scofield":
          {
-            Name.text = "GL-16";
+            // Name.text = "GL-16";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Scofield");
             Type.GetComponent<Image>().color = Color.blue;
             InfoTypeCard = TypeCard.WEAPON_CARD;
@@ -218,7 +218,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Volcanic":
          {
-            Name.text = "PP-90G1";
+            // Name.text = "PP-90G1";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Volcanic");
             Type.GetComponent<Image>().color = Color.blue;
             InfoTypeCard = TypeCard.WEAPON_CARD;
@@ -226,7 +226,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Winchester":
          {
-            Name.text = "SSJ-69";
+            // Name.text = "SSJ-69";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Winchester");
             Type.GetComponent<Image>().color = Color.blue;
             InfoTypeCard = TypeCard.WEAPON_CARD;

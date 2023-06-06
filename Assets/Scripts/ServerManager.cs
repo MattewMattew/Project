@@ -140,14 +140,14 @@ public class ServerManager : NetworkBehaviour
         /*        print(PackCards.Count + " " + "ServerManager");
                 print($"{turnPlayerId}");
                 print($"{Discard.Count} Discard");*/
-        /*        foreach (var item in Hands)
-                {
-                    print($"{item.Cards.Count} in {item.Id} hand");
-                    foreach (var item1 in item.Cards)
-                    {
-                        print($"{item1.Name} card in hand {item.Id}");
-                    }
-                }*/
+            //    foreach (var item in Hands)
+            //     {
+            //         print($"{item.Cards.Count} in {item.Id} hand");
+            //         foreach (var item1 in item.Cards)
+            //         {
+            //             print($"{item1.Name} card in hand {item.Id}");
+            //         }
+            //     }
         /*        foreach (var item in Inventorys)
                 {
                     print($"{item.Cards.Count} cards have {item.Id} player in inventory");
@@ -408,6 +408,7 @@ public class ServerManager : NetworkBehaviour
                     }
                     dumpList.Add(pack[0]);
                     Hands[Hands.IndexOf(hand)] = new HandList(id, dumpList);
+                    FindObjectOfType<PlayerNetworkController>().UpdateCountCardsClientRpc(dumpList.Count, id);
                 }
             }
         }
@@ -509,6 +510,7 @@ public class ServerManager : NetworkBehaviour
                     }
                 }
                 Hands[Hands.IndexOf(item)] = new HandList(id, list);
+                FindObjectOfType<PlayerNetworkController>().UpdateCountCardsClientRpc(list.Count, id);
             }
         }
     }

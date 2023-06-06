@@ -15,7 +15,6 @@ public class PlayerNetworkController : NetworkBehaviour
     public List<Material> Materials;
     Image materialHP;
     public int Range;
-    // Start is called before the first frame update
     void Start()
     {
         var materialComponents = GetComponentsInChildren<Image>();
@@ -47,7 +46,6 @@ public class PlayerNetworkController : NetworkBehaviour
             {
                 if(value.tag == "Timer")
                 {
-                    // print($"ative {id} {value.GetComponent<TextMeshProUGUI>().gameObject.activeSelf}");
                     if (!value.GetComponent<TextMeshProUGUI>().enabled)
                         value.GetComponent<TextMeshProUGUI>().enabled = true;
                     value.GetComponent<TextMeshProUGUI>().text = timer.ToString();
@@ -76,6 +74,11 @@ public class PlayerNetworkController : NetworkBehaviour
     {
         FindObjectOfType<GameManagerScript>().DetectInventory(playerController, playerInventory, card);
     }
+    [ClientRpc]
+    public void UpdateCountCardsClientRpc(int countCards, uint id)
+    {
+        FindObjectOfType<GameManagerScript>().UpdateCountCards(countCards, id);
+    }
 
     [ClientRpc]
     public void UpdateDiscardClientRpc(CardAttributes card)
@@ -96,7 +99,6 @@ public class PlayerNetworkController : NetworkBehaviour
     [ClientRpc]
     public void RemoveCardFromHandClientRpc(CardAttributes card)
     {
-        print($"{card.Name} send to be deleted");
         FindObjectOfType<GameManagerScript>().RemoveCardFromHand(card);
     }
 
@@ -110,16 +112,6 @@ public class PlayerNetworkController : NetworkBehaviour
     public void ButtonActivationClientRpc(uint id)
     {   
         FindObjectOfType<GameManagerScript>().ButtonActivation(id);
-        // print($"id button {id}");
-        // if (netId == id && isLocalPlayer)
-        // {
-
-        //     FindObjectOfType<Button>().enabled = true;
-        // }
-        // else
-        // {
-        //     FindObjectOfType<Button>().enabled = false;
-        // }
 
     }
 
@@ -131,12 +123,14 @@ public class PlayerNetworkController : NetworkBehaviour
 
      public void setPlayerPosition(int range ,Vector2 pos)
     {
-        print($"{range} | {pos} | {netId}");
-        
         transform.SetParent(GameObject.Find("Players").transform);
         transform.localScale = new Vector3(1,1,1);
         transform.localPosition = pos;
-        Range = range;
+        foreach (var item in GameObject.FindGameObjectsWithTag("Range"))
+        {
+            if (item.GetComponentInParent<PlayerNetworkController>().netId == netId)
+                item.GetComponent<TextMeshProUGUI>().text = range.ToString();
+        }
     }
 
 
@@ -153,10 +147,9 @@ public class PlayerNetworkController : NetworkBehaviour
     }
 
     [Command(requiresAuthority = false)]
-    public void CmdGiveCardToDiscard(CardAttributes card/*, uint id, uint target*/)
+    public void CmdGiveCardToDiscard(CardAttributes card)
     {
-        // StartCoroutine(FindObjectOfType<ServerManager>().DeleteCard(card, id));
-        FindObjectOfType<ServerManager>().GiveCardToDiscard(card/*, id, target*/);
+        FindObjectOfType<ServerManager>().GiveCardToDiscard(card);
     }
 
     [Command(requiresAuthority = false)]
@@ -174,10 +167,6 @@ public class PlayerNetworkController : NetworkBehaviour
     public void CmdDuel(uint idAttacking, uint idDefenser)
     {
         FindObjectOfType<ServerManager>().DuelAction(idAttacking, idDefenser);
-/*        if (FindObjectOfType<ServerManager>().turnPlayerId == id)
-            FindObjectOfType<ServerManager>().AttackAction(FindObjectOfType<ServerManager>().attackedPlayerId, card);
-        else if (FindObjectOfType<ServerManager>().attackedPlayerId == id)
-            FindObjectOfType<ServerManager>().AttackAction(FindObjectOfType<ServerManager>().turnPlayerId, card);*/
     }
     [Command(requiresAuthority =false)]
     public void CmdAttack(string card)
