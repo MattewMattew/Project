@@ -189,9 +189,9 @@ public class CardInfoScripts : MonoBehaviour
 
 /* _________________________________________________ WEAPON CARD ___________________________________________________________________ */
 
-         case "Carbine":
+      case "Carbine":
          {
-            Name.text = "";
+            Name.text = "Blast-1";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Carbine");
             Type.GetComponent<Image>().color = Color.blue;
             InfoTypeCard = TypeCard.WEAPON_CARD;
@@ -200,7 +200,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Remington":
          {
-            Name.text = "";
+            Name.text = "SL-9";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Remington");
             Type.GetComponent<Image>().color = Color.blue;
             InfoTypeCard = TypeCard.WEAPON_CARD;
@@ -209,7 +209,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Scofield":
          {
-            Name.text = "";
+            Name.text = "GL-16";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Scofield");
             Type.GetComponent<Image>().color = Color.blue;
             InfoTypeCard = TypeCard.WEAPON_CARD;
@@ -218,7 +218,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Volcanic":
          {
-            Name.text = "";
+            Name.text = "PP-90G1";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Volcanic");
             Type.GetComponent<Image>().color = Color.blue;
             InfoTypeCard = TypeCard.WEAPON_CARD;
@@ -226,13 +226,13 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Winchester":
          {
-            Name.text = "";
+            Name.text = "SSJ-69";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Winchester");
             Type.GetComponent<Image>().color = Color.blue;
             InfoTypeCard = TypeCard.WEAPON_CARD;
             Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Винчестер)");
             break;
-         }       
+         }          
       }
 
       switch (card.Suit)
