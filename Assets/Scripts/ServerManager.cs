@@ -180,7 +180,7 @@ public class ServerManager : NetworkBehaviour
             CmdCardAdded();
         }
         gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
-        if (players.Length <= 6)
+        if (players.Length == 6)
         {
             rangePlayers = new List<RangePlayers> { new RangePlayers(0, new Vector2(46, -324)),
                 new RangePlayers(1, new Vector2(-584, -91)),
@@ -197,11 +197,12 @@ public class ServerManager : NetworkBehaviour
                 new RangePlayers(1, new Vector2(696, 0))*/
             };
         }
-        else if(players.Length <= 2)
+        else if(players.Length == 2)
         {
             rangePlayers = new List<RangePlayers> {
                 new RangePlayers(0, new Vector2(0, -237)), 
-                new RangePlayers(1, new Vector2(-696, 0))
+                new RangePlayers(1, new Vector2(-696, 0)),
+
             };
         }
         /*        spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, 0), new Vector2(0, 421), new Vector2(696, 0) };*/
@@ -260,12 +261,12 @@ public class ServerManager : NetworkBehaviour
                     player.TimerUpdateClientRpc(MoveTime, attackedPlayerId);
                 else
                     player.TimerUpdateClientRpc(MoveTime, turnPlayerId);
+
             }
             yield return new WaitForSeconds(1);
         }
         if(turnModificator == "Discarding")
         {
-            print("Some");
             foreach (var player in players)
                 foreach (var hand in Hands)
                 {
@@ -278,12 +279,10 @@ public class ServerManager : NetworkBehaviour
                             if(player.netId == turnPlayerId)
                                 if(health.Id == player.netId)
                                 {
-                                    print($"{hand.Cards.Count} - {Healths[Healths.IndexOf(health)].Health} = {list.Count - Healths[Healths.IndexOf(health)].Health}");
                                     for (int i = 0; i < hand.Cards.Count - Healths[Healths.IndexOf(health)].Health; i++)
                                     {
-                                        print("for");
                                         int index = UnityEngine.Random.Range(0, list.Count);
-                                        print($"Discarding {list[index].Name}");
+                                        GiveCardToDiscard(list[index]);
                                         player.RemoveCardFromHandClientRpc(list[index]);
                                         list.RemoveAt(index);
                                     }
@@ -325,7 +324,6 @@ public class ServerManager : NetworkBehaviour
                 }
                 if(discardCard > 0) 
                 {
-                    print("Someee");
                     turnModificator = "Discarding";
                     Coroutine = StartCoroutine(MoveFunc(10));
                     player.EndTurnClientRpc();
@@ -372,7 +370,7 @@ public class ServerManager : NetworkBehaviour
             Coroutine = StartCoroutine(MoveFunc(15));
             // turnModificator = "Attack";
         }
-
+        FindObjectOfType<PlayerNetworkController>().ButtonActivationClientRpc(id);
         
     }
     [Server]

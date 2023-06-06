@@ -106,6 +106,23 @@ public class PlayerNetworkController : NetworkBehaviour
         FindObjectOfType<GameManagerScript>().GiveHandCards(id, card);
     }
 
+    [ClientRpc]
+    public void ButtonActivationClientRpc(uint id)
+    {   
+        FindObjectOfType<GameManagerScript>().ButtonActivation(id);
+        // print($"id button {id}");
+        // if (netId == id && isLocalPlayer)
+        // {
+
+        //     FindObjectOfType<Button>().enabled = true;
+        // }
+        // else
+        // {
+        //     FindObjectOfType<Button>().enabled = false;
+        // }
+
+    }
+
 
 
 
