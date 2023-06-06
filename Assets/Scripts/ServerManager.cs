@@ -182,10 +182,19 @@ public class ServerManager : NetworkBehaviour
         gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
         if (players.Length <= 4)
         {
-            rangePlayers = new List<RangePlayers> { new RangePlayers(0, new Vector2(0, -237)), 
+            rangePlayers = new List<RangePlayers> { new RangePlayers(0, new Vector2(46, -324)),
+                new RangePlayers(1, new Vector2(-584, -91)),
+                new RangePlayers(2, new Vector2(-569, 148)),
+                new RangePlayers(3, new Vector2(-279, 399)),
+                new RangePlayers(2, new Vector2(500, 399)),
+                new RangePlayers(1, new Vector2(595, 142)),
+                /*new RangePlayers(1, new Vector2(593, -92))*/
+                
+                
+                /*new RangePlayers(0, new Vector2(0, -237)), 
                 new RangePlayers(1, new Vector2(-696, 0)),
                 new RangePlayers(2, new Vector2(0, 421)),
-                new RangePlayers(1, new Vector2(696, 0))
+                new RangePlayers(1, new Vector2(696, 0))*/
             };
         }
         /*        spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, 0), new Vector2(0, 421), new Vector2(696, 0) };*/
@@ -223,29 +232,6 @@ public class ServerManager : NetworkBehaviour
                 }
             }
         }
-
-        // int i = (int)localPlayerId;
-        // while (rangePlayers.Count > 0)
-        // {
-        //     if (i > FindObjectOfType<NetworkManagerCard>().numPlayers) i = 1;
-        //     foreach (var player in players)
-        //     {
-        //         if (player.netId == localPlayerId)
-        //         {
-        //             player.setPlayerPosition(rangePlayers[0].Range, rangePlayers[0].Pos);
-        //             rangePlayers.RemoveAt(0);
-        //             i++;
-        //             break;
-        //         }
-        //         else if (player.netId == i)
-        //         {
-        //             player.setPlayerPosition(rangePlayers[0].Range, rangePlayers[0].Pos);
-        //             rangePlayers.RemoveAt(0);
-        //             i++;
-        //             break;
-        //         }
-        //     }
-        // }
 
         foreach (var player in players)
         {
