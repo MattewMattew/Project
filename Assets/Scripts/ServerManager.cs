@@ -180,7 +180,7 @@ public class ServerManager : NetworkBehaviour
             CmdCardAdded();
         }
         gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
-        if (players.Length <= 4)
+        if (players.Length <= 6)
         {
             rangePlayers = new List<RangePlayers> { new RangePlayers(0, new Vector2(46, -324)),
                 new RangePlayers(1, new Vector2(-584, -91)),
@@ -195,6 +195,13 @@ public class ServerManager : NetworkBehaviour
                 new RangePlayers(1, new Vector2(-696, 0)),
                 new RangePlayers(2, new Vector2(0, 421)),
                 new RangePlayers(1, new Vector2(696, 0))*/
+            };
+        }
+        else if(players.Length <= 2)
+        {
+            rangePlayers = new List<RangePlayers> {
+                new RangePlayers(0, new Vector2(0, -237)), 
+                new RangePlayers(1, new Vector2(-696, 0))
             };
         }
         /*        spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, 0), new Vector2(0, 421), new Vector2(696, 0) };*/
@@ -241,9 +248,9 @@ public class ServerManager : NetworkBehaviour
 
     }
     [Server]
-    IEnumerator MoveFunc()
+    IEnumerator MoveFunc(int time)
     {
-        MoveTime = 15;
+        MoveTime = time;
         PlayerNetworkController[] players = FindObjectsOfType<PlayerNetworkController>();
         while (MoveTime-- > 0)
         {
@@ -256,28 +263,80 @@ public class ServerManager : NetworkBehaviour
             }
             yield return new WaitForSeconds(1);
         }
+        if(turnModificator == "Discarding")
+        {
+            print("Some");
+            foreach (var player in players)
+                foreach (var hand in Hands)
+                {
+                    if(player.netId == hand.Id)
+                    {
+                        List<CardAttributes> list = new List<CardAttributes>();
+                        foreach (var card in hand.Cards)
+                            list.Add(card);
+                        foreach (var health in Healths)
+                            if(player.netId == turnPlayerId)
+                                if(health.Id == player.netId)
+                                {
+                                    print($"{hand.Cards.Count} - {Healths[Healths.IndexOf(health)].Health} = {list.Count - Healths[Healths.IndexOf(health)].Health}");
+                                    for (int i = 0; i < hand.Cards.Count - Healths[Healths.IndexOf(health)].Health; i++)
+                                    {
+                                        print("for");
+                                        int index = UnityEngine.Random.Range(0, list.Count);
+                                        print($"Discarding {list[index].Name}");
+                                        player.RemoveCardFromHandClientRpc(list[index]);
+                                        list.RemoveAt(index);
+                                    }
+                                    break;
+                                }
+                        Hands[Hands.IndexOf(hand)] = new HandList(player.netId, list);
+                        break;
+                    }
+                }
+        }
         ChangeMove();
     }
 
     [Server]
     public void ChangeMove()
     {
+        turnModificator = "No";
         duelTargetPlayerId = 0;
         if(Coroutine != null) StopCoroutine(Coroutine);
         foreach (var player in FindObjectsOfType<PlayerNetworkController>())
         {
-            if(player.netId == turnPlayerId)
+            int discardCard = 0;
+            if(player.netId == turnPlayerId && attackedPlayerId == 0)
             {
-                player.EndTurnClientRpc();
-                break;
+                foreach (var hand in Hands)
+                {
+                    if(hand.Id == player.netId)
+                    {
+                        foreach (var health in Healths)
+                        {
+                            if(health.Id == player.netId)
+                            {
+                                discardCard = hand.Cards.Count - Healths[Healths.IndexOf(health)].Health;
+                                break;
+                            }
+                        }
+                    break;
+                    }
+                }
+                if(discardCard > 0) 
+                {
+                    print("Someee");
+                    turnModificator = "Discarding";
+                    Coroutine = StartCoroutine(MoveFunc(10));
+                    player.EndTurnClientRpc();
+                    return;
+                }
             }
         }
-
         if (attackedPlayerId != 0)
         {
             foreach (var item in Healths)
             {
-                print($"now {item.Id} and attacked {attackedPlayerId}");
                 if (item.Id == attackedPlayerId)
                 {
                     Healths[Healths.IndexOf(item)]= new HealthList(attackedPlayerId, item.Health-1);
@@ -293,27 +352,28 @@ public class ServerManager : NetworkBehaviour
             GiveTurn(1, false);
         else GiveTurn(turnPlayerId + 1, false);
 
-        GiveHandCards(PackCards, turnPlayerId, 2);
     }
 
     [Server]
     public void GiveTurn(uint id, bool target)
     {
         if (Coroutine != null) StopCoroutine(Coroutine);
-
-        attackedPlayerId = 0;
-        turnModificator = "No";
         if (!target)
         {
             turnPlayerId = id;
+            if(attackedPlayerId == 0) GiveHandCards(PackCards, turnPlayerId, 2);
+            Coroutine = StartCoroutine(MoveFunc(15));
         }
-        else
+        attackedPlayerId = 0;
+        turnModificator = "No";
+        if(target)
         {
             attackedPlayerId = id;
+            Coroutine = StartCoroutine(MoveFunc(15));
             // turnModificator = "Attack";
         }
 
-        Coroutine = StartCoroutine(MoveFunc());
+        
     }
     [Server]
     public void GiveHandCards(SyncList<CardAttributes> pack, uint id, int cardsCount) // ���������� ���� � ����

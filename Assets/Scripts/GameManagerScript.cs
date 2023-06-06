@@ -65,7 +65,21 @@ public class GameManagerScript : MonoBehaviour // Колода
             }
         }
     }
-
+    public void RemoveCardFromHand(CardAttributes card)
+    {
+        foreach (var item in FindObjectsOfType<CardInfoScripts>())
+        {
+            if(item.transform.parent.tag == "Hand")
+            {
+                print($"{item.SelfCard.Name == card.Name && item.SelfCard.Suit == card.Suit && item.SelfCard.Dignity == card.Dignity} RemoveCardFromHand");
+                if(item.SelfCard.Name == card.Name && item.SelfCard.Suit == card.Suit && item.SelfCard.Dignity == card.Dignity)
+                {
+                    print($"card {item.SelfCard.Name} has been deleted");
+                    Destroy(item.gameObject);
+                }
+            }
+        }
+    }
     void GiveInventoryCard(List<CardAttributes> cardInventory, PlayerNetworkController playerController)    
     {
         print("Spawn Inv");

@@ -94,6 +94,13 @@ public class PlayerNetworkController : NetworkBehaviour
     }
 
     [ClientRpc]
+    public void RemoveCardFromHandClientRpc(CardAttributes card)
+    {
+        print($"{card.Name} send to be deleted");
+        FindObjectOfType<GameManagerScript>().RemoveCardFromHand(card);
+    }
+
+    [ClientRpc]
     public void GiveHandCardsClientRpc(uint id, CardAttributes card)
     {
         FindObjectOfType<GameManagerScript>().GiveHandCards(id, card);
