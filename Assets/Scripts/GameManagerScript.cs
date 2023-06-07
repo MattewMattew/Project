@@ -92,8 +92,16 @@ public class GameManagerScript : MonoBehaviour // Колода
     }
     void GiveInventoryCard(List<CardAttributes> cardInventory, PlayerNetworkController playerController)    
     {
-        GameObject card = Instantiate(FindObjectOfType<GameManagerScript>().CardPref, playerController.GetComponentInChildren<DropPlaceScript>().transform, false);
-        card.GetComponent<CardInfoScripts>().ShowCardInfo(cardInventory[cardInventory.Count - 1]);
+        GameObject card = null;
+        foreach (var inv in GameObject.FindGameObjectsWithTag("Field"))
+        {
+            if (inv.GetComponentInParent<PlayerNetworkController>().netId == playerController.netId)
+            {
+                card = Instantiate(FindObjectOfType<GameManagerScript>().CardPref, inv.transform, false);
+                card.GetComponent<CardInfoScripts>().ShowCardInfo(cardInventory[cardInventory.Count - 1]);
+                break;
+            }
+        }
     }
 
     public void IdentifyCardInDiscard(CardAttributes card)

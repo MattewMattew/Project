@@ -24,38 +24,48 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        GameObject[] cards = GameObject.FindGameObjectsWithTag("Card");
-        foreach (var card in cards)
+        if(transform.tag == "Player")
         {
-            if (!GetComponentInParent<NetworkIdentity>().isLocalPlayer)
+            GameObject[] cards = GameObject.FindGameObjectsWithTag("Card");
+            foreach (var card in cards)
             {
-                if (card.GetComponent<CardScript>().TempCard != null)
+                if (!GetComponent<PlayerNetworkController>().isLocalPlayer)
                 {
-                    if(card.GetComponent<CardInfoScripts>().Name.text == "Jail")
+                    if (card.GetComponent<CardScript>().TempCard != null)
                     {
-                        card.transform.SetParent(transform);
-                        card.GetComponent<CardScript>().TempCard = null;
-                        card.transform.localScale = new Vector2(1f, 1f);
-                        GetComponentInParent<PlayerNetworkController>().CmdUpdateInventory(card.GetComponent<CardInfoScripts>().SelfCard, 
-                                                                            GetComponentInParent<PlayerNetworkController>(), transform);
-                        FindObjectOfType<PlayerNetworkController>().CmdRemoveCardFromHand(FindObjectOfType<ServerManager>().turnPlayerId,
-                                            card.GetComponent<CardInfoScripts>().SelfCard);
-                        Destroy(card);
-                    }
-                    else
-                    {
-                        FindObjectOfType<PlayerNetworkController>().CmdGiveCardToDiscard(card.GetComponent<CardInfoScripts>().SelfCard);
-                        if (card.GetComponent<CardInfoScripts>().SelfCard.Name == "Bang")
-                            GetComponentInParent<PlayerNetworkController>().CmdAttack(card.GetComponent<CardInfoScripts>().SelfCard.Name);
-                        if (card.GetComponent<CardInfoScripts>().SelfCard.Name == "Duel")
-                            GetComponentInParent<PlayerNetworkController>().CmdDuel(FindObjectOfType<ServerManager>().turnPlayerId, 
-                                                                             GetComponentInParent<PlayerNetworkController>().netId);
-                        card.GetComponent<CardScript>().TempCard = null;
-                        FindObjectOfType<PlayerNetworkController>().CmdRemoveCardFromHand(FindObjectOfType<ServerManager>().turnPlayerId, 
-                                                                    card.GetComponent<CardInfoScripts>().SelfCard);
-                        Destroy(card);
-                    }
-                }   
+                        if(card.GetComponent<CardInfoScripts>().Name.text == "Jail")
+                        {
+                            foreach (var inv in GameObject.FindGameObjectsWithTag("Field"))
+                            {
+                                if(inv.GetComponentInParent<PlayerNetworkController>().netId == GetComponent<PlayerNetworkController>().netId)
+                                {
+                                    card.transform.SetParent(inv.transform);
+                                    card.GetComponent<CardScript>().TempCard = null;
+                                    card.transform.localScale = new Vector2(1f, 1f);
+                                    GetComponent<PlayerNetworkController>().CmdUpdateInventory(card.GetComponent<CardInfoScripts>().SelfCard, 
+                                                                            GetComponent<PlayerNetworkController>(), transform);
+                                    FindObjectOfType<PlayerNetworkController>().CmdRemoveCardFromHand(FindObjectOfType<ServerManager>().turnPlayerId,
+                                                                                card.GetComponent<CardInfoScripts>().SelfCard);
+                                    Destroy(card);
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            FindObjectOfType<PlayerNetworkController>().CmdGiveCardToDiscard(card.GetComponent<CardInfoScripts>().SelfCard);
+                            if (card.GetComponent<CardInfoScripts>().SelfCard.Name == "Bang")
+                                GetComponent<PlayerNetworkController>().CmdAttack(card.GetComponent<CardInfoScripts>().SelfCard.Name);
+                            if (card.GetComponent<CardInfoScripts>().SelfCard.Name == "Duel")
+                                GetComponent<PlayerNetworkController>().CmdDuel(FindObjectOfType<ServerManager>().turnPlayerId, 
+                                                                        GetComponent<PlayerNetworkController>().netId);
+                            card.GetComponent<CardScript>().TempCard = null;
+                            FindObjectOfType<PlayerNetworkController>().CmdRemoveCardFromHand(FindObjectOfType<ServerManager>().turnPlayerId, 
+                                                                        card.GetComponent<CardInfoScripts>().SelfCard);
+                            Destroy(card);
+                        }
+                    }   
+                }
             }
         }
     }

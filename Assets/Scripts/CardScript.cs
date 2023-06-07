@@ -75,7 +75,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
 
                         }
                     }
-                    else if (FindObjectOfType<ServerManager>().turnModificator == "No")
+                    else if (FindObjectOfType<ServerManager>().turnModificator == "No" && !FindObjectOfType<ServerManager>().useBang)
                         UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                     break;
                 }

@@ -67,6 +67,8 @@ public class ServerManager : NetworkBehaviour
 
     [SyncVar]
     public uint turnPlayerId;
+    [SyncVar]
+    public bool useBang = false;
 
     [SyncVar]
     public uint attackedPlayerId;
@@ -414,11 +416,13 @@ public class ServerManager : NetworkBehaviour
         {
             print($"1");
             GiveTurn(1, false);
+            useBang = false;
         }
         else 
         {
             print($"{turnPlayerId + 1}");
             GiveTurn(turnPlayerId + 1, false);
+            useBang = false;
         
         } 
 
@@ -537,9 +541,9 @@ public class ServerManager : NetworkBehaviour
     [Server]
     public void AttackAction(uint id, string card)
     {
-        print($"{id} has been attacked");
         GiveTurn(id, true);
         turnModificator = card;
+        useBang = true;
     }
 
     [Server]
