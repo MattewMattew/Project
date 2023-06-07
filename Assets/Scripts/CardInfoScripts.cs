@@ -9,7 +9,7 @@ public class CardInfoScripts : MonoBehaviour
    public CardAttributes SelfCard;
    public TextMeshProUGUI Name, Dignity;
    public Image Logo, Suit,Icon;
-   public GameObject Type;
+   public GameObject Type, Info;
    Sprite LogoSprite;
    public enum TypeCard {DISPOSABLE_CARD, PERMANENT_CARD, WEAPON_CARD}
    public TypeCard InfoTypeCard;
@@ -37,19 +37,22 @@ public class CardInfoScripts : MonoBehaviour
 
       /* _________________________________________________ DISPOSABLE CARD _______________________________________________________________ */
          case "Bang":
-         {
+         {  
+            
             // Name.text = "Выстрел";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Bang");
-            Type.GetComponent<Image>().color = Color.red;
+            //Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("") ;
+            Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
             Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(БЭНГ!)");
+            
             break;
          }
          case "Missed":
          {
             // Name.text = "Промах";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Missed");
-            Type.GetComponent<Image>().color = Color.red;
+            Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
             Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Промах)");
             break;
@@ -58,7 +61,7 @@ public class CardInfoScripts : MonoBehaviour
          {
             // Name.text = "Пиво";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Beer");
-            Type.GetComponent<Image>().color = Color.red;
+            Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
             Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Пиво)");
             break;
@@ -67,7 +70,7 @@ public class CardInfoScripts : MonoBehaviour
          {
             // Name.text = "Воровство";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Panic");
-            Type.GetComponent<Image>().color = Color.red;
+            Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
             Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Паника)");
             break;
@@ -76,7 +79,7 @@ public class CardInfoScripts : MonoBehaviour
          {
             // Name.text = "Турель";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Gatling");
-            Type.GetComponent<Image>().color = Color.red;
+            Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
             Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Гатлинг)");
             break;
@@ -85,7 +88,7 @@ public class CardInfoScripts : MonoBehaviour
          {
             // Name.text = "Контробанда";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/WellsFargo");
-            Type.GetComponent<Image>().color = Color.red;
+            Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
             Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Уэлс Фарго)");
             break;
@@ -94,7 +97,7 @@ public class CardInfoScripts : MonoBehaviour
          {
             // Name.text = "Контейнер";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Diligence");
-            Type.GetComponent<Image>().color = Color.red;
+            Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
             Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Дилижанс)");
             break;
@@ -103,7 +106,7 @@ public class CardInfoScripts : MonoBehaviour
          {
             // Name.text = "Снабжение";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/General");
-            Type.GetComponent<Image>().color = Color.red;
+            Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
             Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Уэлс Фарго)");
             break;
@@ -112,7 +115,7 @@ public class CardInfoScripts : MonoBehaviour
          {
             // Name.text = "Дуэль";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Duel");
-            Type.GetComponent<Image>().color = Color.red;
+            Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
             break;
          }
@@ -120,7 +123,7 @@ public class CardInfoScripts : MonoBehaviour
          {
             // Name.text = "Бар";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Saloon");
-            Type.GetComponent<Image>().color = Color.red;
+            Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
             Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Салун)");
             break;
@@ -129,7 +132,7 @@ public class CardInfoScripts : MonoBehaviour
          {
             // Name.text = "Устрашение";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Women");
-            Type.GetComponent<Image>().color = Color.red;
+            Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
             Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Плутовка Кэт)");
             break;
@@ -138,7 +141,7 @@ public class CardInfoScripts : MonoBehaviour
          {
             // Name.text = "Заключенные";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Indians");
-            Type.GetComponent<Image>().color = Color.red;
+            Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
             Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Гатлинг)");
             break;
@@ -148,42 +151,83 @@ public class CardInfoScripts : MonoBehaviour
 
          case "Barrel":
          {
-            // Name.text = "Укрытие";
-            Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Barrel");
-            Type.GetComponent<Image>().color = Color.blue;
-            InfoTypeCard = TypeCard.PERMANENT_CARD;
+            if (transform.parent.tag =="Field")
+            {  
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Box") ;
+               Info.SetActive(false);
+            }
+            else if (transform.parent.tag =="Hand"){
+               
+               Info.SetActive(true);
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
+               // Name.text = "Укрытие";
+               Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Barrel");
+               
+               InfoTypeCard = TypeCard.PERMANENT_CARD;}
             break;
          }
          case "Dynamite":
          {
-            // Name.text = "Граната";
-            Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Dynamite");
-            Type.GetComponent<Image>().color = Color.blue;
-            InfoTypeCard = TypeCard.PERMANENT_CARD;
+            if (transform.parent.tag =="Field")
+            {  
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Bomb") ;
+               Info.SetActive(false);
+            }
+            else if (transform.parent.tag =="Hand"){
+               Info.SetActive(true);
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
+               // Name.text = "Граната";
+               Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Dynamite");
+               
+               InfoTypeCard = TypeCard.PERMANENT_CARD;}
             break;
          }
          case "Jail":
-         {
-            // Name.text = "Карцер";
-            Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Jail");
-            Type.GetComponent<Image>().color = Color.blue;
-            InfoTypeCard = TypeCard.PERMANENT_CARD;
+         {  
+            if (transform.parent.tag =="Field")
+            {  
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Jail") ;
+               Info.SetActive(false);
+            }
+            else if (transform.parent.tag =="Hand"){
+               Info.SetActive(true);
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
+               // Name.text = "Карцер";
+               Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Jail");
+               
+               InfoTypeCard = TypeCard.PERMANENT_CARD;}
             break;
          }
          case "Mustang":
          {
-            // Name.text = "Джетпак";
-            Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Mustang");
-            Type.GetComponent<Image>().color = Color.blue;
-            InfoTypeCard = TypeCard.PERMANENT_CARD;
+             if (transform.parent.tag =="Field")
+            {  
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Jetpack") ;
+               Info.SetActive(false);
+            }
+            else if (transform.parent.tag =="Hand"){
+               Info.SetActive(true);
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
+               // Name.text = "Джетпак";
+               Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Mustang");
+               
+               InfoTypeCard = TypeCard.PERMANENT_CARD;}
             break;
          }
          case "Roach":
          {
-            // Name.text = "Прицел";
-            Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Roach");
-            Type.GetComponent<Image>().color = Color.blue;
-            InfoTypeCard = TypeCard.PERMANENT_CARD;
+             if (transform.parent.tag =="Field")
+            {  
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Scope") ;
+               Info.SetActive(false);
+            }
+            else if (transform.parent.tag =="Hand"){
+               Info.SetActive(true);
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
+               // Name.text = "Прицел";
+               Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Roach");
+               
+               InfoTypeCard = TypeCard.PERMANENT_CARD;}
             break;
          }
 
@@ -191,46 +235,86 @@ public class CardInfoScripts : MonoBehaviour
 
       case "Carbine":
          {
-            // Name.text = "Blast-1";
-            Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Carbine");
-            Type.GetComponent<Image>().color = Color.blue;
-            InfoTypeCard = TypeCard.WEAPON_CARD;
-            Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Карабин)");
+            if (transform.parent.tag =="Field")
+            {  
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Gun") ;
+               Info.SetActive(false);
+            }
+            else if (transform.parent.tag =="Hand"){
+               Info.SetActive(true);
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
+               // Name.text = "Blast-1";
+               Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Carbine");
+               
+               InfoTypeCard = TypeCard.WEAPON_CARD;
+               Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Карабин)");}
             break;
          }
          case "Remington":
          {
-            // Name.text = "SL-9";
-            Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Remington");
-            Type.GetComponent<Image>().color = Color.blue;
-            InfoTypeCard = TypeCard.WEAPON_CARD;
-            Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Ремингтон)");
+            if (transform.parent.tag =="Field")
+            {  
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Gun") ;
+               Info.SetActive(false);
+            }
+            else if (transform.parent.tag =="Hand"){
+               Info.SetActive(true);
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
+               // Name.text = "SL-9";
+               Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Remington");
+               
+               InfoTypeCard = TypeCard.WEAPON_CARD;
+               Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Ремингтон)");}
             break;
          }
          case "Scofield":
          {
-            // Name.text = "GL-16";
-            Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Scofield");
-            Type.GetComponent<Image>().color = Color.blue;
-            InfoTypeCard = TypeCard.WEAPON_CARD;
-            Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Скофилд)");
+            if (transform.parent.tag =="Field")
+            {  
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Gun") ;
+               Info.SetActive(false);
+            }
+               else if (transform.parent.tag =="Hand"){
+               Info.SetActive(true);
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
+               // Name.text = "GL-16";
+               Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Scofield");
+               
+               InfoTypeCard = TypeCard.WEAPON_CARD;
+               Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Скофилд)");}
             break;
          }
          case "Volcanic":
          {
-            // Name.text = "PP-90G1";
-            Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Volcanic");
-            Type.GetComponent<Image>().color = Color.blue;
-            InfoTypeCard = TypeCard.WEAPON_CARD;
+            if (transform.parent.tag =="Field")
+            {  
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Gun") ;
+               Info.SetActive(false);
+            }
+            else if (transform.parent.tag =="Hand"){
+               Info.SetActive(true);
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
+               // Name.text = "PP-90G1";
+               Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Volcanic");
+               
+               InfoTypeCard = TypeCard.WEAPON_CARD;}
             break;
          }
          case "Winchester":
          {
-            // Name.text = "SSJ-69";
-            Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Winchester");
-            Type.GetComponent<Image>().color = Color.blue;
-            InfoTypeCard = TypeCard.WEAPON_CARD;
-            Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Винчестер)");
+            if (transform.parent.tag =="Field")
+            {  
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Gun") ;
+               Info.SetActive(false);
+            }
+            else if (transform.parent.tag =="Hand"){
+               Info.SetActive(true);
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
+               // Name.text = "SSJ-69";
+               Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Winchester");
+               
+               InfoTypeCard = TypeCard.WEAPON_CARD;
+               Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Винчестер)");}
             break;
          }          
       }
