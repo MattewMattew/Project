@@ -700,7 +700,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b05b8f3952d596b4eb6ca468cc9beedf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a86b57bb0cb21774cb1c5006163cd79b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -802,6 +802,7 @@ GameObject:
   - component: {fileID: 5621470554775821624}
   - component: {fileID: 2107603218715486784}
   - component: {fileID: -8368189322307692333}
+  - component: {fileID: 5387099093719241002}
   m_Layer: 5
   m_Name: Player
   m_TagString: Player
@@ -884,6 +885,19 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 2c1b9dae42216f145be656e24b690b24, type: 2}
   - {fileID: 2100000, guid: 87a0ab516804be74b9fd092063326ddb, type: 2}
   Range: 0
+--- !u!114 &5387099093719241002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5621470554775821631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5787a846aaacc1e4fa50c1577c8e2273, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 1
 --- !u!1 &5621470554831182054
 GameObject:
   m_ObjectHideFlags: 0
@@ -1574,7 +1588,6 @@ GameObject:
   - component: {fileID: 5774995630968441234}
   - component: {fileID: 2249683738063644785}
   - component: {fileID: 4049583307366626683}
-  - component: {fileID: 240854553047181196}
   - component: {fileID: 8622198904475540331}
   m_Layer: 5
   m_Name: Inventory
@@ -1642,19 +1655,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &240854553047181196
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8495711010149526751}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5787a846aaacc1e4fa50c1577c8e2273, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Type: 1
 --- !u!114 &8622198904475540331
 MonoBehaviour:
   m_ObjectHideFlags: 0
