@@ -8,6 +8,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
 {
     public GameObject TempCard;
     public GameManagerScript GameManager;
+    // bool PresenceVolcanic = false;
 
     void Awake() 
     {
@@ -23,6 +24,14 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
             if (player.netId == FindObjectOfType<ServerManager>().turnPlayerId && player.isLocalPlayer)
             {
                 turnPlayer = player;
+                // foreach (var inv in GameObject.FindGameObjectsWithTag("Field"))
+                // {
+                //     if (inv.GetComponentInParent<PlayerNetworkController>().netId == player.netId)
+                //         foreach (var card in inv.GetComponentsInChildren<CardInfoScripts>())
+                //         {
+                //             if (card.SelfCard.Name == "Volcanic") PresenceVolcanic = true;    
+                //         }
+                // }
                 break;
             }
             if (player.netId == FindObjectOfType<ServerManager>().attackedPlayerId && player.isLocalPlayer)
@@ -75,8 +84,9 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
 
                         }
                     }
-                    else if (FindObjectOfType<ServerManager>().turnModificator == "No" && !FindObjectOfType<ServerManager>().useBang)
-                        UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                    else if (FindObjectOfType<ServerManager>().turnModificator == "No")
+                            if(/*PresenceVolcanic || */!FindObjectOfType<ServerManager>().useBang) 
+                                UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                     break;
                 }
                 case "Missed":

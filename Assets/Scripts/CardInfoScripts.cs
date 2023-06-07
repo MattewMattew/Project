@@ -41,7 +41,6 @@ public class CardInfoScripts : MonoBehaviour
             
             // Name.text = "Выстрел";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Bang");
-            //Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("") ;
             Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
             Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(БЭНГ!)");
@@ -238,6 +237,7 @@ public class CardInfoScripts : MonoBehaviour
             if (transform.parent.tag =="Field")
             {  
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Gun") ;
+               InfoTypeCard = TypeCard.WEAPON_CARD;
                Info.SetActive(false);
             }
             else if (transform.parent.tag =="Hand"){
@@ -255,6 +255,7 @@ public class CardInfoScripts : MonoBehaviour
             if (transform.parent.tag =="Field")
             {  
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Gun") ;
+               InfoTypeCard = TypeCard.WEAPON_CARD;
                Info.SetActive(false);
             }
             else if (transform.parent.tag =="Hand"){
@@ -272,6 +273,7 @@ public class CardInfoScripts : MonoBehaviour
             if (transform.parent.tag =="Field")
             {  
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Gun") ;
+               InfoTypeCard = TypeCard.WEAPON_CARD;
                Info.SetActive(false);
             }
                else if (transform.parent.tag =="Hand"){
@@ -289,6 +291,7 @@ public class CardInfoScripts : MonoBehaviour
             if (transform.parent.tag =="Field")
             {  
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Gun") ;
+               InfoTypeCard = TypeCard.WEAPON_CARD;
                Info.SetActive(false);
             }
             else if (transform.parent.tag =="Hand"){
@@ -305,6 +308,7 @@ public class CardInfoScripts : MonoBehaviour
             if (transform.parent.tag =="Field")
             {  
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Gun") ;
+               InfoTypeCard = TypeCard.WEAPON_CARD;
                Info.SetActive(false);
             }
             else if (transform.parent.tag =="Hand"){
