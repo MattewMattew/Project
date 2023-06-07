@@ -155,11 +155,11 @@ public class CardInfoScripts : MonoBehaviour
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Box") ;
                Info.SetActive(false);
             }
-            else if (transform.parent.tag =="Hand"){
-               
+            else 
+            {
+               // Name.text = "Укрытие";
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
-               // Name.text = "Укрытие";
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Barrel");
                
                InfoTypeCard = TypeCard.PERMANENT_CARD;}
@@ -172,10 +172,11 @@ public class CardInfoScripts : MonoBehaviour
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Bomb") ;
                Info.SetActive(false);
             }
-            else if (transform.parent.tag =="Hand"){
+            else 
+            {
+               // Name.text = "Граната";
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
-               // Name.text = "Граната";
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Dynamite");
                
                InfoTypeCard = TypeCard.PERMANENT_CARD;}
@@ -188,10 +189,11 @@ public class CardInfoScripts : MonoBehaviour
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Jail") ;
                Info.SetActive(false);
             }
-            else if (transform.parent.tag =="Hand"){
+            else 
+            {
+               // Name.text = "Карцер";
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
-               // Name.text = "Карцер";
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Jail");
                
                InfoTypeCard = TypeCard.PERMANENT_CARD;}
@@ -204,10 +206,11 @@ public class CardInfoScripts : MonoBehaviour
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Jetpack") ;
                Info.SetActive(false);
             }
-            else if (transform.parent.tag =="Hand"){
+            else 
+            {
+               // Name.text = "Джетпак";
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
-               // Name.text = "Джетпак";
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Mustang");
                
                InfoTypeCard = TypeCard.PERMANENT_CARD;}
@@ -220,13 +223,14 @@ public class CardInfoScripts : MonoBehaviour
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Scope") ;
                Info.SetActive(false);
             }
-            else if (transform.parent.tag =="Hand"){
+            else
+            {
+               // Name.text = "Прицел";
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
-               // Name.text = "Прицел";
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Roach");
-               
-               InfoTypeCard = TypeCard.PERMANENT_CARD;}
+               InfoTypeCard = TypeCard.PERMANENT_CARD;
+            }
             break;
          }
 
@@ -240,14 +244,15 @@ public class CardInfoScripts : MonoBehaviour
                InfoTypeCard = TypeCard.WEAPON_CARD;
                Info.SetActive(false);
             }
-            else if (transform.parent.tag =="Hand"){
+            else 
+            {
+               // Name.text = "Blast-1";
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
-               // Name.text = "Blast-1";
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Carbine");
-               
                InfoTypeCard = TypeCard.WEAPON_CARD;
-               Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Карабин)");}
+               Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Карабин)");
+            }
             break;
          }
          case "Remington":
@@ -258,14 +263,15 @@ public class CardInfoScripts : MonoBehaviour
                InfoTypeCard = TypeCard.WEAPON_CARD;
                Info.SetActive(false);
             }
-            else if (transform.parent.tag =="Hand"){
+            else 
+            {
+               // Name.text = "SL-9";
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
-               // Name.text = "SL-9";
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Remington");
-               
                InfoTypeCard = TypeCard.WEAPON_CARD;
-               Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Ремингтон)");}
+               Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Ремингтон)");
+            }
             break;
          }
          case "Scofield":
@@ -276,14 +282,15 @@ public class CardInfoScripts : MonoBehaviour
                InfoTypeCard = TypeCard.WEAPON_CARD;
                Info.SetActive(false);
             }
-               else if (transform.parent.tag =="Hand"){
+            else 
+            {
+               // Name.text = "GL-16";
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
-               // Name.text = "GL-16";
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Scofield");
-               
                InfoTypeCard = TypeCard.WEAPON_CARD;
-               Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Скофилд)");}
+               Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Скофилд)");
+            }
             break;
          }
          case "Volcanic":
@@ -294,13 +301,14 @@ public class CardInfoScripts : MonoBehaviour
                InfoTypeCard = TypeCard.WEAPON_CARD;
                Info.SetActive(false);
             }
-            else if (transform.parent.tag =="Hand"){
+            else 
+            {
+               // Name.text = "PP-90G1";
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
-               // Name.text = "PP-90G1";
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Volcanic");
-               
-               InfoTypeCard = TypeCard.WEAPON_CARD;}
+               InfoTypeCard = TypeCard.WEAPON_CARD;
+            }
             break;
          }
          case "Winchester":
@@ -311,14 +319,15 @@ public class CardInfoScripts : MonoBehaviour
                InfoTypeCard = TypeCard.WEAPON_CARD;
                Info.SetActive(false);
             }
-            else if (transform.parent.tag =="Hand"){
+            else 
+            {
+               // Name.text = "SSJ-69";
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
-               // Name.text = "SSJ-69";
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Winchester");
-               
                InfoTypeCard = TypeCard.WEAPON_CARD;
-               Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Винчестер)");}
+               Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Винчестер)");
+            }
             break;
          }          
       }

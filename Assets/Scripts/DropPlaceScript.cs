@@ -26,8 +26,7 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
     {
         if(transform.tag == "Player")
         {
-            GameObject[] cards = GameObject.FindGameObjectsWithTag("Card");
-            foreach (var card in cards)
+            foreach (var card in GameObject.FindGameObjectsWithTag("Card"))
             {
                 if (!GetComponent<PlayerNetworkController>().isLocalPlayer)
                 {

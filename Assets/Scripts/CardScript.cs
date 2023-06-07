@@ -17,9 +17,8 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        var players = FindObjectsOfType<PlayerNetworkController>();
         PlayerNetworkController turnPlayer = new PlayerNetworkController();
-        foreach (var player in players)
+        foreach (var player in FindObjectsOfType<PlayerNetworkController>())
         {
             if (player.netId == FindObjectOfType<ServerManager>().turnPlayerId && player.isLocalPlayer)
             {
@@ -34,12 +33,25 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 // }
                 break;
             }
+            // if(transform.parent.tag == "Field" && !player.isLocalPlayer)
+            // {
+            //     foreach (var card in GameObject.FindGameObjectsWithTag("Card"))
+            //     {
+            //         if (TempCard != null)
+            //         {
+            //             card.GetComponent<CardScript>().UseCard(player.netId, card.GetComponent<CardInfoScripts>().SelfCard);
+            //             break;
+            //         }
+
+            //     }
+            // }
             if (player.netId == FindObjectOfType<ServerManager>().attackedPlayerId && player.isLocalPlayer)
             {
                 turnPlayer = player;
                 break;
             }
         }
+        print($"Tag {transform.parent.tag} || turn player {turnPlayer.netId}");
 
         if(transform.parent.tag == "Hand" && turnPlayer)
         {
@@ -64,7 +76,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                             Debug.LogWarning(FindObjectOfType<ServerManager>().duelTargetPlayerId);
                         if (FindObjectOfType<ServerManager>().duelTargetPlayerId == turnPlayer.netId)
                         {
-                            foreach (var item in players)
+                            foreach (var item in FindObjectsOfType<PlayerNetworkController>())
                             { 
                                 if(item.netId == FindObjectOfType<ServerManager>().turnPlayerId)
                                 { 
@@ -74,7 +86,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                         }
                         else
                         {
-                            foreach (var item in players)
+                            foreach (var item in FindObjectsOfType<PlayerNetworkController>())
                             {
                                 if (item.netId == FindObjectOfType<ServerManager>().duelTargetPlayerId)
                                 {
@@ -307,6 +319,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                     break;
                 }
             } 
+
         }
     }
 
