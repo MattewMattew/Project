@@ -6,6 +6,7 @@ using UnityEngine.XR;
 using System;
 // using static UnityEditor.Progress;
 using System.IO;
+using TMPro;
 
 public class ServerManager : NetworkBehaviour
 {
@@ -17,6 +18,7 @@ public class ServerManager : NetworkBehaviour
     public readonly SyncList<HandList> Hands = new SyncList<HandList>();
     public readonly SyncList<HealthList> Healths = new SyncList<HealthList>();
 
+    private TextMeshProUGUI stage;
 
     public List<RangePlayers> rangePlayers = new List<RangePlayers>();
 
@@ -140,14 +142,14 @@ public class ServerManager : NetworkBehaviour
         /*        print(PackCards.Count + " " + "ServerManager");
                 print($"{turnPlayerId}");
                 print($"{Discard.Count} Discard");*/
-            //    foreach (var item in Hands)
-            //     {
-            //         print($"{item.Cards.Count} in {item.Id} hand");
-            //         foreach (var item1 in item.Cards)
-            //         {
-            //             print($"{item1.Name} card in hand {item.Id}");
-            //         }
-            //     }
+        //    foreach (var item in Hands)
+        //     {
+        //         print($"{item.Cards.Count} in {item.Id} hand");
+        //         foreach (var item1 in item.Cards)
+        //         {
+        //             print($"{item1.Name} card in hand {item.Id}");
+        //         }
+        //     }
         /*        foreach (var item in Inventorys)
                 {
                     print($"{item.Cards.Count} cards have {item.Id} player in inventory");
@@ -160,7 +162,39 @@ public class ServerManager : NetworkBehaviour
         // {
         //     Debug.LogWarning($"range {item.Range} to {item.netId} player");
         // }
-
+        switch(turnModificator)
+        {
+            case "No":
+                {
+                    stage.text = "Фаза хода";
+                    break;
+                }
+            case "Bang":
+                {
+                    stage.text = "Фаза атаки";
+                    break;
+                }
+            case "Discarding":
+                {
+                    stage.text = "Фаза сброса";
+                    break;
+                }
+            case "Indians":
+                {
+                    stage.text = "Фаза атаки заключенных";
+                    break;
+                }
+            case "Duel":
+                {
+                    stage.text = "Фаза дуэли";
+                    break;
+                }
+            case "Gatling":
+                {
+                    stage.text = "Фаза массивной атаки";
+                    break;
+                }
+        }
     }
     public struct RangePlayers
     {
@@ -174,6 +208,7 @@ public class ServerManager : NetworkBehaviour
     }
     void Start()
     {
+        stage = GameObject.Find("Stage").GetComponent<TextMeshProUGUI>();
         PlayerNetworkController[] players = FindObjectsOfType<PlayerNetworkController>();
         if (isServer) 
         {
@@ -261,6 +296,34 @@ public class ServerManager : NetworkBehaviour
                     player.TimerUpdateClientRpc(MoveTime, attackedPlayerId);
                 else
                     player.TimerUpdateClientRpc(MoveTime, turnPlayerId);
+                if(turnModificator == "Discarding")
+                {
+                    var discardCard = -1;
+                    if (player.netId == turnPlayerId && attackedPlayerId == 0)
+                    {
+                        foreach (var hand in Hands)
+                        {
+                            if (hand.Id == player.netId)
+                            {
+                                foreach (var health in Healths)
+                                {
+                                    if (health.Id == player.netId)
+                                    {
+                                        discardCard = hand.Cards.Count - Healths[Healths.IndexOf(health)].Health;
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        print($"{discardCard} discardCard");
+                        if (discardCard <= 0)
+                        {
+                            print("Done");
+                            MoveTime = 0;
+                        }
+                    }
+                }
 
             }
             yield return new WaitForSeconds(1);
@@ -289,6 +352,7 @@ public class ServerManager : NetworkBehaviour
                                     break;
                                 }
                         Hands[Hands.IndexOf(hand)] = new HandList(player.netId, list);
+                        FindObjectOfType<PlayerNetworkController>().UpdateCountCardsClientRpc(list.Count, player.netId);
                         break;
                     }
                 }
@@ -337,7 +401,7 @@ public class ServerManager : NetworkBehaviour
             {
                 if (item.Id == attackedPlayerId)
                 {
-                    Healths[Healths.IndexOf(item)]= new HealthList(attackedPlayerId, item.Health-1);
+                    Healths[Healths.IndexOf(item)] = new HealthList(attackedPlayerId, item.Health - 1);
                     foreach (var item1 in FindObjectsOfType<PlayerNetworkController>())
                     {
                         item1.HealthUpdateClientRpc(attackedPlayerId, item.Health - 1);
@@ -347,8 +411,16 @@ public class ServerManager : NetworkBehaviour
             GiveTurn(turnPlayerId, false);
         }
         else if (turnPlayerId + 1 > FindObjectOfType<NetworkManagerCard>().numPlayers)
+        {
+            print($"1");
             GiveTurn(1, false);
-        else GiveTurn(turnPlayerId + 1, false);
+        }
+        else 
+        {
+            print($"{turnPlayerId + 1}");
+            GiveTurn(turnPlayerId + 1, false);
+        
+        } 
 
     }
 
@@ -541,13 +613,52 @@ public class ServerManager : NetworkBehaviour
         Discard.Add(card);
         FindObjectOfType<PlayerNetworkController>().UpdateDiscardClientRpc(card);
     }
-
+    [Server]
+    public void CardDiscarding() 
+    {
+        if (Coroutine != null) StopCoroutine(Coroutine);
+        foreach (var player in FindObjectsOfType<PlayerNetworkController>())
+            if(player.netId == turnPlayerId)
+            {
+                foreach (var hand in Hands)
+                {
+                    if (player.netId == hand.Id)
+                    {
+                        List<CardAttributes> list = new List<CardAttributes>();
+                        foreach (var card in hand.Cards)
+                            list.Add(card);
+                        foreach (var health in Healths)
+                            if (health.Id == player.netId)
+                            {
+                                for (int i = 0; i < hand.Cards.Count - Healths[Healths.IndexOf(health)].Health; i++)
+                                {
+                                    int index = UnityEngine.Random.Range(0, list.Count);
+                                    GiveCardToDiscard(list[index]);
+                                    player.RemoveCardFromHandClientRpc(list[index]);
+                                    list.RemoveAt(index);
+                                }
+                                Hands[Hands.IndexOf(hand)] = new HandList(player.netId, list);
+                                FindObjectOfType<PlayerNetworkController>().UpdateCountCardsClientRpc(list.Count, player.netId);
+                                ChangeMove();
+                                break;
+                            }
+                    }
+                }
+                break;
+            }
+    }
     [Command(requiresAuthority = false)]
     public void CmdChangeMove()
     {
         if (Coroutine != null) StopCoroutine(Coroutine);
-        print("Coroutine has been stoped");
-        ChangeMove();
+        if(turnModificator == "Discarding")
+        {
+            CardDiscarding();
+        }
+        else
+        {
+            ChangeMove();
+        }
     }
     [Server]
     public void RegenerationHealth(uint id, CardAttributes card)

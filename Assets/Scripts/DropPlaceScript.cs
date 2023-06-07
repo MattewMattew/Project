@@ -38,6 +38,8 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
                         card.transform.localScale = new Vector2(1f, 1f);
                         GetComponentInParent<PlayerNetworkController>().CmdUpdateInventory(card.GetComponent<CardInfoScripts>().SelfCard, 
                                                                             GetComponentInParent<PlayerNetworkController>(), transform);
+                        FindObjectOfType<PlayerNetworkController>().CmdRemoveCardFromHand(FindObjectOfType<ServerManager>().turnPlayerId,
+                                            card.GetComponent<CardInfoScripts>().SelfCard);
                         Destroy(card);
                     }
                     else
