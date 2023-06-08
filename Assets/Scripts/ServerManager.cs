@@ -218,12 +218,13 @@ public class ServerManager : NetworkBehaviour
         if (players.Length == 6)
         {
             RolesList = new List<Roles>() { Roles.SINDICATE, Roles.SINDICATE, Roles.SINDICATE, Roles.CAPTAIN, Roles.HELPER, Roles.RENEGADE };
-            rangePlayers = new List<RangePlayers> { new RangePlayers(0, new Vector2(46, -324)),
-                new RangePlayers(1, new Vector2(-584, -91)),
-                new RangePlayers(2, new Vector2(-569, 148)),
-                new RangePlayers(3, new Vector2(-279, 399)),
-                new RangePlayers(2, new Vector2(500, 399)),
-                new RangePlayers(1, new Vector2(595, 142)),
+            rangePlayers = new List<RangePlayers> { 
+                new RangePlayers(0, new Vector2(0, -230)),
+                new RangePlayers(1, new Vector2(-512, -40)),
+                new RangePlayers(2, new Vector2(-512, 176)),
+                new RangePlayers(3, new Vector2(0, 392)),
+                new RangePlayers(2, new Vector2(512, 176)),
+                new RangePlayers(1, new Vector2(512, -40)),
                 /*new RangePlayers(1, new Vector2(593, -92))*/
                 
                 
@@ -245,14 +246,39 @@ public class ServerManager : NetworkBehaviour
         else if (players.Length == 4)
         {
             RolesList = new List<Roles>() { Roles.SINDICATE, Roles.CAPTAIN, Roles.SINDICATE, Roles.RENEGADE };
+            rangePlayers = new List<RangePlayers> { 
+                new RangePlayers(0, new Vector2(0, -230)),
+                new RangePlayers(1, new Vector2(-512, 0)),
+                new RangePlayers(2, new Vector2(0, 360)),
+                new RangePlayers(1, new Vector2(512, 0)),
+              
+            };
         }
         else if (players.Length == 5)
         {
             RolesList = new List<Roles>() { Roles.SINDICATE, Roles.CAPTAIN, Roles.SINDICATE, Roles.HELPER, Roles.RENEGADE };
+            rangePlayers = new List<RangePlayers> { 
+                new RangePlayers(0, new Vector2(0, -230)),
+                new RangePlayers(1, new Vector2(-512, -40)),
+                new RangePlayers(2, new Vector2(-512, 176)),
+                new RangePlayers(2, new Vector2(512, 176)),
+                new RangePlayers(1, new Vector2(512, -40)),
+              
+            };
+
         }
         else if (players.Length == 7)
         {
             RolesList = new List<Roles>() { Roles.SINDICATE, Roles.SINDICATE, Roles.CAPTAIN, Roles.SINDICATE, Roles.HELPER, Roles.HELPER, Roles.RENEGADE };
+            rangePlayers = new List<RangePlayers>{
+                new RangePlayers(0, new Vector2(0, -230)),
+                new RangePlayers(1, new Vector2(-512, -40)),
+                new RangePlayers(2, new Vector2(-512, 176)),
+                new RangePlayers(3, new Vector2(-300, 392)),
+                new RangePlayers(3, new Vector2(300, 392)),
+                new RangePlayers(2, new Vector2(512, 176)),
+                new RangePlayers(1, new Vector2(512, -40)),
+            };
         }
         if (isClient)
         {
