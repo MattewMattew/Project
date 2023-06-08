@@ -15,20 +15,43 @@ public class PlayerNetworkController : NetworkBehaviour
     public List<Material> Materials;
     Image materialHP;
     public int Range;
+
+    public int maxHealth = 0;
+
+    public ServerManager.Roles Role;
     void Start()
+    {
+        
+    }
+    [ClientRpc]
+    public void GiveRole(uint id, ServerManager.Roles role) 
+    {
+        if(netId == id) Role = role;
+        print($"{netId} player have {role} role");
+        GiveHealthInit();
+    }
+    void GiveHealthInit()
     {
         var materialComponents = GetComponentsInChildren<Image>();
         foreach (var item in materialComponents)
         {
-            if(item.gameObject.tag == "HpBar")
+            if (item.gameObject.tag == "HpBar")
             {
                 item.material = Materials[(int)netId - 1];
-                item.material.SetFloat("_RemovedS", 9f - 4f);
+                if (Role == ServerManager.Roles.CAPTAIN)
+                {
+                    item.material.SetFloat("_RemovedS", 9f - 5f);
+                    maxHealth = 5;
+                }
+                else
+                {
+                    item.material.SetFloat("_RemovedS", 9f - 4f);
+                    maxHealth = 4;
+                }
                 materialHP = item;
             }
         }
     }
-
     [ClientRpc]
     public void HealthUpdateClientRpc(uint id, int health)
     {

@@ -65,12 +65,12 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                     if (FindObjectOfType<ServerManager>().turnModificator == "Discarding")
                         UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
 
-                    if (FindObjectOfType<ServerManager>().turnModificator == "Indians")
+                    if (FindObjectOfType<ServerManager>().turnModificator == "Indians" && turnPlayer.netId == FindObjectOfType<ServerManager>().attackedPlayerId)
                     {
                         UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                         turnPlayer.CmdDefense();
                     }
-                    else if (FindObjectOfType<ServerManager>().turnModificator == "Duel")
+                    else if (FindObjectOfType<ServerManager>().turnModificator == "Duel" && turnPlayer.netId == FindObjectOfType<ServerManager>().duelTargetPlayerId)
                     {
                         UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                             Debug.LogWarning(FindObjectOfType<ServerManager>().duelTargetPlayerId);
@@ -80,7 +80,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                             { 
                                 if(item.netId == FindObjectOfType<ServerManager>().turnPlayerId)
                                 { 
-                                    item.CmdAttack("Duel");
+                                    item.CmdDuel(turnPlayer.netId, FindObjectOfType<ServerManager>().attackedPlayerId);
                                 }
                             }
                         }
@@ -105,13 +105,13 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 {
                     if (FindObjectOfType<ServerManager>().turnModificator == "Discarding")
                         UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
-
-                    if (FindObjectOfType<ServerManager>().turnModificator == "Gatling" || FindObjectOfType<ServerManager>().turnModificator == "Bang")
-                    {
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
-                        turnPlayer.CmdDefense();
+                    if(turnPlayer.netId == FindObjectOfType<ServerManager>().attackedPlayerId)
+                        if (FindObjectOfType<ServerManager>().turnModificator == "Gatling" || FindObjectOfType<ServerManager>().turnModificator == "Bang")
+                        {
+                            UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                            turnPlayer.CmdDefense();
                         
-                    }
+                        }
                     break;
                 }
                 case "Beer":

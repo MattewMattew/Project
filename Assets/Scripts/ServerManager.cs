@@ -20,6 +20,8 @@ public class ServerManager : NetworkBehaviour
 
     private TextMeshProUGUI stage;
 
+    public enum Roles {SINDICATE, HELPER, RENEGADE, CAPTAIN}
+
     public List<RangePlayers> rangePlayers = new List<RangePlayers>();
 
 
@@ -94,7 +96,8 @@ public class ServerManager : NetworkBehaviour
         List<CardAttributes> GivePack()
         {
             List<CardAttributes> list = new List<CardAttributes>();
-            for (int i = 0; i < 22; i++)
+            int allServerCards = CardDesk.AllServerCards.Count;
+            for (int i = 0; i < allServerCards; i++)
             {
                 int card = UnityEngine.Random.Range(0, CardDesk.AllServerCards.Count);
                 list.Add(CardDesk.AllServerCards[card]);
@@ -121,18 +124,7 @@ public class ServerManager : NetworkBehaviour
             }
         }
 
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        foreach (var player in players)
-        {
-            if (isServer)
-            {
-                GiveHandCards(PackCards, player.GetComponent<NetworkIdentity>().netId, 4);
-                if (player.GetComponent<NetworkIdentity>().netId == 1)
-                {
-                    GiveTurn(player.GetComponent<NetworkIdentity>().netId, false);
-                }
-            }
-        }
+        
     }
     [Client]
     void Update()
@@ -160,11 +152,16 @@ public class ServerManager : NetworkBehaviour
                         print($"{item.Id} player inventory have {item1.Name} card. In array {item.Cards.Count} cards");
                     }
                 }*/
-        // foreach (var item in FindObjectsOfType<PlayerNetworkController>())
-        // {
-        //     Debug.LogWarning($"range {item.Range} to {item.netId} player");
-        // }
-        switch(turnModificator)
+        /*      foreach (var item in FindObjectsOfType<PlayerNetworkController>())
+              {
+                   Debug.LogWarning($"range {item.Range} to {item.netId} player");
+              }*/
+/*        if (isClient)
+        foreach (var item in FindObjectsOfType<PlayerNetworkController>())
+        {
+            print($"{item.netId} player have {item.Role} role");
+        }*/
+        switch (turnModificator)
         {
             case "No":
                 {
@@ -217,8 +214,10 @@ public class ServerManager : NetworkBehaviour
             CmdCardAdded();
         }
         gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
+        List<Roles> RolesList = new List<Roles>();
         if (players.Length == 6)
         {
+            RolesList = new List<Roles>() { Roles.SINDICATE, Roles.SINDICATE, Roles.SINDICATE, Roles.CAPTAIN, Roles.HELPER, Roles.RENEGADE };
             rangePlayers = new List<RangePlayers> { new RangePlayers(0, new Vector2(46, -324)),
                 new RangePlayers(1, new Vector2(-584, -91)),
                 new RangePlayers(2, new Vector2(-569, 148)),
@@ -236,13 +235,25 @@ public class ServerManager : NetworkBehaviour
         }
         else if(players.Length == 2)
         {
+            RolesList = new List<Roles>() { Roles.CAPTAIN, Roles.SINDICATE };
             rangePlayers = new List<RangePlayers> {
                 new RangePlayers(0, new Vector2(0, -237)), 
                 new RangePlayers(1, new Vector2(-696, 0)),
 
             };
         }
-        /*        spawnPoint = new List<Vector2>() { new Vector2(0, -237), new Vector2(-696, 0), new Vector2(0, 421), new Vector2(696, 0) };*/
+        else if (players.Length == 4)
+        {
+            RolesList = new List<Roles>() { Roles.SINDICATE, Roles.CAPTAIN, Roles.SINDICATE, Roles.RENEGADE };
+        }
+        else if (players.Length == 5)
+        {
+            RolesList = new List<Roles>() { Roles.SINDICATE, Roles.CAPTAIN, Roles.SINDICATE, Roles.HELPER, Roles.RENEGADE };
+        }
+        else if (players.Length == 7)
+        {
+            RolesList = new List<Roles>() { Roles.SINDICATE, Roles.SINDICATE, Roles.CAPTAIN, Roles.SINDICATE, Roles.HELPER, Roles.HELPER, Roles.RENEGADE };
+        }
         if (isClient)
         {
             var localPlayerId = (uint)0;
@@ -277,12 +288,28 @@ public class ServerManager : NetworkBehaviour
                 }
             }
         }
-
-        foreach (var player in players)
+        if (isServer)
         {
-            if(isServer) Healths.Add(new HealthList(player.netId, 4));
+            foreach (var player in players)
+            {
 
+                var index = UnityEngine.Random.Range(0, RolesList.Count);
+                player.GiveRole(player.netId, RolesList[index]);
+                if (RolesList[index] == Roles.CAPTAIN)
+                {
+                    Healths.Add(new HealthList(player.netId, 5));
+                    GiveTurn(player.netId, false);
+                    GiveHandCards(PackCards, player.netId, 5);
+                }
+                else
+                {
+                    Healths.Add(new HealthList(player.netId, 4));
+                    GiveHandCards(PackCards, player.netId, 4);
+                }
+                RolesList.RemoveAt(index);
+            }
         }
+        
 
     }
     [Server]
@@ -454,14 +481,31 @@ public class ServerManager : NetworkBehaviour
     {
         int i = 0;
         while (i++ < cardsCount)
+        {
+            if (pack.Count == 0)
+            {
+                ResetPack();
+            }
             GiveCardToHand(pack, id);
+        }
         
+    }
+    [Server]
+    public void ResetPack()
+    {
+        Debug.LogWarning(Discard.Count);
+        int count = Discard.Count;
+        for (int i = 0; i < count; i++)
+        {
+            int index = UnityEngine.Random.Range(0, Discard.Count);
+            PackCards.Add(Discard[index]);
+            Discard.RemoveAt(index);
+        }
     }
     [Server]
     void GiveCardToHand(SyncList<CardAttributes> pack, uint id) // ������ ����� � ����
     {
-        if (pack.Count == 0)
-            return;
+        
         bool check = false;
         List<CardAttributes> list = new List<CardAttributes> { pack[0] };
         foreach (var item in Hands)
@@ -564,7 +608,7 @@ public class ServerManager : NetworkBehaviour
                 turnModificator = card;
                 while (attackedPlayerId != 0)
                 {
-                    yield return new WaitForSeconds(1);
+                    yield return new WaitForSeconds(0.5f);
                 }
             }
         }
@@ -667,9 +711,14 @@ public class ServerManager : NetworkBehaviour
     [Server]
     public void RegenerationHealth(uint id, CardAttributes card)
     {
+        int maxHP = 0;
+        foreach (var player in FindObjectsOfType<PlayerNetworkController>())
+            if (player.netId == id)
+                maxHP = player.maxHealth;
+
         foreach (var item in Healths)
         {
-            if (item.Health+1 < 5)
+            if (item.Health < maxHP)
             {
                 if (card.Name == "Saloon")
                 {
