@@ -511,11 +511,18 @@ public class ServerManager : NetworkBehaviour
             if (pack.Count == 0)
             {
                 ResetPack();
+                ResetDiscardClientRpc();
             }
             GiveCardToHand(pack, id);
-        }
-        
+        } 
     }
+
+    [ClientRpc]
+    void ResetDiscardClientRpc()
+    {
+        FindObjectOfType<GameManagerScript>().CardDiscard.GetComponentsInChildren<CardScript>();
+    }
+
     [Server]
     public void ResetPack()
     {

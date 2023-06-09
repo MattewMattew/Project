@@ -11,7 +11,7 @@ public class GameManagerScript : MonoBehaviour // Колода
     public Transform SelfHand, DiscardTransform;
     public GameObject CardPref;
     public TextMeshProUGUI CountCards;
-    GameObject CardDiscard;
+    public GameObject CardDiscard;
 
     void Awake()
     {

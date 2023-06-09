@@ -51,7 +51,6 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 break;
             }
         }
-        print($"Tag {transform.parent.tag} || turn player {turnPlayer.netId}");
 
         if(transform.parent.tag == "Hand" && turnPlayer)
         {
