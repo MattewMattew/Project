@@ -69,20 +69,22 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                         UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                         turnPlayer.CmdDefense();
                     }
-                    else if (FindObjectOfType<ServerManager>().turnModificator == "Duel" && turnPlayer.netId == FindObjectOfType<ServerManager>().duelTargetPlayerId)
+                    else if (FindObjectOfType<ServerManager>().turnModificator == "Duel" && turnPlayer.netId == FindObjectOfType<ServerManager>().attackedPlayerId)
                     {
                         UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                             Debug.LogWarning(FindObjectOfType<ServerManager>().duelTargetPlayerId);
-                        if (FindObjectOfType<ServerManager>().duelTargetPlayerId == turnPlayer.netId)
+                            /*                        if (FindObjectOfType<ServerManager>().duelTargetPlayerId == turnPlayer.netId)
+                                                    {*/
+                        print($"{FindObjectOfType<ServerManager>().attackedPlayerId} attackedPlayerId");
+                        if(turnPlayer.netId == FindObjectOfType<ServerManager>().turnPlayerId)
                         {
-                            foreach (var item in FindObjectsOfType<PlayerNetworkController>())
-                            { 
-                                if(item.netId == FindObjectOfType<ServerManager>().turnPlayerId)
-                                { 
-                                    item.CmdDuel(turnPlayer.netId, FindObjectOfType<ServerManager>().attackedPlayerId);
-                                }
-                            }
+                            turnPlayer.CmdDuel(turnPlayer.netId, FindObjectOfType<ServerManager>().duelTargetPlayerId);
                         }
+                        if(turnPlayer.netId == FindObjectOfType<ServerManager>().duelTargetPlayerId)
+                        {
+                            turnPlayer.CmdDuel(turnPlayer.netId, FindObjectOfType<ServerManager>().turnPlayerId);
+                        }
+/*                        }
                         else
                         {
                             foreach (var item in FindObjectsOfType<PlayerNetworkController>())
@@ -93,7 +95,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                                 }
                             }
 
-                        }
+                        }*/
                     }
                     else if (FindObjectOfType<ServerManager>().turnModificator == "No")
                             if(/*PresenceVolcanic || */!FindObjectOfType<ServerManager>().useBang) 

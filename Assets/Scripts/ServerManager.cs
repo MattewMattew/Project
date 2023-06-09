@@ -461,6 +461,10 @@ public class ServerManager : NetworkBehaviour
                     {
                         item1.HealthUpdateClientRpc(attackedPlayerId, item.Health - 1);
                     }
+                    if (item.Health - 1 <= 0)
+                    {
+                        DeathAction();
+                    }
                 }
             }
             GiveTurn(turnPlayerId, false);
@@ -480,7 +484,11 @@ public class ServerManager : NetworkBehaviour
         } 
 
     }
+    [Server]
+    public void DeathAction()
+    {
 
+    }
     [Server]
     public void GiveTurn(uint id, bool target)
     {
@@ -626,7 +634,7 @@ public class ServerManager : NetworkBehaviour
     [Server]
     public void DuelAction (uint idAttacking, uint idDefenser)
     {
-        duelTargetPlayerId = idDefenser;
+        if(duelTargetPlayerId == 0) duelTargetPlayerId = idDefenser;
         GiveTurn(idDefenser, true);
         turnModificator = "Duel";
     }
