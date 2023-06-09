@@ -10,6 +10,7 @@ public class CardInfoScripts : MonoBehaviour
    public TextMeshProUGUI Name, Dignity;
    public Image Logo, Suit,Icon;
    public GameObject Type, Info;
+   public int WeaponRange;
    Sprite LogoSprite;
    public enum TypeCard {DISPOSABLE_CARD, PERMANENT_CARD, WEAPON_CARD}
    public TypeCard InfoTypeCard;
@@ -238,10 +239,11 @@ public class CardInfoScripts : MonoBehaviour
 
       case "Carbine":
          {
+            InfoTypeCard = TypeCard.WEAPON_CARD;
+            WeaponRange = 4;
             if (transform.parent.tag =="Field")
             {  
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Gun") ;
-               InfoTypeCard = TypeCard.WEAPON_CARD;
                Info.SetActive(false);
             }
             else 
@@ -250,17 +252,17 @@ public class CardInfoScripts : MonoBehaviour
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Carbine");
-               InfoTypeCard = TypeCard.WEAPON_CARD;
                Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Карабин)");
             }
             break;
          }
          case "Remington":
          {
+            InfoTypeCard = TypeCard.WEAPON_CARD;
+            WeaponRange = 3;
             if (transform.parent.tag =="Field")
             {  
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Gun") ;
-               InfoTypeCard = TypeCard.WEAPON_CARD;
                Info.SetActive(false);
             }
             else 
@@ -269,17 +271,17 @@ public class CardInfoScripts : MonoBehaviour
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Remington");
-               InfoTypeCard = TypeCard.WEAPON_CARD;
                Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Ремингтон)");
             }
             break;
          }
          case "Scofield":
          {
+            InfoTypeCard = TypeCard.WEAPON_CARD;
+            WeaponRange = 2;
             if (transform.parent.tag =="Field")
             {  
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Gun") ;
-               InfoTypeCard = TypeCard.WEAPON_CARD;
                Info.SetActive(false);
             }
             else 
@@ -288,17 +290,17 @@ public class CardInfoScripts : MonoBehaviour
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Scofield");
-               InfoTypeCard = TypeCard.WEAPON_CARD;
                Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Скофилд)");
             }
             break;
          }
          case "Volcanic":
          {
+            InfoTypeCard = TypeCard.WEAPON_CARD;
+            WeaponRange = 1;
             if (transform.parent.tag =="Field")
             {  
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Gun") ;
-               InfoTypeCard = TypeCard.WEAPON_CARD;
                Info.SetActive(false);
             }
             else 
@@ -307,16 +309,16 @@ public class CardInfoScripts : MonoBehaviour
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Volcanic");
-               InfoTypeCard = TypeCard.WEAPON_CARD;
             }
             break;
          }
          case "Winchester":
          {
+            InfoTypeCard = TypeCard.WEAPON_CARD;
+            WeaponRange = 5;
             if (transform.parent.tag =="Field")
             {  
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Gun") ;
-               InfoTypeCard = TypeCard.WEAPON_CARD;
                Info.SetActive(false);
             }
             else 
@@ -325,7 +327,6 @@ public class CardInfoScripts : MonoBehaviour
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Winchester");
-               InfoTypeCard = TypeCard.WEAPON_CARD;
                Icon.sprite=Resources.Load<Sprite>("Sprites/Icon/Иконки(Винчестер)");
             }
             break;
