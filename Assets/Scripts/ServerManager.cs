@@ -20,6 +20,8 @@ public class ServerManager : NetworkBehaviour
 
     private TextMeshProUGUI stage;
 
+    private int playersCount = 0;
+
     public enum Roles {SINDICATE, HELPER, RENEGADE, CAPTAIN}
 
     public List<RangePlayers> rangePlayers = new List<RangePlayers>();
@@ -211,6 +213,7 @@ public class ServerManager : NetworkBehaviour
     {
         stage = GameObject.Find("Stage").GetComponent<TextMeshProUGUI>();
         PlayerNetworkController[] players = FindObjectsOfType<PlayerNetworkController>();
+        playersCount = players.Length;
         if (isServer) 
         {
             CmdCardAdded();
@@ -452,6 +455,7 @@ public class ServerManager : NetworkBehaviour
                 }
             }
         }
+        Debug.LogWarning(playersCount + " numPlayers");
         if (attackedPlayerId != 0)
         {
             foreach (var item in Healths)
@@ -471,9 +475,9 @@ public class ServerManager : NetworkBehaviour
             }
             GiveTurn(turnPlayerId, false);
         }
-        else if (turnPlayerId + 1 > FindObjectOfType<NetworkManagerCard>().numPlayers)
+        else if (turnPlayerId + 1 > playersCount)
         {
-            for (int i = 1; i <= FindObjectOfType<NetworkManagerCard>().numPlayers; i++)
+            for (int i = 1; i <= playersCount; i++)
                 foreach (var item in FindObjectsOfType<PlayerNetworkController>())
                 {
                     if (item.netId == i)
@@ -481,14 +485,14 @@ public class ServerManager : NetworkBehaviour
                         print($"{i}");
                         GiveTurn((uint)i, false);
                         useBang = false;
-                        i = FindObjectOfType<NetworkManagerCard>().numPlayers;
+                        i = playersCount;
                         break;
                     }
                 }
         }
         else 
         {
-            for (int i = (int)turnPlayerId + 1; i <= FindObjectOfType<NetworkManagerCard>().numPlayers; i++)
+            for (int i = (int)turnPlayerId + 1; i <= playersCount; i++)
                 foreach (var item in FindObjectsOfType<PlayerNetworkController>())
                 {
                     if (item.netId == i)
@@ -496,7 +500,7 @@ public class ServerManager : NetworkBehaviour
                         print($"{i}");
                         GiveTurn((uint)i, false);
                         useBang = false;
-                        i = FindObjectOfType<NetworkManagerCard>().numPlayers;
+                        i = playersCount;
                         break;
                     }
                 }        
