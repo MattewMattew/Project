@@ -244,7 +244,7 @@ public class ServerManager : NetworkBehaviour
             RolesList = new List<Roles>() { Roles.CAPTAIN, Roles.SINDICATE };
             rangePlayers = new List<RangePlayers> {
                 new RangePlayers(0, new Vector2(0, -237)), 
-                new RangePlayers(1, new Vector2(-696, 0)),
+                new RangePlayers(2, new Vector2(-696, 0)),
 
             };
         }
@@ -611,6 +611,7 @@ public class ServerManager : NetworkBehaviour
     [Server]
     public void PanicAction(CardAttributes card, uint id)
     {
+        print($"card {card.Name} {card.Dignity} {card.Suit} id {id}");
         foreach (var hand in Hands)
         {
             if (hand.Id == id)
@@ -698,6 +699,24 @@ public class ServerManager : NetworkBehaviour
                 {
                     yield return new WaitForSeconds(0.5f);
                 }
+            }
+        }
+    }
+
+    [Server]
+    public void RandomRemoveCardFromHand(PlayerNetworkController player, CardAttributes card)
+    {
+        foreach (var hand in Hands)
+        {
+            if(hand.Id == player.netId)
+            {
+                int index = UnityEngine.Random.Range(0, hand.Cards.Count);
+                if (card.Name == "Panic")
+                    PanicAction(Hands[Hands.IndexOf(hand)].Cards[index], turnPlayerId);
+                if (card.Name == "Women")
+                    GiveCardToDiscard(Hands[Hands.IndexOf(hand)].Cards[index]);
+                player.RemoveCardFromHandClientRpc(Hands[Hands.IndexOf(hand)].Cards[index]);
+                RemoveCardFromHand(Hands[Hands.IndexOf(hand)].Cards[index], player.netId);
             }
         }
     }

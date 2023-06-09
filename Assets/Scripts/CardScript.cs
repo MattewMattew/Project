@@ -23,14 +23,6 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
             if (player.netId == FindObjectOfType<ServerManager>().turnPlayerId && player.isLocalPlayer)
             {
                 turnPlayer = player;
-                // foreach (var inv in GameObject.FindGameObjectsWithTag("Field"))
-                // {
-                //     if (inv.GetComponentInParent<PlayerNetworkController>().netId == player.netId)
-                //         foreach (var card in inv.GetComponentsInChildren<CardInfoScripts>())
-                //         {
-                //             if (card.SelfCard.Name == "Volcanic") PresenceVolcanic = true;    
-                //         }
-                // }
                 break;
             }
 

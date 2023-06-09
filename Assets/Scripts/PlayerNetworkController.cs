@@ -131,12 +131,14 @@ public class PlayerNetworkController : NetworkBehaviour
     [ClientRpc]
     public void RemoveCardFromHandClientRpc(CardAttributes card)
     {
-        FindObjectOfType<GameManagerScript>().RemoveCardFromHand(card);
+        if (isLocalPlayer)
+            FindObjectOfType<GameManagerScript>().RemoveCardFromHand(card);
     }
 
     [ClientRpc]
     public void GiveHandCardsClientRpc(uint id, CardAttributes card)
     {
+        print($"{id} {card.Name}");
         FindObjectOfType<GameManagerScript>().GiveHandCards(id, card);
     }
 
@@ -158,6 +160,7 @@ public class PlayerNetworkController : NetworkBehaviour
         transform.SetParent(GameObject.Find("Players").transform);
         transform.localScale = new Vector3(1,1,1);
         transform.localPosition = pos;
+        Range = range;
         foreach (var item in GameObject.FindGameObjectsWithTag("Range"))
         {
             if (item.GetComponentInParent<PlayerNetworkController>().netId == netId)
@@ -227,6 +230,11 @@ public class PlayerNetworkController : NetworkBehaviour
     public void CmdRemoveCardFromHand(uint id, CardAttributes card)
     {
         FindObjectOfType<ServerManager>().RemoveCardFromHand(card, id);
+    }
+    [Command(requiresAuthority =false)]
+    public void CmdRandomRemoveCardFromHand(PlayerNetworkController player, CardAttributes card)
+    {
+        FindObjectOfType<ServerManager>().RandomRemoveCardFromHand(player, card);
     }
 
     [Command(requiresAuthority = false)]
