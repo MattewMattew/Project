@@ -473,7 +473,7 @@ public class ServerManager : NetworkBehaviour
         }
         else if (turnPlayerId + 1 > FindObjectOfType<NetworkManagerCard>().numPlayers)
         {
-            for (int i = 1; i <= FindObjectsOfType<PlayerNetworkController>().Length; i++)
+            for (int i = 1; i <= FindObjectOfType<NetworkManagerCard>().numPlayers; i++)
                 foreach (var item in FindObjectsOfType<PlayerNetworkController>())
                 {
                     if (item.netId == i)
@@ -481,14 +481,14 @@ public class ServerManager : NetworkBehaviour
                         print($"{i}");
                         GiveTurn((uint)i, false);
                         useBang = false;
-                        i = FindObjectsOfType<PlayerNetworkController>().Length;
+                        i = FindObjectOfType<NetworkManagerCard>().numPlayers;
                         break;
                     }
                 }
         }
         else 
         {
-            for (int i = (int)turnPlayerId + 1; i <= FindObjectsOfType<PlayerNetworkController>().Length; i++)
+            for (int i = (int)turnPlayerId + 1; i <= FindObjectOfType<NetworkManagerCard>().numPlayers; i++)
                 foreach (var item in FindObjectsOfType<PlayerNetworkController>())
                 {
                     if (item.netId == i)
@@ -496,7 +496,7 @@ public class ServerManager : NetworkBehaviour
                         print($"{i}");
                         GiveTurn((uint)i, false);
                         useBang = false;
-                        i = FindObjectsOfType<PlayerNetworkController>().Length;
+                        i = FindObjectOfType<NetworkManagerCard>().numPlayers;
                         break;
                     }
                 }        
