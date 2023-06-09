@@ -6,9 +6,9 @@ using UnityEngine.EventSystems;
 
 public class CardScript : MonoBehaviour, IPointerClickHandler 
 {
-    public GameObject TempCard;
+    public GameObject TempCard = null;
     public GameManagerScript GameManager;
-    // bool PresenceVolcanic = false;
+    bool PresenceVolcanic = false;
 
     void Awake() 
     {
@@ -33,18 +33,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 // }
                 break;
             }
-            // if(transform.parent.tag == "Field" && !player.isLocalPlayer)
-            // {
-            //     foreach (var card in GameObject.FindGameObjectsWithTag("Card"))
-            //     {
-            //         if (TempCard != null)
-            //         {
-            //             card.GetComponent<CardScript>().UseCard(player.netId, card.GetComponent<CardInfoScripts>().SelfCard);
-            //             break;
-            //         }
 
-            //     }
-            // }
             if (player.netId == FindObjectOfType<ServerManager>().attackedPlayerId && player.isLocalPlayer)
             {
                 turnPlayer = player;
@@ -72,10 +61,6 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                     else if (FindObjectOfType<ServerManager>().turnModificator == "Duel" && turnPlayer.netId == FindObjectOfType<ServerManager>().attackedPlayerId)
                     {
                         UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
-                            Debug.LogWarning(FindObjectOfType<ServerManager>().duelTargetPlayerId);
-                            /*                        if (FindObjectOfType<ServerManager>().duelTargetPlayerId == turnPlayer.netId)
-                                                    {*/
-                        print($"{FindObjectOfType<ServerManager>().attackedPlayerId} attackedPlayerId");
                         if(turnPlayer.netId == FindObjectOfType<ServerManager>().turnPlayerId)
                         {
                             turnPlayer.CmdDuel(turnPlayer.netId, FindObjectOfType<ServerManager>().duelTargetPlayerId);
@@ -84,21 +69,11 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                         {
                             turnPlayer.CmdDuel(turnPlayer.netId, FindObjectOfType<ServerManager>().turnPlayerId);
                         }
-/*                        }
-                        else
-                        {
-                            foreach (var item in FindObjectsOfType<PlayerNetworkController>())
-                            {
-                                if (item.netId == FindObjectOfType<ServerManager>().duelTargetPlayerId)
-                                {
-                                    item.CmdAttack("Duel");
-                                }
-                            }
-
-                        }*/
                     }
                     else if (FindObjectOfType<ServerManager>().turnModificator == "No")
-                            if(/*PresenceVolcanic || */!FindObjectOfType<ServerManager>().useBang) 
+                            foreach (var card in turnPlayer.GetComponentsInChildren<CardInfoScripts>())
+                                if (card.SelfCard.Name == "Volcanic") PresenceVolcanic = true;    
+                            if(PresenceVolcanic || !FindObjectOfType<ServerManager>().useBang) 
                                 UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                     break;
                 }
@@ -322,6 +297,33 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
             } 
 
         }
+        else if(transform.parent.tag == "Field" && turnPlayer)
+        {
+            if (GetComponentInParent<PlayerNetworkController>().netId != turnPlayer.netId)
+                foreach (var card in GameObject.Find("SelfHand").GetComponentsInChildren<CardScript>())
+                {
+                    if(card.TempCard != null)
+                    {
+                        card.GetComponent<CardScript>().UseCard(turnPlayer.netId, card.GetComponent<CardInfoScripts>().SelfCard);
+                        if(card.GetComponent<CardInfoScripts>().SelfCard.Name == "Women")
+                        {
+                            GetComponentInParent<PlayerNetworkController>().CmdGiveCardToDiscard(GetComponent<CardInfoScripts>().SelfCard);
+                            GetComponentInParent<PlayerNetworkController>().CmdRemoveCardFromInventory(GetComponent<CardInfoScripts>().SelfCard, 
+                                                                            GetComponentInParent<PlayerNetworkController>().netId);
+                            break;
+                        }
+                        if (card.GetComponent<CardInfoScripts>().SelfCard.Name == "Panic")
+                        {
+                            GetComponentInParent<PlayerNetworkController>().CmdPanicAction(GetComponent<CardInfoScripts>().SelfCard, 
+                                                                            turnPlayer.netId);
+                            GetComponentInParent<PlayerNetworkController>().CmdRemoveCardFromInventory(GetComponent<CardInfoScripts>().SelfCard, 
+                                                                            GetComponentInParent<PlayerNetworkController>().netId);
+                            break;
+
+                        }
+                    }
+                }
+        }
     }
 
     void AddCardInventory(uint id, CardAttributes card)
@@ -341,7 +343,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                             {
                                 if (item.InfoTypeCard == CardInfoScripts.TypeCard.WEAPON_CARD)
                                 {
-                                    print("Done");
+                                    player.CmdGiveCardToDiscard(item.SelfCard);
                                     player.CmdRemoveCardFromInventory(item.SelfCard, player.netId);
                                     Destroy(item.gameObject);
                                 }
@@ -364,9 +366,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
 
     void UseCardOnEnemy(uint id, CardAttributes card)
     {
-        CardScript[] cardsHand = GameObject.Find("SelfHand").GetComponentsInChildren<CardScript>();
-
-        foreach (var item in cardsHand)
+        foreach (var item in GameObject.Find("SelfHand").GetComponentsInChildren<CardScript>())
         {
             if (item.TempCard != null)
             {

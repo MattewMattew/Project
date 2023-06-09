@@ -164,7 +164,7 @@ public class ServerManager : NetworkBehaviour
                     print($"{item.netId} player have {item.Role} role");
                 }*/
         PlayerNetworkController[] players = FindObjectsOfType<PlayerNetworkController>();
-        print($"{players.Length} players");
+        // print($"{players.Length} players");
         switch (turnModificator)
         {
             case "No":
@@ -376,10 +376,10 @@ public class ServerManager : NetworkBehaviour
                                 break;
                             }
                         }
-                        print($"{discardCard} discardCard");
+                        // print($"{discardCard} discardCard");
                         if (discardCard <= 0)
                         {
-                            print("Done");
+                            // print("Done");
                             MoveTime = 0;
                         }
                     }
@@ -455,7 +455,7 @@ public class ServerManager : NetworkBehaviour
                 }
             }
         }
-        Debug.LogWarning(playersCount + " numPlayers");
+        // Debug.LogWarning(playersCount + " numPlayers");
         if (attackedPlayerId != 0)
         {
             foreach (var item in Healths)
@@ -482,7 +482,7 @@ public class ServerManager : NetworkBehaviour
                 {
                     if (item.netId == i)
                     {
-                        print($"{i}");
+                        // print($"{i}");
                         GiveTurn((uint)i, false);
                         useBang = false;
                         i = playersCount;
@@ -497,7 +497,7 @@ public class ServerManager : NetworkBehaviour
                 {
                     if (item.netId == i)
                     {
-                        print($"{i}");
+                        // print($"{i}");
                         GiveTurn((uint)i, false);
                         useBang = false;
                         i = playersCount;
@@ -560,7 +560,7 @@ public class ServerManager : NetworkBehaviour
     [Server]
     public void ResetPack()
     {
-        Debug.LogWarning(Discard.Count);
+        // Debug.LogWarning(Discard.Count);
         int count = Discard.Count;
         for (int i = 0; i < count; i++)
         {
@@ -607,6 +607,27 @@ public class ServerManager : NetworkBehaviour
         pack.Remove(pack[0]);
 
     }
+
+    [Server]
+    public void PanicAction(CardAttributes card, uint id)
+    {
+        foreach (var hand in Hands)
+        {
+            if (hand.Id == id)
+            {
+                List<CardAttributes> dumpList = new List<CardAttributes>();
+                foreach (var handCard in hand.Cards)
+                {
+                    dumpList.Add(handCard);
+                }
+                dumpList.Add(card);
+                Hands[Hands.IndexOf(hand)] = new HandList(id, dumpList);
+                FindObjectOfType<PlayerNetworkController>().UpdateCountCardsClientRpc(dumpList.Count, id);
+            }
+        }
+        FindObjectOfType<PlayerNetworkController>().GiveHandCardsClientRpc(id, card);
+    }
+
     [Server]
     public void UpdateInventory(CardAttributes card, PlayerNetworkController playerController, Transform playerInventory)
     {
@@ -716,7 +737,7 @@ public class ServerManager : NetworkBehaviour
                         list.Add(item1);
                     }
                 }
-                Debug.LogWarning(list.Count);
+                // Debug.LogWarning(list.Count);
                 Inventorys[Inventorys.IndexOf(item)] = new CardList(id, list);
             }
         }

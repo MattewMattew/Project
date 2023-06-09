@@ -27,7 +27,7 @@ public class PlayerNetworkController : NetworkBehaviour
     public void GiveRole(uint id, ServerManager.Roles role) 
     {
         if(netId == id) Role = role;
-        print($"{netId} player have {role} role");
+        // print($"{netId} player have {role} role");
         GiveHealthInit();
     }
     void GiveHealthInit()
@@ -172,6 +172,11 @@ public class PlayerNetworkController : NetworkBehaviour
 
 
 
+    [Command(requiresAuthority = false)]
+    public void CmdPanicAction(CardAttributes card, uint id)
+    {
+        FindObjectOfType<ServerManager>().PanicAction(card, id);
+    }
     [Command(requiresAuthority = false)]
     public void CmdUpdateInventory(CardAttributes card, PlayerNetworkController playerController, Transform playerInventory)
     {
