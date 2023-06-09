@@ -156,11 +156,13 @@ public class ServerManager : NetworkBehaviour
               {
                    Debug.LogWarning($"range {item.Range} to {item.netId} player");
               }*/
-/*        if (isClient)
-        foreach (var item in FindObjectsOfType<PlayerNetworkController>())
-        {
-            print($"{item.netId} player have {item.Role} role");
-        }*/
+        /*        if (isClient)
+                foreach (var item in FindObjectsOfType<PlayerNetworkController>())
+                {
+                    print($"{item.netId} player have {item.Role} role");
+                }*/
+        PlayerNetworkController[] players = FindObjectsOfType<PlayerNetworkController>();
+        print($"{players.Length} players");
         switch (turnModificator)
         {
             case "No":
@@ -463,7 +465,7 @@ public class ServerManager : NetworkBehaviour
                     }
                     if (item.Health - 1 <= 0)
                     {
-                        DeathAction();
+                        DeathAction(attackedPlayerId);
                     }
                 }
             }
@@ -471,23 +473,43 @@ public class ServerManager : NetworkBehaviour
         }
         else if (turnPlayerId + 1 > FindObjectOfType<NetworkManagerCard>().numPlayers)
         {
-            print($"1");
-            GiveTurn(1, false);
-            useBang = false;
+            for (int i = 1; i <= FindObjectsOfType<PlayerNetworkController>().Length; i++)
+                foreach (var item in FindObjectsOfType<PlayerNetworkController>())
+                {
+                    if (item.netId == i)
+                    {
+                        print($"{i}");
+                        GiveTurn((uint)i, false);
+                        useBang = false;
+                        i = FindObjectsOfType<PlayerNetworkController>().Length;
+                        break;
+                    }
+                }
         }
         else 
         {
-            print($"{turnPlayerId + 1}");
-            GiveTurn(turnPlayerId + 1, false);
-            useBang = false;
-        
+            for (int i = (int)turnPlayerId + 1; i <= FindObjectsOfType<PlayerNetworkController>().Length; i++)
+                foreach (var item in FindObjectsOfType<PlayerNetworkController>())
+                {
+                    if (item.netId == i)
+                    {
+                        print($"{i}");
+                        GiveTurn((uint)i, false);
+                        useBang = false;
+                        i = FindObjectsOfType<PlayerNetworkController>().Length;
+                        break;
+                    }
+                }        
         } 
 
     }
     [Server]
-    public void DeathAction()
+    public void DeathAction(uint id)
     {
-
+        foreach (var item in FindObjectsOfType<PlayerNetworkController>())
+        {
+            item.DeathActionClientRpc(id);
+        }
     }
     [Server]
     public void GiveTurn(uint id, bool target)

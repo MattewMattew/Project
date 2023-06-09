@@ -53,6 +53,15 @@ public class PlayerNetworkController : NetworkBehaviour
         }
     }
     [ClientRpc]
+    public void DeathActionClientRpc(uint id)
+    {
+        if(netId == id)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    [ClientRpc]
     public void HealthUpdateClientRpc(uint id, int health)
     {
         if(netId == id)
