@@ -738,6 +738,15 @@ public class ServerManager : NetworkBehaviour
                 }
                 Hands[Hands.IndexOf(item)] = new HandList(id, list);
                 FindObjectOfType<PlayerNetworkController>().UpdateCountCardsClientRpc(list.Count, id);
+                foreach(var player in FindObjectsOfType<PlayerNetworkController>())
+                {
+                    if (player.netId==id)
+                    {
+                        player.AnimAction(card);
+                        break;
+
+                    }
+                }
             }
         }
     }

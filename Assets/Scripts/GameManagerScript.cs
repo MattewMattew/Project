@@ -8,6 +8,7 @@ using System;
 
 public class GameManagerScript : MonoBehaviour // Колода
 {
+    private GameObject Anim;
     public Transform SelfHand, DiscardTransform;
     public GameObject CardPref;
     public TextMeshProUGUI CountCards;
@@ -24,7 +25,8 @@ public class GameManagerScript : MonoBehaviour // Колода
     }
     void Start()
     {
-        
+        Anim = GameObject.FindWithTag("Anim");
+        Anim.GetComponent<Animator>().Play("Opacity");
     }
 
     public void ButtonActivation(uint id)

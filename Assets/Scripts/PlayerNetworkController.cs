@@ -12,6 +12,8 @@ using UnityEngine.UI;
 
 public class PlayerNetworkController : NetworkBehaviour
 {
+    private Coroutine coroutine;
+    private GameObject Anim;
     public List<Material> Materials;
     Image materialHP;
     public int Range;
@@ -21,7 +23,7 @@ public class PlayerNetworkController : NetworkBehaviour
     public ServerManager.Roles Role;
     void Start()
     {
-        
+        Anim = GetComponentInChildren<Animator>().gameObject;
     }
     [ClientRpc]
     public void GiveRole(uint id, ServerManager.Roles role) 
@@ -242,4 +244,30 @@ public class PlayerNetworkController : NetworkBehaviour
     {
         StartCoroutine(FindObjectOfType<ServerManager>().MassiveAttackAction(card));
     }
+
+    [ClientRpc] 
+    public void AnimAction(CardAttributes card)
+    {
+        Anim.GetComponent<Animator>().SetBool("Bang", false);
+        Anim.GetComponent<Animator>().SetBool("Duel", false);
+        if (coroutine != null) StopCoroutine(coroutine);
+        Anim.GetComponent<Animator>().SetBool(card.Name, true);
+        coroutine = StartCoroutine(StartAnim(card));
+
+    }
+    IEnumerator StartAnim(CardAttributes card)
+    {
+        int Animtime = 5;
+        while(Animtime > 0)
+        {
+            Animtime--;
+            yield return new WaitForSeconds(1);
+        }
+        if (Anim.GetComponent<Animator>().GetBool(card.Name))
+        {
+            //Anim.SetActive(false);
+            Anim.GetComponent<Animator>().SetBool(card.Name, false);
+        }
+
+    }   
 }
