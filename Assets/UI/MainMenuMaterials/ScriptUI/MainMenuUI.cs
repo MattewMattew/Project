@@ -18,6 +18,16 @@ public class MainMenuUI :  MonoBehaviour
     [Header("Screen")]
     public TMP_Dropdown Dropdown;
     
+
+    void Awake(){
+         Dropdown.onValueChanged.AddListener(new UnityAction<int>(index =>
+        {
+            PlayerPrefs.SetInt("ScreenSize", Dropdown.value);
+            
+        }));
+        
+    }
+
     private void Start(){
         if (!PlayerPrefs.HasKey("ScreenSize"))
         PlayerPrefs.SetInt("ScreenSize", 0);
@@ -44,13 +54,7 @@ public class MainMenuUI :  MonoBehaviour
         PlayerPrefs.SetString("Name", DisplayName);
         TexB.text = DisplayName;
     }
-    void Awake(){
-         Dropdown.onValueChanged.AddListener(new UnityAction<int>(index =>
-        {
-            PlayerPrefs.SetInt("ScreenSize", Dropdown.value);
-            
-        }));
-    }
+   
     public void Change(){
           
         if(Dropdown.value == 0){
