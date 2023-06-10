@@ -83,8 +83,7 @@ public class ServerManager : NetworkBehaviour
     [SyncVar]
     public string turnModificator = "No";
 
-    int Move, MoveTime = 30;
-    private List<Vector2> spawnPoint;
+    int MoveTime = 30;
     public class GameCard
     {
         public List<CardAttributes> Pack;
@@ -199,6 +198,17 @@ public class ServerManager : NetworkBehaviour
                 }
         }
     }
+    [Server]
+    public void SendNameToClient(uint id, string name)
+    {
+        foreach (var item in FindObjectsOfType<PlayerNetworkController>())
+        {
+            if(item.netId == id)
+            {
+                item.SetNameClientRpc(id, name);
+            }
+        }
+    }
     public struct RangePlayers
     {
         public int Range;
@@ -214,10 +224,7 @@ public class ServerManager : NetworkBehaviour
         stage = GameObject.Find("Stage").GetComponent<TextMeshProUGUI>();
         PlayerNetworkController[] players = FindObjectsOfType<PlayerNetworkController>();
         playersCount = players.Length;
-        if (isServer) 
-        {
-            CmdCardAdded();
-        }
+        if (isServer) CmdCardAdded();
         gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
         List<Roles> RolesList = new List<Roles>();
         if (players.Length == 6)
@@ -307,15 +314,18 @@ public class ServerManager : NetworkBehaviour
                     {
                         checkLocalPlayer = true;
                         player.setPlayerPosition(rangePlayers[0].Range, rangePlayers[0].Pos);
+                        player.SetName();
                         rangePlayers.RemoveAt(0);
                         break;
                     }
                     else if (player.netId == i)
                     {
                         player.setPlayerPosition(rangePlayers[0].Range, rangePlayers[0].Pos);
+                        player.SetName();
                         rangePlayers.RemoveAt(0);
                         break;
                     }
+                    
                 }
             }
         }

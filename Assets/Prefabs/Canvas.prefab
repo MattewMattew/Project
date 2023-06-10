@@ -1339,3 +1339,4 @@ MonoBehaviour:
   DiscardTransform: {fileID: 5436102575857109341}
   CardPref: {fileID: 1793064928002630346, guid: 3f755444af9b42147b63e3fbcee4ee99, type: 3}
   CountCards: {fileID: 1171377484536420745}
+  CardDiscard: {fileID: 0}

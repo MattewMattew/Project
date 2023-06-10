@@ -24,7 +24,47 @@ public class PlayerNetworkController : NetworkBehaviour
     void Start()
     {
         Anim = GetComponentInChildren<Animator>().gameObject;
+        
     }
+    public void SetName()
+    {
+        if (isLocalPlayer)
+        {
+            foreach (var item in GetComponentsInChildren<TextMeshProUGUI>())
+            {
+                if (item.tag == "UserName")
+                {
+                    item.text = "Test";
+                    CmdSendNameToServer("Test");
+                    break;
+                }
+
+            }
+
+        }
+    }
+    [Command(requiresAuthority =false)]
+    public void CmdSendNameToServer(string name)
+    {
+        FindObjectOfType<ServerManager>().SendNameToClient(netId, name);
+    }
+    [ClientRpc]
+    public void SetNameClientRpc(uint id, string name)
+    {
+        if(netId == id)
+        {
+            foreach (var item in GetComponentsInChildren<TextMeshProUGUI>())
+            {
+                if (item.tag == "UserName")
+                {
+                    item.text = name;
+                    break;
+                }
+
+            }
+        }
+    }
+
     [ClientRpc]
     public void GiveRole(uint id, ServerManager.Roles role) 
     {
@@ -248,16 +288,20 @@ public class PlayerNetworkController : NetworkBehaviour
     [ClientRpc] 
     public void AnimAction(CardAttributes card)
     {
-        Anim.GetComponent<Animator>().SetBool("Bang", false);
-        Anim.GetComponent<Animator>().SetBool("Duel", false);
-        if (coroutine != null) StopCoroutine(coroutine);
-        Anim.GetComponent<Animator>().SetBool(card.Name, true);
-        coroutine = StartCoroutine(StartAnim(card));
+        if(FindObjectOfType<ServerManager>().turnModificator != "Discarding" && 
+            (netId == FindObjectOfType<ServerManager>().turnPlayerId || netId == FindObjectOfType<ServerManager>().attackedPlayerId))
+        {
+            Anim.GetComponent<Animator>().SetBool("Bang", false);
+            Anim.GetComponent<Animator>().SetBool("Duel", false);
+            if (coroutine != null) StopCoroutine(coroutine);
+            Anim.GetComponent<Animator>().SetBool(card.Name, true);
+            coroutine = StartCoroutine(StartAnim(card));
+        }
 
     }
     IEnumerator StartAnim(CardAttributes card)
     {
-        int Animtime = 5;
+        int Animtime = 3;
         while(Animtime > 0)
         {
             Animtime--;
