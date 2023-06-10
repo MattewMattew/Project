@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+
 using Mirror;
 
 public class MainMenuUI :  MonoBehaviour
@@ -72,6 +74,10 @@ public class MainMenuUI :  MonoBehaviour
     }
     public void CloseGame(){
         Application.Quit();
+    }
+    public void StartScene(int index)
+    {
+        SceneManager.LoadScene(index);
     }
     
 
