@@ -293,6 +293,18 @@ public class PlayerNetworkController : NetworkBehaviour
         {
             Anim.GetComponent<Animator>().SetBool("Bang", false);
             Anim.GetComponent<Animator>().SetBool("Duel", false);
+            Anim.GetComponent<Animator>().SetBool("Diligence", false);
+            Anim.GetComponent<Animator>().SetBool("WellsFargo", false);
+            Anim.GetComponent<Animator>().SetBool("Gatling", false);
+            Anim.GetComponent<Animator>().SetBool("Jail", false);
+            Anim.GetComponent<Animator>().SetBool("Panic", false);
+            Anim.GetComponent<Animator>().SetBool("Women", false);
+            Anim.GetComponent<Animator>().SetBool("Beer", false);
+            Anim.GetComponent<Animator>().SetBool("Missed", false);
+            Anim.GetComponent<Animator>().SetBool("Barrel", false);
+            Anim.GetComponent<Animator>().SetBool("Roach", false);
+            Anim.GetComponent<Animator>().SetBool("Dynamite", false);
+            Anim.GetComponent<Animator>().SetBool("Mustang", false);
             if (coroutine != null) StopCoroutine(coroutine);
             Anim.GetComponent<Animator>().SetBool(card.Name, true);
             coroutine = StartCoroutine(StartAnim(card));
