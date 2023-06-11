@@ -86,20 +86,36 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
                                 DeleteCard(card);
                                 return;
                             }
-                            if(card.GetComponent<CardInfoScripts>().SelfCard.Name == "Women")
-                            {
-                                DeleteCard(card);
-                                GetComponent<PlayerNetworkController>().CmdRandomRemoveCardFromHand(GetComponent<PlayerNetworkController>(),
-                                                                                card.GetComponent<CardInfoScripts>().SelfCard);
-                                return;
-                            }
-                            if (card.GetComponent<CardInfoScripts>().SelfCard.Name == "Panic")
-                            {
-                                DeleteCard(card);
-                                GetComponent<PlayerNetworkController>().CmdRandomRemoveCardFromHand(GetComponent<PlayerNetworkController>(),
-                                                                                card.GetComponent<CardInfoScripts>().SelfCard);
-                                return;
 
+                            if(card.GetComponent<CardInfoScripts>().SelfCard.Name == "Women" || card.GetComponent<CardInfoScripts>().SelfCard.Name == "Panic")
+                            foreach (var hand in FindObjectOfType<ServerManager>().Hands)
+                            {
+                                if (hand.Id == GetComponent<PlayerNetworkController>().netId)
+                                {
+                                    if (hand.Cards.Count > 0)
+                                    {
+                                        if(card.GetComponent<CardInfoScripts>().SelfCard.Name == "Women")
+                                        {
+                                            DeleteCard(card);
+                                            GetComponent<PlayerNetworkController>().CmdRandomRemoveCardFromHand(GetComponent<PlayerNetworkController>(),
+                                                                                            card.GetComponent<CardInfoScripts>().SelfCard);
+                                            return;
+                                        }
+                                        if (card.GetComponent<CardInfoScripts>().SelfCard.Name == "Panic")
+                                        {
+                                            GetComponent<PlayerNetworkController>().CmdRandomRemoveCardFromHand(GetComponent<PlayerNetworkController>(),
+                                                                                            card.GetComponent<CardInfoScripts>().SelfCard);
+                                            DeleteCard(card);
+                                            return;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        card.GetComponent<CardScript>().TempCard = null;
+                                        card.transform.localScale = new Vector2(1f, 1f);
+                                        return;
+                                    }
+                                }
                             }
                              
                             
