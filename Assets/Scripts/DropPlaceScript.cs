@@ -32,7 +32,7 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
                 {
                     if (card.GetComponent<CardScript>().TempCard != null)
                     {
-                        if(card.GetComponent<CardInfoScripts>().Name.text == "Jail")
+                        if(card.GetComponent<CardInfoScripts>().Name == "Jail")
                         {
                             foreach (var inv in GameObject.FindGameObjectsWithTag("Field"))
                             {

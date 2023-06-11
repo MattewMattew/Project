@@ -7,30 +7,32 @@ using TMPro;
 public class CardInfoScripts : MonoBehaviour
 {
    public CardAttributes SelfCard;
-   public TextMeshProUGUI Name, Dignity ,InfoCard;
+   public TextMeshProUGUI NameCard, Dignity ,InfoCard;
    public Image Logo, Suit,Icon;
    public GameObject Type, Info;
    public int WeaponRange;
+   public string Name;
    Sprite LogoSprite;
    public enum TypeCard {DISPOSABLE_CARD, PERMANENT_CARD, WEAPON_CARD}
    public TypeCard InfoTypeCard;
    
    //Test
-   public void HideCardInfo (CardAttributes card)
-   {
-      SelfCard = card;
+   // public void HideCardInfo (CardAttributes card)
+   // {
+   //    SelfCard = card;
       
-      Name.text = "";
-      Logo.sprite = null;
-      Suit.sprite = null;
-      Dignity.text = "";
-      Icon.sprite = null;
+   //    Name = "";
+   //    NameCard.text = "";
+   //    Logo.sprite = null;
+   //    Suit.sprite = null;
+   //    Dignity.text = "";
+   //    Icon.sprite = null;
       
-   }
+   // }
    public void ShowCardInfo (CardAttributes card)
    {
       SelfCard = card;
-      Name.text = card.Name;
+      Name = card.Name;
       Dignity.text = card.Dignity;
       switch (card.Name)
       {
@@ -40,7 +42,7 @@ public class CardInfoScripts : MonoBehaviour
          case "Bang":
          {  
             
-            // Name.text = "Выстрел";
+            NameCard.text = "Выстрел";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Bang");
             Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
@@ -51,7 +53,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Missed":
          {
-            // Name.text = "Промах";
+            NameCard.text = "Промах";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Missed");
             Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
@@ -61,7 +63,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Beer":
          {
-            // Name.text = "Пиво";
+            NameCard.text = "Пиво";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Beer");
             Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
@@ -71,7 +73,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Panic":
          {
-            // Name.text = "Воровство";
+            NameCard.text = "Воровство";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Panic");
             Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
@@ -81,7 +83,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Gatling":
          {
-            // Name.text = "Турель";
+            NameCard.text = "Турель";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Gatling");
             Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
@@ -91,7 +93,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "WellsFargo":
          {
-            // Name.text = "Контробанда";
+            NameCard.text = "Контробанда";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/WellsFargo");
             Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
@@ -101,7 +103,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Diligence":
          {
-            // Name.text = "Контейнер";
+            NameCard.text = "Контейнер";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Diligence");
             Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
@@ -111,7 +113,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "General":
          {
-            // Name.text = "Снабжение";
+            NameCard.text = "Снабжение";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/General");
             Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
@@ -121,7 +123,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Duel":
          {
-            // Name.text = "Дуэль";
+            NameCard.text = "Дуэль";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Duel");
             Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
@@ -130,7 +132,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Saloon":
          {
-            // Name.text = "Бар";
+            NameCard.text = "Бар";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Saloon");
             Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
@@ -140,7 +142,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Women":
          {
-            // Name.text = "Устрашение";
+            NameCard.text = "Устрашение";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Women");
             Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
@@ -150,7 +152,7 @@ public class CardInfoScripts : MonoBehaviour
          }
          case "Indians":
          {
-            // Name.text = "Заключенные";
+            NameCard.text = "Заключенные";
             Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Indians");
             Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKartaRED") ;
             InfoTypeCard = TypeCard.DISPOSABLE_CARD;
@@ -170,7 +172,7 @@ public class CardInfoScripts : MonoBehaviour
             }
             else 
             {
-               // Name.text = "Укрытие";
+               NameCard.text = "Укрытие";
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Barrel");
@@ -187,7 +189,7 @@ public class CardInfoScripts : MonoBehaviour
             }
             else 
             {
-               // Name.text = "Граната";
+               NameCard.text = "Граната";
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Dynamite");
@@ -204,7 +206,7 @@ public class CardInfoScripts : MonoBehaviour
             }
             else 
             {
-               // Name.text = "Карцер";
+               NameCard.text = "Карцер";
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Jail");
@@ -221,7 +223,7 @@ public class CardInfoScripts : MonoBehaviour
             }
             else 
             {
-               // Name.text = "Джетпак";
+               NameCard.text = "Джетпак";
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Mustang");
@@ -238,7 +240,7 @@ public class CardInfoScripts : MonoBehaviour
             }
             else
             {
-               // Name.text = "Прицел";
+               NameCard.text = "Прицел";
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Roach");
@@ -261,7 +263,7 @@ public class CardInfoScripts : MonoBehaviour
             }
             else 
             {
-               // Name.text = "Blast-1";
+               NameCard.text = "Blast-1";
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Carbine");
@@ -282,7 +284,7 @@ public class CardInfoScripts : MonoBehaviour
             }
             else 
             {
-               // Name.text = "SL-9";
+               NameCard.text = "SL-9";
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Remington");
@@ -302,7 +304,7 @@ public class CardInfoScripts : MonoBehaviour
             }
             else 
             {
-               // Name.text = "GL-16";
+               NameCard.text = "GL-16";
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Scofield");
@@ -322,7 +324,7 @@ public class CardInfoScripts : MonoBehaviour
             }
             else 
             {
-               // Name.text = "PP-90G1";
+               NameCard.text = "PP-90G1";
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Volcanic");
@@ -341,7 +343,7 @@ public class CardInfoScripts : MonoBehaviour
             }
             else 
             {
-               // Name.text = "SSJ-69";
+               NameCard.text = "SSJ-69";
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Winchester");

@@ -370,7 +370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf515ba4e68b2440af64b63b0b56e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: {fileID: 1793064926918951534}
+  NameCard: {fileID: 1793064926918951534}
   Dignity: {fileID: 1793064928580894407}
   InfoCard: {fileID: 8343997537637257423}
   Logo: {fileID: 1793064928571959663}
@@ -379,6 +379,7 @@ MonoBehaviour:
   Type: {fileID: 1793064928555424539}
   Info: {fileID: 1793064928657749718}
   WeaponRange: 0
+  Name: 
   InfoTypeCard: 0
 --- !u!114 &-1328678331357455933
 MonoBehaviour:

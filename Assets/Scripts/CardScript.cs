@@ -35,7 +35,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
 
         if(transform.parent.tag == "Hand" && turnPlayer)
         {
-            switch (GetComponent<CardInfoScripts>().Name.text)
+            switch (GetComponent<CardInfoScripts>().Name)
             {
 
 /* _________________________________________________ DISPOSABLE CARD _______________________________________________________________ */
