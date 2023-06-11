@@ -30,6 +30,9 @@ public class ServerManager : NetworkBehaviour
     private Coroutine Coroutine;
 
     private int TempHealth;
+    private int vB,vS,vR;
+    public GameObject GB,GS,GR;
+    public TextMeshProUGUI textB,textS,textR;
 
     public struct CardList
     {
@@ -237,6 +240,7 @@ public class ServerManager : NetworkBehaviour
                 new RangePlayers(3, new Vector2(0, 392)),
                 new RangePlayers(2, new Vector2(512, 176)),
                 new RangePlayers(1, new Vector2(512, -40)),
+               
                 /*new RangePlayers(1, new Vector2(593, -92))*/
                 
                 
@@ -245,6 +249,28 @@ public class ServerManager : NetworkBehaviour
                 new RangePlayers(2, new Vector2(0, 421)),
                 new RangePlayers(1, new Vector2(696, 0))*/
             };
+            foreach (var item in RolesList)
+            {
+                if(item == Roles.SINDICATE)
+                {
+                 GB.SetActive(true);
+                 vB +=1;
+                 textB.text = vB.ToString();
+                }
+                
+                if(item == Roles.RENEGADE)
+                {
+                 GR.SetActive(true);
+                 vR +=1;
+                 textR.text = vR.ToString();
+                }
+                if(item==Roles.HELPER)
+                {
+                 GS.SetActive(true);
+                 vS+=1;
+                 textS.text = vS.ToString();
+                }
+            }
         }
         else if(players.Length == 2)
         {
@@ -254,6 +280,28 @@ public class ServerManager : NetworkBehaviour
                 new RangePlayers(2, new Vector2(-696, 0)),
 
             };
+            foreach (var item in RolesList)
+            {
+                if(item == Roles.SINDICATE)
+                {
+                 GB.SetActive(true);
+                 vB +=1;
+                 textB.text = vB.ToString();
+                }
+                
+                if(item == Roles.RENEGADE)
+                {
+                 GR.SetActive(true);
+                 vR +=1;
+                 textR.text = vR.ToString();
+                }
+                if(item==Roles.HELPER)
+                {
+                 GS.SetActive(true);
+                 vS+=1;
+                 textS.text = vS.ToString();
+                }
+            }
         }
         else if (players.Length == 4)
         {
@@ -263,8 +311,30 @@ public class ServerManager : NetworkBehaviour
                 new RangePlayers(1, new Vector2(-512, 0)),
                 new RangePlayers(2, new Vector2(0, 360)),
                 new RangePlayers(1, new Vector2(512, 0)),
-              
+                
             };
+            foreach (var item in RolesList)
+            {
+                if(item == Roles.SINDICATE)
+                {
+                 GB.SetActive(true);
+                 vB +=1;
+                 textB.text = vB.ToString();
+                }
+                
+                if(item == Roles.RENEGADE)
+                {
+                 GR.SetActive(true);
+                 vR +=1;
+                 textR.text = vR.ToString();
+                }
+                if(item==Roles.HELPER)
+                {
+                 GS.SetActive(true);
+                 vS+=1;
+                 textS.text = vS.ToString();
+                }
+            }
         }
         else if (players.Length == 5)
         {
@@ -277,7 +347,28 @@ public class ServerManager : NetworkBehaviour
                 new RangePlayers(1, new Vector2(512, -40)),
               
             };
-
+           foreach (var item in RolesList)
+            {
+                if(item == Roles.SINDICATE)
+                {
+                 GB.SetActive(true);
+                 vB +=1;
+                 textB.text = vB.ToString();
+                }
+                
+                if(item == Roles.RENEGADE)
+                {
+                 GR.SetActive(true);
+                 vR +=1;
+                 textR.text = vR.ToString();
+                }
+                if(item==Roles.HELPER)
+                {
+                 GS.SetActive(true);
+                 vS+=1;
+                 textS.text = vS.ToString();
+                }
+            }
         }
         else if (players.Length == 7)
         {
@@ -291,6 +382,28 @@ public class ServerManager : NetworkBehaviour
                 new RangePlayers(2, new Vector2(512, 176)),
                 new RangePlayers(1, new Vector2(512, -40)),
             };
+            foreach (var item in RolesList)
+            {
+                if(item == Roles.SINDICATE)
+                {
+                 GB.SetActive(true);
+                 vB +=1;
+                 textB.text = vB.ToString();
+                }
+                
+                if(item == Roles.RENEGADE)
+                {
+                 GR.SetActive(true);
+                 vR +=1;
+                 textR.text = vR.ToString();
+                }
+                if(item==Roles.HELPER)
+                {
+                 GS.SetActive(true);
+                 vS+=1;
+                 textS.text = vS.ToString();
+                }
+            }
         }
         if (isClient)
         {
