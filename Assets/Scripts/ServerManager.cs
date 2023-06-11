@@ -30,9 +30,9 @@ public class ServerManager : NetworkBehaviour
     private Coroutine Coroutine;
 
     private int TempHealth;
-    private int vB,vS,vR;
-    public GameObject GB,GS,GR;
-    public TextMeshProUGUI textB,textS,textR;
+    private int vB, vS, vR;
+    public GameObject GB, GS, GR;
+    public TextMeshProUGUI textB, textS, textR;
 
     public struct CardList
     {
@@ -240,7 +240,6 @@ public class ServerManager : NetworkBehaviour
                 new RangePlayers(3, new Vector2(0, 392)),
                 new RangePlayers(2, new Vector2(512, 176)),
                 new RangePlayers(1, new Vector2(512, -40)),
-               
                 /*new RangePlayers(1, new Vector2(593, -92))*/
                 
                 
@@ -251,24 +250,24 @@ public class ServerManager : NetworkBehaviour
             };
             foreach (var item in RolesList)
             {
-                if(item == Roles.SINDICATE)
+                if (item == Roles.SINDICATE)
                 {
-                 GB.SetActive(true);
-                 vB +=1;
-                 textB.text = vB.ToString();
+                    GB.SetActive(true);
+                    vB += 1;
+                    textB.text = vB.ToString();
                 }
-                
-                if(item == Roles.RENEGADE)
+
+                if (item == Roles.RENEGADE)
                 {
-                 GR.SetActive(true);
-                 vR +=1;
-                 textR.text = vR.ToString();
+                    GR.SetActive(true);
+                    vR += 1;
+                    textR.text = vR.ToString();
                 }
-                if(item==Roles.HELPER)
+                if (item == Roles.HELPER)
                 {
-                 GS.SetActive(true);
-                 vS+=1;
-                 textS.text = vS.ToString();
+                    GS.SetActive(true);
+                    vS += 1;
+                    textS.text = vS.ToString();
                 }
             }
         }
@@ -282,24 +281,24 @@ public class ServerManager : NetworkBehaviour
             };
             foreach (var item in RolesList)
             {
-                if(item == Roles.SINDICATE)
+                if (item == Roles.SINDICATE)
                 {
-                 GB.SetActive(true);
-                 vB +=1;
-                 textB.text = vB.ToString();
+                    GB.SetActive(true);
+                    vB += 1;
+                    textB.text = vB.ToString();
                 }
-                
-                if(item == Roles.RENEGADE)
+
+                if (item == Roles.RENEGADE)
                 {
-                 GR.SetActive(true);
-                 vR +=1;
-                 textR.text = vR.ToString();
+                    GR.SetActive(true);
+                    vR += 1;
+                    textR.text = vR.ToString();
                 }
-                if(item==Roles.HELPER)
+                if (item == Roles.HELPER)
                 {
-                 GS.SetActive(true);
-                 vS+=1;
-                 textS.text = vS.ToString();
+                    GS.SetActive(true);
+                    vS += 1;
+                    textS.text = vS.ToString();
                 }
             }
         }
@@ -311,28 +310,28 @@ public class ServerManager : NetworkBehaviour
                 new RangePlayers(1, new Vector2(-512, 0)),
                 new RangePlayers(2, new Vector2(0, 360)),
                 new RangePlayers(1, new Vector2(512, 0)),
-                
+              
             };
             foreach (var item in RolesList)
             {
-                if(item == Roles.SINDICATE)
+                if (item == Roles.SINDICATE)
                 {
-                 GB.SetActive(true);
-                 vB +=1;
-                 textB.text = vB.ToString();
+                    GB.SetActive(true);
+                    vB += 1;
+                    textB.text = vB.ToString();
                 }
-                
-                if(item == Roles.RENEGADE)
+
+                if (item == Roles.RENEGADE)
                 {
-                 GR.SetActive(true);
-                 vR +=1;
-                 textR.text = vR.ToString();
+                    GR.SetActive(true);
+                    vR += 1;
+                    textR.text = vR.ToString();
                 }
-                if(item==Roles.HELPER)
+                if (item == Roles.HELPER)
                 {
-                 GS.SetActive(true);
-                 vS+=1;
-                 textS.text = vS.ToString();
+                    GS.SetActive(true);
+                    vS += 1;
+                    textS.text = vS.ToString();
                 }
             }
         }
@@ -347,28 +346,29 @@ public class ServerManager : NetworkBehaviour
                 new RangePlayers(1, new Vector2(512, -40)),
               
             };
-           foreach (var item in RolesList)
+            foreach (var item in RolesList)
             {
-                if(item == Roles.SINDICATE)
+                if (item == Roles.SINDICATE)
                 {
-                 GB.SetActive(true);
-                 vB +=1;
-                 textB.text = vB.ToString();
+                    GB.SetActive(true);
+                    vB += 1;
+                    textB.text = vB.ToString();
                 }
-                
-                if(item == Roles.RENEGADE)
+
+                if (item == Roles.RENEGADE)
                 {
-                 GR.SetActive(true);
-                 vR +=1;
-                 textR.text = vR.ToString();
+                    GR.SetActive(true);
+                    vR += 1;
+                    textR.text = vR.ToString();
                 }
-                if(item==Roles.HELPER)
+                if (item == Roles.HELPER)
                 {
-                 GS.SetActive(true);
-                 vS+=1;
-                 textS.text = vS.ToString();
+                    GS.SetActive(true);
+                    vS += 1;
+                    textS.text = vS.ToString();
                 }
             }
+
         }
         else if (players.Length == 7)
         {
@@ -384,24 +384,24 @@ public class ServerManager : NetworkBehaviour
             };
             foreach (var item in RolesList)
             {
-                if(item == Roles.SINDICATE)
+                if (item == Roles.SINDICATE)
                 {
-                 GB.SetActive(true);
-                 vB +=1;
-                 textB.text = vB.ToString();
+                    GB.SetActive(true);
+                    vB += 1;
+                    textB.text = vB.ToString();
                 }
-                
-                if(item == Roles.RENEGADE)
+
+                if (item == Roles.RENEGADE)
                 {
-                 GR.SetActive(true);
-                 vR +=1;
-                 textR.text = vR.ToString();
+                    GR.SetActive(true);
+                    vR += 1;
+                    textR.text = vR.ToString();
                 }
-                if(item==Roles.HELPER)
+                if (item == Roles.HELPER)
                 {
-                 GS.SetActive(true);
-                 vS+=1;
-                 textS.text = vS.ToString();
+                    GS.SetActive(true);
+                    vS += 1;
+                    textS.text = vS.ToString();
                 }
             }
         }
@@ -645,7 +645,11 @@ public class ServerManager : NetworkBehaviour
         if (!target)
         {
             turnPlayerId = id;
-            if(attackedPlayerId == 0) GiveHandCards(PackCards, turnPlayerId, 2);
+            if (attackedPlayerId == 0)
+            {
+                CheckNextCardInPackAttributes(id);
+                GiveHandCards(PackCards, turnPlayerId, 2);
+            }
             Coroutine = StartCoroutine(MoveFunc(15));
         }
         attackedPlayerId = 0;
@@ -670,7 +674,7 @@ public class ServerManager : NetworkBehaviour
                 ResetPack();
                 ResetDiscardClientRpc();
             }
-            GiveCardToHand(pack, id);
+            GiveCardToHand(pack[0], id);
         } 
     }
 
@@ -693,11 +697,11 @@ public class ServerManager : NetworkBehaviour
         }
     }
     [Server]
-    void GiveCardToHand(SyncList<CardAttributes> pack, uint id) // ������ ����� � ����
+    void GiveCardToHand(CardAttributes cardPack, uint id) // ������ ����� � ����
     {
         
         bool check = false;
-        List<CardAttributes> list = new List<CardAttributes> { pack[0] };
+        List<CardAttributes> list = new List<CardAttributes> { cardPack };
         foreach (var item in Hands)
         {
             if (id == item.Id)
@@ -716,7 +720,7 @@ public class ServerManager : NetworkBehaviour
                     {
                         dumpList.Add(card);
                     }
-                    dumpList.Add(pack[0]);
+                    dumpList.Add(cardPack);
                     Hands[Hands.IndexOf(hand)] = new HandList(id, dumpList);
                     FindObjectOfType<PlayerNetworkController>().UpdateCountCardsClientRpc(dumpList.Count, id);
                 }
@@ -726,8 +730,8 @@ public class ServerManager : NetworkBehaviour
         {
             Hands.Add(new HandList(id, list));
         }
-        FindObjectOfType<PlayerNetworkController>().GiveHandCardsClientRpc(id, pack[0]);
-        pack.Remove(pack[0]);
+        FindObjectOfType<PlayerNetworkController>().GiveHandCardsClientRpc(id, cardPack);
+        PackCards.Remove(cardPack);
 
     }
 
@@ -797,11 +801,83 @@ public class ServerManager : NetworkBehaviour
     [Server]
     public void AttackAction(uint id, string card)
     {
+        CheckNextCardInPackAttributes(id);
         GiveTurn(id, true);
         turnModificator = card;
         useBang = true;
     }
-
+    [Server]
+    void CheckNextCardInPackAttributes(uint id)
+    {
+        foreach (var inv in GameObject.FindGameObjectsWithTag("Field"))
+        {
+            if(inv.GetComponentInParent<PlayerNetworkController>().netId == id)
+            {
+                foreach (var cardInv in inv.GetComponentsInChildren<CardInfoScripts>())
+                {
+                    if (turnModificator == "Bang" || turnModificator == "Gatling")
+                    {
+                        if (cardInv.SelfCard.Name == "Barrel")
+                        {
+                        
+                            if (PackCards[0].Suit == "Hearts")
+                            {
+                                GiveTurn(turnPlayerId, false);
+                            }
+                            GiveCardToDiscard(PackCards[0]);
+                            PackCards.RemoveAt(0);
+                            break;
+                        }
+                    }
+                    if(turnModificator == "No")
+                    {
+                        if (cardInv.SelfCard.Name == "Dynamite")
+                        {
+                            if (PackCards[0].Suit == "Spades" && (int.Parse(PackCards[0].Dignity) >= 2 && int.Parse(PackCards[0].Dignity) <= 9))
+                            {
+                                foreach (var item in Healths)
+                                {
+                                    if (item.Id == id)
+                                    {
+                                        foreach (var item1 in FindObjectsOfType<PlayerNetworkController>())
+                                        {
+                                            if (item.Id == item1.netId)
+                                            {
+                                                Healths[Healths.IndexOf(item)] = new HealthList(item1.netId, item.Health - 3);
+                                                item1.HealthUpdateClientRpc(item1.netId, item.Health - 3);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                RemoveCardFromHand(cardInv.GetComponent<CardInfoScripts>().SelfCard, id);
+                                foreach (var item in FindObjectsOfType<PlayerNetworkController>())
+                                {
+                                    if (item.netId == id)
+                                    {
+                                        item.RemoveCardFromHandClientRpc(cardInv.GetComponent<CardInfoScripts>().SelfCard);
+                                        for (int i = (int)turnPlayerId + 1; i <= playersCount; i++)
+                                            foreach (var item1 in FindObjectsOfType<PlayerNetworkController>())
+                                            {
+                                                if (item1.netId == i)
+                                                {
+                                                    UpdateInventory(cardInv.GetComponent<CardInfoScripts>().SelfCard, item1, item1.transform);
+                                                }
+                                            }
+                                    }
+                                }
+                            }
+                            GiveCardToDiscard(PackCards[0]);
+                            PackCards.RemoveAt(0);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
     [Server]
     public void DuelAction (uint idAttacking, uint idDefenser)
     {

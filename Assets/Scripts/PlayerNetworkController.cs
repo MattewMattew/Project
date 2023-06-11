@@ -77,6 +77,7 @@ public class PlayerNetworkController : NetworkBehaviour
         {
             RoleInfo.gameObject.SetActive(true);
             RoleInfo.sprite=Resources.Load<Sprite>("Sprites/Role/Роль(Капитан)");
+            materialHP.material.SetFloat("_CountS", 9.6f);
         }
         else{
             RoleInfo.gameObject.SetActive(false);
@@ -228,7 +229,7 @@ public class PlayerNetworkController : NetworkBehaviour
      public void setPlayerPosition(int range ,Vector2 pos)
     {
         transform.SetParent(GameObject.Find("Players").transform);
-        transform.localScale = new Vector3(1,1,1);
+        transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         transform.localPosition = pos;
         Range = range;
         foreach (var item in GameObject.FindGameObjectsWithTag("Range"))
