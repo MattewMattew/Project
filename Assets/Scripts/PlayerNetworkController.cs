@@ -17,6 +17,8 @@ public class PlayerNetworkController : NetworkBehaviour
     public List<Material> Materials;
     Image materialHP;
     public int Range;
+    public GameObject RoleInf;
+    public Image RoleInfo;
 
     public int maxHealth = 0;
 
@@ -71,6 +73,32 @@ public class PlayerNetworkController : NetworkBehaviour
         if(netId == id) Role = role;
         // print($"{netId} player have {role} role");
         GiveHealthInit();
+        if(role == ServerManager.Roles.CAPTAIN)
+        {
+            RoleInfo.gameObject.SetActive(true);
+            RoleInfo.sprite=Resources.Load<Sprite>("Sprites/Role/Роль(Капитан)");
+        }
+        else{
+            RoleInfo.gameObject.SetActive(false);
+        }
+        if (isLocalPlayer && netId == id)
+        {
+            if (role == ServerManager.Roles.SINDICATE)
+            {
+                RoleInfo.gameObject.SetActive(true); 
+                RoleInfo.sprite=Resources.Load<Sprite>("Sprites/Role/Роль(Бандит)");   
+            }
+            else if (role == ServerManager.Roles.HELPER)
+            {
+                RoleInfo.gameObject.SetActive(true);
+                RoleInfo.sprite=Resources.Load<Sprite>("Sprites/Role/Роль(Помощник)");
+            }
+            else if (role == ServerManager.Roles.RENEGADE)
+            {
+                RoleInfo.gameObject.SetActive(true);
+                RoleInfo.sprite=Resources.Load<Sprite>("Sprites/Role/Роль(Ренегат)");
+            }
+        }
     }
     void GiveHealthInit()
     {

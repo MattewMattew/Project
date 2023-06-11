@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Mirror;
+using UnityEngine.SceneManagement;
 
 public class ButtonsNetworkManager : MonoBehaviour
 {
@@ -46,5 +47,9 @@ public class ButtonsNetworkManager : MonoBehaviour
 
         DisplayName = InputName.text;
         TexB.text = DisplayName;
+    }
+    public void NextScene(int index)
+    {
+        SceneManager.LoadScene(index);
     }
 }
