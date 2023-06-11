@@ -12,6 +12,7 @@ using UnityEngine.UI;
 
 public class PlayerNetworkController : NetworkBehaviour
 {
+    private GameObject AnimIndians;
     private Coroutine coroutine;
     private GameObject Anim;
     public List<Material> Materials;
@@ -24,7 +25,7 @@ public class PlayerNetworkController : NetworkBehaviour
 
     public ServerManager.Roles Role;
     void Start()
-    {
+    {  
         Anim = GetComponentInChildren<Animator>().gameObject;
         
     }
@@ -77,7 +78,6 @@ public class PlayerNetworkController : NetworkBehaviour
         {
             RoleInfo.gameObject.SetActive(true);
             RoleInfo.sprite=Resources.Load<Sprite>("Sprites/Role/Роль(Капитан)");
-            materialHP.material.SetFloat("_CountS", 9.6f);
         }
         else{
             RoleInfo.gameObject.SetActive(false);
@@ -122,6 +122,7 @@ public class PlayerNetworkController : NetworkBehaviour
                 materialHP = item;
             }
         }
+        AnimIndians = GameObject.Find("AnimIndians");
     }
     [ClientRpc]
     public void DeathActionClientRpc(uint id)
@@ -229,7 +230,7 @@ public class PlayerNetworkController : NetworkBehaviour
      public void setPlayerPosition(int range ,Vector2 pos)
     {
         transform.SetParent(GameObject.Find("Players").transform);
-        transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        transform.localScale = new Vector3(1,1,1);
         transform.localPosition = pos;
         Range = range;
         foreach (var item in GameObject.FindGameObjectsWithTag("Range"))
@@ -317,14 +318,15 @@ public class PlayerNetworkController : NetworkBehaviour
     [ClientRpc] 
     public void AnimAction(CardAttributes card)
     {
-        if(FindObjectOfType<ServerManager>().turnModificator != "Discarding" && 
-            (netId == FindObjectOfType<ServerManager>().turnPlayerId || netId == FindObjectOfType<ServerManager>().attackedPlayerId))
+        if(FindObjectOfType<ServerManager>().turnModificator != "Discarding") 
         {
+            AnimIndians.GetComponent<Animator>().SetBool("Gatling", false);
+            AnimIndians.GetComponent<Animator>().SetBool("Indians", false);
+            AnimIndians.GetComponent<Animator>().SetBool("Saloon", false);
             Anim.GetComponent<Animator>().SetBool("Bang", false);
             Anim.GetComponent<Animator>().SetBool("Duel", false);
             Anim.GetComponent<Animator>().SetBool("Diligence", false);
             Anim.GetComponent<Animator>().SetBool("WellsFargo", false);
-            Anim.GetComponent<Animator>().SetBool("Gatling", false);
             Anim.GetComponent<Animator>().SetBool("Jail", false);
             Anim.GetComponent<Animator>().SetBool("Panic", false);
             Anim.GetComponent<Animator>().SetBool("Women", false);
@@ -334,13 +336,50 @@ public class PlayerNetworkController : NetworkBehaviour
             Anim.GetComponent<Animator>().SetBool("Roach", false);
             Anim.GetComponent<Animator>().SetBool("Dynamite", false);
             Anim.GetComponent<Animator>().SetBool("Mustang", false);
+            Anim.GetComponent<Animator>().SetBool("Remington", false);
+            Anim.GetComponent<Animator>().SetBool("Winchester", false);
+            Anim.GetComponent<Animator>().SetBool("Carbine", false);
+            Anim.GetComponent<Animator>().SetBool("Volcanic", false);
+            Anim.GetComponent<Animator>().SetBool("Scofield", false);
             if (coroutine != null) StopCoroutine(coroutine);
-            Anim.GetComponent<Animator>().SetBool(card.Name, true);
-            coroutine = StartCoroutine(StartAnim(card));
+            print ($"{card.Name} card");
+            if (netId == FindObjectOfType<ServerManager>().turnPlayerId || netId == FindObjectOfType<ServerManager>().attackedPlayerId && card.Name != "Saloon")
+            {
+                if(card.Name=="Saloon" || card.Name=="Indians" || card.Name== "Gatling")
+                {
+                    AnimIndians.GetComponent<Animator>().SetBool(card.Name, true);
+                    coroutine = StartCoroutine(StartAnim(card.Name, AnimIndians.GetComponent<Animator>()));
+                }
+                else 
+                {
+                   if(netId == FindObjectOfType<ServerManager>().attackedPlayerId && FindObjectOfType<ServerManager>().turnModificator == "Duel" || 
+                   FindObjectOfType<ServerManager>().turnModificator == "Gatling" || FindObjectOfType<ServerManager>().turnModificator == "Indians")
+                   {
+
+                    Anim.GetComponent<Animator>().SetBool(card.Name, true);
+                    coroutine = StartCoroutine(StartAnim(card.Name, Anim.GetComponent<Animator>()));
+
+                   } 
+                   if(netId == FindObjectOfType<ServerManager>().attackedPlayerId)
+                   {
+                    Anim.GetComponent<Animator>().SetBool(card.Name, true);
+                    coroutine = StartCoroutine(StartAnim(card.Name, Anim.GetComponent<Animator>()));
+                   }
+                }
+
+            }
+            if(card.Name == "Saloon")
+            {
+                print ("DontBeer");
+                Anim.GetComponent<Animator>().SetBool("Beer", true);
+                coroutine = StartCoroutine(StartAnim("Beer", Anim.GetComponent<Animator>()));
+
+
+            }
         }
 
     }
-    IEnumerator StartAnim(CardAttributes card)
+    IEnumerator StartAnim(string cardName, Animator animator)
     {
         int Animtime = 3;
         while(Animtime > 0)
@@ -348,10 +387,10 @@ public class PlayerNetworkController : NetworkBehaviour
             Animtime--;
             yield return new WaitForSeconds(1);
         }
-        if (Anim.GetComponent<Animator>().GetBool(card.Name))
+        if (animator.GetComponent<Animator>().GetBool(cardName))
         {
             //Anim.SetActive(false);
-            Anim.GetComponent<Animator>().SetBool(card.Name, false);
+            animator.GetComponent<Animator>().SetBool(cardName, false);
         }
 
     }   
