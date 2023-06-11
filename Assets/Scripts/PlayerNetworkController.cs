@@ -34,8 +34,8 @@ public class PlayerNetworkController : NetworkBehaviour
             {
                 if (item.tag == "UserName")
                 {
-                    item.text = "Test";
-                    CmdSendNameToServer("Test");
+                    item.text = FindObjectOfType<ButtonsNetworkManager>().DisplayName;
+                    CmdSendNameToServer(FindObjectOfType<ButtonsNetworkManager>().DisplayName);
                     break;
                 }
 

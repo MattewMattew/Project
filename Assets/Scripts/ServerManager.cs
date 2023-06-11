@@ -350,7 +350,7 @@ public class ServerManager : NetworkBehaviour
                 RolesList.RemoveAt(index);
             }
         }
-        
+        GameObject.Find("MainCanvas").SetActive(false);
 
     }
     [Server]
