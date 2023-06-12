@@ -457,7 +457,7 @@ public class ServerManager : NetworkBehaviour
                 }
                 else
                 {
-                    Healths.Add(new HealthList(player.netId, 4));
+                    Healths.Add(new HealthList(player.netId, 1));
                     GiveHandCards(PackCards, player.netId, 4);
                 }
                 RolesList.RemoveAt(index);
@@ -633,33 +633,61 @@ public class ServerManager : NetworkBehaviour
     [Server]
     public void DeathAction(uint id)
     {
+        
+        foreach (var item in Inventorys)
+        {
+            if(item.Id == id)
+            {
+                foreach (var item1 in item.Cards)
+                {
+                    GiveCardToDiscard(item1);
+                }
+                Inventorys[Inventorys.IndexOf(item)] = new CardList(id, new List<CardAttributes>());
+            }
+        }
+        foreach (var item in Hands)
+        {
+            if (item.Id == id)
+            {
+                foreach (var item1 in item.Cards)
+                {
+                    GiveCardToDiscard(item1);
+                }
+                Hands[Hands.IndexOf(item)] = new HandList(id, new List<CardAttributes>());
+            }
+        }
         foreach (var item in FindObjectsOfType<PlayerNetworkController>())
         {
             item.DeathActionClientRpc(id);
+            if(item.netId == id)
+            {
+                NetworkServer.Destroy(item.gameObject);
+                
+            }
         }
     }
     [Server]
     public void GiveTurn(uint id, bool target)
     {
+        CheckNextCardInPackAttributes(id);
         if (Coroutine != null) StopCoroutine(Coroutine);
         if (!target)
         {
             turnPlayerId = id;
             if (attackedPlayerId == 0)
             {
-                CheckNextCardInPackAttributes(id);
                 GiveHandCards(PackCards, turnPlayerId, 2);
             }
             Coroutine = StartCoroutine(MoveFunc(15));
         }
         attackedPlayerId = 0;
-        turnModificator = "No";
         if(target)
         {
             attackedPlayerId = id;
             Coroutine = StartCoroutine(MoveFunc(15));
             // turnModificator = "Attack";
         }
+        turnModificator = "No";
         FindObjectOfType<PlayerNetworkController>().ButtonActivationClientRpc(id);
         
     }
@@ -801,9 +829,8 @@ public class ServerManager : NetworkBehaviour
     [Server]
     public void AttackAction(uint id, string card)
     {
-        CheckNextCardInPackAttributes(id);
-        GiveTurn(id, true);
         turnModificator = card;
+        GiveTurn(id, true);
         useBang = true;
     }
     [Server]
@@ -819,9 +846,10 @@ public class ServerManager : NetworkBehaviour
                     {
                         if (cardInv.SelfCard.Name == "Barrel")
                         {
-                        
+                            if(PackCards.Count <= 0) ResetPack();
                             if (PackCards[0].Suit == "Hearts")
                             {
+                                turnModificator = "No";
                                 GiveTurn(turnPlayerId, false);
                             }
                             GiveCardToDiscard(PackCards[0]);
@@ -833,8 +861,11 @@ public class ServerManager : NetworkBehaviour
                     {
                         if (cardInv.SelfCard.Name == "Dynamite")
                         {
-                            if (PackCards[0].Suit == "Spades" && (int.Parse(PackCards[0].Dignity) >= 2 && int.Parse(PackCards[0].Dignity) <= 9))
+                            if (PackCards.Count <= 0) ResetPack();
+                            RemoveCardFromInventory(cardInv.GetComponent<CardInfoScripts>().SelfCard, id);
+                            if (PackCards[0].Suit == "Spades" && (Int32.Parse(PackCards[0].Dignity) >= 2 && Int32.Parse(PackCards[0].Dignity) <= 9))
                             {
+                                print($"BOOM {PackCards[0].Suit} {PackCards[0].Dignity}");
                                 foreach (var item in Healths)
                                 {
                                     if (item.Id == id)
@@ -852,22 +883,26 @@ public class ServerManager : NetworkBehaviour
                             }
                             else
                             {
-                                RemoveCardFromHand(cardInv.GetComponent<CardInfoScripts>().SelfCard, id);
                                 foreach (var item in FindObjectsOfType<PlayerNetworkController>())
                                 {
                                     if (item.netId == id)
                                     {
-                                        item.RemoveCardFromHandClientRpc(cardInv.GetComponent<CardInfoScripts>().SelfCard);
-                                        for (int i = (int)turnPlayerId + 1; i <= playersCount; i++)
+                                        for (int i = (int)turnPlayerId + 1; i <= playersCount + 1; i++)
+                                        {
+                                            if (i > playersCount) i = 1;
                                             foreach (var item1 in FindObjectsOfType<PlayerNetworkController>())
                                             {
                                                 if (item1.netId == i)
                                                 {
                                                     UpdateInventory(cardInv.GetComponent<CardInfoScripts>().SelfCard, item1, item1.transform);
+                                                        i = playersCount+2;
+                                                        break;
                                                 }
                                             }
+                                        }
                                     }
                                 }
+                                
                             }
                             GiveCardToDiscard(PackCards[0]);
                             PackCards.RemoveAt(0);
@@ -892,8 +927,8 @@ public class ServerManager : NetworkBehaviour
         {
             if (item.netId != turnPlayerId)
             {
-                GiveTurn(item.netId, true);
                 turnModificator = card;
+                GiveTurn(item.netId, true);
                 while (attackedPlayerId != 0)
                 {
                     yield return new WaitForSeconds(0.5f);
