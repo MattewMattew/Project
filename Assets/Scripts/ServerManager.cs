@@ -131,11 +131,13 @@ public class ServerManager : NetworkBehaviour
 
         
     }
+
+
     [Client]
     void Update()
     {
-        CountRoles();
-        /*        foreach (var item in Healths)
+       /* CountRoles();*/
+/*                foreach (var item in Healths)
                 {
                     print($"{item.Id} have {item.Health} health   {Healths.Count}");
                 }*/
@@ -226,15 +228,13 @@ public class ServerManager : NetworkBehaviour
     }
     void Start()
     {
+        init();
         stage = GameObject.Find("Stage").GetComponent<TextMeshProUGUI>();
         PlayerNetworkController[] players = FindObjectsOfType<PlayerNetworkController>();
-        playersCount = players.Length;
-        if (isServer) CmdCardAdded();
+        playersCount = players.Length; 
         gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
-        List<Roles> RolesList = new List<Roles>();
         if (players.Length == 6)
         {
-            RolesList = new List<Roles>() { Roles.SINDICATE, Roles.SINDICATE, Roles.SINDICATE, Roles.CAPTAIN, Roles.HELPER, Roles.RENEGADE };
             rangePlayers = new List<RangePlayers> { 
                 new RangePlayers(0, new Vector2(0, -230)),
                 new RangePlayers(1, new Vector2(-512, -40)),
@@ -242,139 +242,38 @@ public class ServerManager : NetworkBehaviour
                 new RangePlayers(3, new Vector2(0, 392)),
                 new RangePlayers(2, new Vector2(512, 176)),
                 new RangePlayers(1, new Vector2(512, -40)),
-                /*new RangePlayers(1, new Vector2(593, -92))*/
-                
-                
-                /*new RangePlayers(0, new Vector2(0, -237)), 
-                new RangePlayers(1, new Vector2(-696, 0)),
-                new RangePlayers(2, new Vector2(0, 421)),
-                new RangePlayers(1, new Vector2(696, 0))*/
             };
-            // foreach (var item in RolesList)
-            // {
-            //     if (item == Roles.SINDICATE)
-            //     {
-            //         GB.SetActive(true);
-            //         vB += 1;
-            //         textB.text = vB.ToString();
-            //     }
 
-            //     if (item == Roles.RENEGADE)
-            //     {
-            //         GR.SetActive(true);
-            //         vR += 1;
-            //         textR.text = vR.ToString();
-            //     }
-            //     if (item == Roles.HELPER)
-            //     {
-            //         GS.SetActive(true);
-            //         vS += 1;
-            //         textS.text = vS.ToString();
-            //     }
-            // }
         }
         else if(players.Length == 2)
         {
-            RolesList = new List<Roles>() { Roles.CAPTAIN, Roles.SINDICATE };
             rangePlayers = new List<RangePlayers> {
                 new RangePlayers(0, new Vector2(0, -237)), 
                 new RangePlayers(1, new Vector2(-696, 0)),
-
             };
-            // foreach (var item in RolesList)
-            // {
-            //     if (item == Roles.SINDICATE)
-            //     {
-            //         GB.SetActive(true);
-            //         vB += 1;
-            //         textB.text = vB.ToString();
-            //     }
-
-            //     if (item == Roles.RENEGADE)
-            //     {
-            //         GR.SetActive(true);
-            //         vR += 1;
-            //         textR.text = vR.ToString();
-            //     }
-            //     if (item == Roles.HELPER)
-            //     {
-            //         GS.SetActive(true);
-            //         vS += 1;
-            //         textS.text = vS.ToString();
-            //     }
-            // }
         }
         else if (players.Length == 4)
         {
-            RolesList = new List<Roles>() { Roles.SINDICATE, Roles.CAPTAIN, Roles.SINDICATE, Roles.RENEGADE };
             rangePlayers = new List<RangePlayers> { 
                 new RangePlayers(0, new Vector2(0, -230)),
                 new RangePlayers(1, new Vector2(-512, 0)),
                 new RangePlayers(2, new Vector2(0, 360)),
                 new RangePlayers(1, new Vector2(512, 0)),
-              
             };
-            // foreach (var item in RolesList)
-            // {
-            //     if (item == Roles.SINDICATE)
-            //     {
-            //         GB.SetActive(true);
-            //         vB += 1;
-            //         textB.text = vB.ToString();
-            //     }
-
-            //     if (item == Roles.RENEGADE)
-            //     {
-            //         GR.SetActive(true);
-            //         vR += 1;
-            //         textR.text = vR.ToString();
-            //     }
-            //     if (item == Roles.HELPER)
-            //     {
-            //         GS.SetActive(true);
-            //         vS += 1;
-            //         textS.text = vS.ToString();
-            //     }
-            // }
         }
         else if (players.Length == 5)
         {
-            RolesList = new List<Roles>() { Roles.SINDICATE, Roles.CAPTAIN, Roles.SINDICATE, Roles.HELPER, Roles.RENEGADE };
             rangePlayers = new List<RangePlayers> { 
                 new RangePlayers(0, new Vector2(0, -230)),
                 new RangePlayers(1, new Vector2(-512, -40)),
                 new RangePlayers(2, new Vector2(-512, 176)),
                 new RangePlayers(2, new Vector2(512, 176)),
                 new RangePlayers(1, new Vector2(512, -40)),
-              
             };
-            // foreach (var item in RolesList)
-            // {
-            //     if (item == Roles.SINDICATE)
-            //     {
-            //         GB.SetActive(true);
-            //         vB += 1;
-            //         textB.text = vB.ToString();
-            //     }
-
-            //     if (item == Roles.RENEGADE)
-            //     {
-            //         GR.SetActive(true);
-            //         vR += 1;
-            //         textR.text = vR.ToString();
-            //     }
-            //     if (item == Roles.HELPER)
-            //     {
-            //         GS.SetActive(true);
-            //         vS += 1;
-            //         textS.text = vS.ToString();
-            //     }
-            // }
 
         }
         else if (players.Length == 7)
         {
-            RolesList = new List<Roles>() { Roles.SINDICATE, Roles.SINDICATE, Roles.CAPTAIN, Roles.SINDICATE, Roles.HELPER, Roles.HELPER, Roles.RENEGADE };
             rangePlayers = new List<RangePlayers>{
                 new RangePlayers(0, new Vector2(0, -230)),
                 new RangePlayers(1, new Vector2(-512, -40)),
@@ -384,31 +283,7 @@ public class ServerManager : NetworkBehaviour
                 new RangePlayers(2, new Vector2(512, 176)),
                 new RangePlayers(1, new Vector2(512, -40)),
             };
-            // foreach (var item in RolesList)
-            // {
-            //     if (item == Roles.SINDICATE)
-            //     {
-            //         GB.SetActive(true);
-            //         vB += 1;
-            //         textB.text = vB.ToString();
-            //     }
-
-            //     if (item == Roles.RENEGADE)
-            //     {
-            //         GR.SetActive(true);
-            //         vR += 1;
-            //         textR.text = vR.ToString();
-            //     }
-            //     if (item == Roles.HELPER)
-            //     {
-            //         GS.SetActive(true);
-            //         vS += 1;
-            //         textS.text = vS.ToString();
-            //     }
-            // }
         }
-
-        CountRoles();
 
         if (isClient)
         {
@@ -447,32 +322,61 @@ public class ServerManager : NetworkBehaviour
                 }
             }
         }
-        if (isServer)
-        {
-            foreach (var player in players)
-            {
-
-                var index = UnityEngine.Random.Range(0, RolesList.Count);
-                player.GiveRole(player.netId, RolesList[index]);
-                if (RolesList[index] == Roles.CAPTAIN)
-                {
-                    Healths.Add(new HealthList(player.netId, 5));
-                    GiveTurn(player.netId, false);
-                    GiveHandCards(PackCards, player.netId, 5);
-                }
-                else
-                {
-                    Healths.Add(new HealthList(player.netId, 1));
-                    GiveHandCards(PackCards, player.netId, 4);
-                }
-                RolesList.RemoveAt(index);
-            }
-        }
         GameObject.Find("MainCanvas").SetActive(false);
 
     }
+    [Server]
+    public void init()
+    {
+        CmdCardAdded();
+        PlayerNetworkController[] players = FindObjectsOfType<PlayerNetworkController>();
+        playersCount = players.Length;
+        List<Roles> RolesList = new List<Roles>();
+        if (players.Length == 6)
+        {
+            RolesList = new List<Roles>() { Roles.SINDICATE, Roles.SINDICATE, Roles.SINDICATE, Roles.CAPTAIN, Roles.HELPER, Roles.RENEGADE };
 
-    void CountRoles()
+        }
+        else if (players.Length == 2)
+        {
+            RolesList = new List<Roles>() { Roles.CAPTAIN, Roles.SINDICATE };
+        }
+        else if (players.Length == 4)
+        {
+            RolesList = new List<Roles>() { Roles.SINDICATE, Roles.CAPTAIN, Roles.SINDICATE, Roles.RENEGADE };
+        }
+        else if (players.Length == 5)
+        {
+            RolesList = new List<Roles>() { Roles.SINDICATE, Roles.CAPTAIN, Roles.SINDICATE, Roles.HELPER, Roles.RENEGADE };
+
+        }
+        else if (players.Length == 7)
+        {
+            RolesList = new List<Roles>() { Roles.SINDICATE, Roles.SINDICATE, Roles.CAPTAIN, Roles.SINDICATE, Roles.HELPER, Roles.HELPER, Roles.RENEGADE };
+        }
+        foreach (var player in players)
+        {
+
+            var index = UnityEngine.Random.Range(0, RolesList.Count);
+            player.GiveRole(player.netId, RolesList[index]);
+            if (RolesList[index] == Roles.CAPTAIN)
+            {
+                Healths.Add(new HealthList(player.netId, 5));
+                GiveTurn(player.netId, false);
+                GiveHandCards(PackCards, player.netId, 5);
+            }
+            else
+            {
+                Healths.Add(new HealthList(player.netId, 1));
+                GiveHandCards(PackCards, player.netId, 4);
+            }
+            RolesList.RemoveAt(index);
+        }
+    }
+
+
+
+    public void CountRolesClientRpc()
     {
         SindicateCount = 0;
         RenegadeCount = 0;
@@ -480,24 +384,26 @@ public class ServerManager : NetworkBehaviour
         CaptainCount = 0;
         foreach (var item in FindObjectsOfType<PlayerNetworkController>())
         {
-            if (item.Role == Roles.SINDICATE)
+            print($"{item.isDead} isDead");
+            if (item.Role == Roles.SINDICATE && !item.isDead)
             {
                 GB.SetActive(true);
                 SindicateCount++;
             }
 
-            if (item.Role == Roles.RENEGADE)
+            if (item.Role == Roles.RENEGADE && !item.isDead)
             {
                 GR.SetActive(true);
                 RenegadeCount++;
             }
-            if (item.Role == Roles.HELPER)
+            if (item.Role == Roles.HELPER && !item.isDead)
             {
                 GS.SetActive(true);
                 HelperCount++;
             }
-            if (item.Role == Roles.CAPTAIN) CaptainCount++;
+            if (item.Role == Roles.CAPTAIN && !item.isDead) CaptainCount++;
         }
+        print($"SindicateCount {SindicateCount} RenegadeCount {RenegadeCount} HelperCount {HelperCount} CaptainCount {CaptainCount}");
         textS.text = HelperCount.ToString();
         textR.text = RenegadeCount.ToString();
         textB.text = SindicateCount.ToString();
@@ -507,16 +413,12 @@ public class ServerManager : NetworkBehaviour
         }
         if (CaptainCount == 0 && SindicateCount == 0) {
             winMenu.SetActive(true);
-            winText.text = "Sindicate WIN!";
+            winText.text = "RENEGADE WIN!";
         };
         if (CaptainCount == 0 && SindicateCount != 0) {
             winMenu.SetActive(true);
-            winText.text = "RENEGADE WIN!";
+            winText.text = "Sindicate WIN!";
         };
-    }
-    public void exitInScene(int index){
-
-        SceneManager.LoadScene(index);
     }
 
     [Server]
@@ -725,7 +627,7 @@ public class ServerManager : NetworkBehaviour
             //     if (item.Role == Roles.CAPTAIN) CaptainCount++;
             // }
         }
-        CountRoles();
+        
         // if (RenegadeCount == 0 && SindicateCount == 0) print("Captane win");
         // if (CaptainCount == 0 && SindicateCount == 0) print("Renegade win");
         // if (CaptainCount == 0 && SindicateCount != 0) print("Sindicate win");
@@ -1051,7 +953,7 @@ public class ServerManager : NetworkBehaviour
                 }
                 Hands[Hands.IndexOf(item)] = new HandList(id, list);
                 FindObjectOfType<PlayerNetworkController>().UpdateCountCardsClientRpc(list.Count, id);
-                foreach(var player in FindObjectsOfType<PlayerNetworkController>())
+/*                foreach(var player in FindObjectsOfType<PlayerNetworkController>())
                 {
                     if (player.netId==id)
                     {
@@ -1059,7 +961,7 @@ public class ServerManager : NetworkBehaviour
                         break;
 
                     }
-                }
+                }*/
             }
         }
     }

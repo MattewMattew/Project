@@ -20,7 +20,7 @@ public class PlayerNetworkController : NetworkBehaviour
     public int Range;
     public GameObject RoleInf;
     public Image RoleInfo;
-
+    public bool isDead = false;
     public int maxHealth = 0;
 
     public ServerManager.Roles Role;
@@ -71,9 +71,12 @@ public class PlayerNetworkController : NetworkBehaviour
     [ClientRpc]
     public void GiveRole(uint id, ServerManager.Roles role) 
     {
-        if(netId == id) Role = role;
-        // print($"{netId} player have {role} role");
-        GiveHealthInit();
+        if (netId == id)
+        {
+            Role = role;
+            GiveHealthInit(role);
+        }
+            // print($"{netId} player have {role} role");
         if(role == ServerManager.Roles.CAPTAIN)
         {
             RoleInfo.gameObject.SetActive(true);
@@ -101,7 +104,7 @@ public class PlayerNetworkController : NetworkBehaviour
             }
         }
     }
-    void GiveHealthInit()
+    void GiveHealthInit(ServerManager.Roles role)
     {
         var materialComponents = GetComponentsInChildren<Image>();
         foreach (var item in materialComponents)
@@ -109,13 +112,16 @@ public class PlayerNetworkController : NetworkBehaviour
             if (item.gameObject.tag == "HpBar")
             {
                 item.material = Materials[(int)netId - 1];
-                if (Role == ServerManager.Roles.CAPTAIN)
+                print($"{netId} asad {role}");
+                if (role == ServerManager.Roles.CAPTAIN)
                 {
+                    item.material.SetFloat("_CountS", 9.6f);
                     item.material.SetFloat("_RemovedS", 9.6f - 5.6f);
                     maxHealth = 5;
                 }
                 else
                 {
+                    item.material.SetFloat("_CountS", 9f);
                     item.material.SetFloat("_RemovedS", 9f - 1);
                     maxHealth = 4;
                 }
@@ -123,6 +129,7 @@ public class PlayerNetworkController : NetworkBehaviour
             }
         }
         AnimIndians = GameObject.Find("AnimIndians");
+        StartCoroutine(CountRoles());
     }
     [ClientRpc]
     public void DeathActionClientRpc(uint id)
@@ -130,12 +137,29 @@ public class PlayerNetworkController : NetworkBehaviour
         if(netId == id)
         {   
             if (isLocalPlayer)
-            {;
+            {
                 Destroy(GameObject.FindGameObjectWithTag("Hand"));
-            } 
-            Destroy(gameObject);
+            }
+            isDead = true;
+            print($"Dead {netId} {isDead}");
+            StartCoroutine(Death());
+            /*Destroy(gameObject);*/
+           /*CountRolesClientRpc();*/
         }
     }
+    IEnumerator CountRoles()
+    {
+        yield return new WaitForSeconds(1);
+        FindObjectOfType<ServerManager>().CountRolesClientRpc();
+    }
+    IEnumerator Death()
+    {
+        yield return new WaitForSeconds(1);
+        FindObjectOfType<ServerManager>().CountRolesClientRpc();
+        Destroy(gameObject);
+    }
+
+
 
     [ClientRpc]
     public void HealthUpdateClientRpc(uint id, int health)
@@ -319,8 +343,18 @@ public class PlayerNetworkController : NetworkBehaviour
         StartCoroutine(FindObjectOfType<ServerManager>().MassiveAttackAction(card));
     }
 
+    [Command(requiresAuthority = false)]
+    public void CmdAnimAction(CardAttributes card, string mod)
+    {
+        foreach (var player in FindObjectsOfType<PlayerNetworkController>())
+        {
+            player.AnimAction(card, mod);
+        }
+    }
+
+
     [ClientRpc] 
-    public void AnimAction(CardAttributes card)
+    public void AnimAction(CardAttributes card, string mod)
     {
         if(FindObjectOfType<ServerManager>().turnModificator != "Discarding") 
         {
@@ -347,7 +381,7 @@ public class PlayerNetworkController : NetworkBehaviour
             Anim.GetComponent<Animator>().SetBool("Scofield", false);
             if (coroutine != null) StopCoroutine(coroutine);
             print ($"{card.Name} card");
-            if (netId == FindObjectOfType<ServerManager>().turnPlayerId || netId == FindObjectOfType<ServerManager>().attackedPlayerId && card.Name != "Saloon")
+            if (netId == FindObjectOfType<ServerManager>().turnPlayerId || netId == FindObjectOfType<ServerManager>().attackedPlayerId)
             {
                 if(card.Name=="Saloon" || card.Name=="Indians" || card.Name== "Gatling")
                 {
@@ -356,18 +390,18 @@ public class PlayerNetworkController : NetworkBehaviour
                 }
                 else 
                 {
-                   if(netId == FindObjectOfType<ServerManager>().attackedPlayerId && FindObjectOfType<ServerManager>().turnModificator == "Duel" || 
-                   FindObjectOfType<ServerManager>().turnModificator == "Gatling" || FindObjectOfType<ServerManager>().turnModificator == "Indians")
+                   print($"{netId} || {mod}");
+                   if(netId == FindObjectOfType<ServerManager>().turnPlayerId && card.Name != "Missed" && (mod != "Gatling" || mod != "Indians"))
                    {
-
-                    Anim.GetComponent<Animator>().SetBool(card.Name, true);
-                    coroutine = StartCoroutine(StartAnim(card.Name, Anim.GetComponent<Animator>()));
-
+                        Anim.GetComponent<Animator>().SetBool(card.Name, true);
+                        coroutine = StartCoroutine(StartAnim(card.Name, Anim.GetComponent<Animator>()));
                    } 
-                   if(netId == FindObjectOfType<ServerManager>().attackedPlayerId)
-                   {
-                    Anim.GetComponent<Animator>().SetBool(card.Name, true);
-                    coroutine = StartCoroutine(StartAnim(card.Name, Anim.GetComponent<Animator>()));
+                   if(netId == FindObjectOfType<ServerManager>().attackedPlayerId && (mod == "Duel" ||
+                   mod == "Gatling" || mod == "Indians" || 
+                   card.Name == "Missed"))
+                   {    
+                        Anim.GetComponent<Animator>().SetBool(card.Name, true);
+                        coroutine = StartCoroutine(StartAnim(card.Name, Anim.GetComponent<Animator>()));
                    }
                 }
 

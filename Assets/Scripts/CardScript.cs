@@ -76,9 +76,10 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                     if(turnPlayer.netId == FindObjectOfType<ServerManager>().attackedPlayerId)
                         if (FindObjectOfType<ServerManager>().turnModificator == "Gatling" || FindObjectOfType<ServerManager>().turnModificator == "Bang")
                         {
+                            turnPlayer.CmdAnimAction(GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
                             UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                             turnPlayer.CmdDefense();
-                        
+
                         }
                     break;
                 }
