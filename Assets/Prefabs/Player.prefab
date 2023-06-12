@@ -910,6 +910,7 @@ MonoBehaviour:
   Range: 0
   RoleInf: {fileID: 6872465579586802647}
   RoleInfo: {fileID: 3020888389688640576}
+  isDead: 0
   maxHealth: 0
   Role: 0
 --- !u!114 &5387099093719241002
@@ -1664,7 +1665,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.424981, g: 0.23843002, b: 0.8867924, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
@@ -1701,7 +1702,7 @@ MonoBehaviour:
   m_ChildAlignment: 3
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 60, y: 60}
+  m_CellSize: {x: 94, y: 87}
   m_Spacing: {x: 10, y: 5}
   m_Constraint: 0
   m_ConstraintCount: 2
