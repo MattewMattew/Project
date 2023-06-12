@@ -64,8 +64,8 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
                                             if (cardInv.InfoTypeCard == CardInfoScripts.TypeCard.WEAPON_CARD)
                                                 if (GetComponent<PlayerNetworkController>().Range <= cardInv.WeaponRange)
                                                 {
-                                                    GetComponent<PlayerNetworkController>().CmdAttack(card.GetComponent<CardInfoScripts>().SelfCard.Name);
                                                     DeleteCard(card);
+                                                    GetComponent<PlayerNetworkController>().CmdAttack(card.GetComponent<CardInfoScripts>().SelfCard.Name);
                                                     return;
                                                 }
                                                 

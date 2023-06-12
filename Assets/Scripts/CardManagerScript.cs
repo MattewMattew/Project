@@ -40,16 +40,16 @@ public class CardManagerScript : MonoBehaviour // Список карт и св�
         /* _________________________________________________ DISPOSABLE CARD _______________________________________________________________ */
 
         CardDesk.AllServerCards.Add(new CardAttributes("Bang", "2", "Diamonds"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Bang", "3", "Diamonds"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Bang", "4", "Diamonds"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Bang", "5", "Diamonds"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Bang", "6", "Diamonds"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Bang", "7", "Diamonds"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Bang", "8", "Diamonds"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Bang", "9", "Diamonds"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Bang", "10", "Diamonds"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Bang", "J", "Diamonds"));
-/*        CardDesk.AllServerCards.Add(new CardAttributes("Bang", "Q", "Diamonds"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Bang", "3", "Diamonds"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Bang", "4", "Diamonds"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Bang", "5", "Diamonds"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Bang", "6", "Diamonds"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Bang", "7", "Diamonds"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Bang", "8", "Diamonds"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Bang", "9", "Diamonds"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Bang", "10", "Diamonds"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Bang", "J", "Diamonds"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Bang", "Q", "Diamonds"));
         CardDesk.AllServerCards.Add(new CardAttributes("Bang", "K", "Diamonds"));
         CardDesk.AllServerCards.Add(new CardAttributes("Bang", "A", "Diamonds"));
         CardDesk.AllServerCards.Add(new CardAttributes("Bang", "Q", "Hearts"));
@@ -63,27 +63,27 @@ public class CardManagerScript : MonoBehaviour // Список карт и св�
         CardDesk.AllServerCards.Add(new CardAttributes("Bang", "7", "Clubs"));
         CardDesk.AllServerCards.Add(new CardAttributes("Bang", "8", "Clubs"));
         CardDesk.AllServerCards.Add(new CardAttributes("Bang", "9", "Clubs"));
-        CardDesk.AllServerCards.Add(new CardAttributes("Bang", "A", "Spades"));*/
+        CardDesk.AllServerCards.Add(new CardAttributes("Bang", "A", "Spades"));
 
         CardDesk.AllServerCards.Add(new CardAttributes("Missed", "2", "Spades"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Missed", "3", "Spades"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Missed", "4", "Spades"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Missed", "5", "Spades"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Missed", "6", "Spades"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Missed", "7", "Spades"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Missed", "8", "Spades"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Missed", "10", "Clubs"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Missed", "J", "Clubs"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Missed", "Q", "Clubs"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Missed", "K", "Clubs"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Missed", "A", "Clubs"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Missed", "3", "Spades"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Missed", "4", "Spades"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Missed", "5", "Spades"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Missed", "6", "Spades"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Missed", "7", "Spades"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Missed", "8", "Spades"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Missed", "10", "Clubs"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Missed", "J", "Clubs"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Missed", "Q", "Clubs"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Missed", "K", "Clubs"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Missed", "A", "Clubs"));
 
         CardDesk.AllServerCards.Add(new CardAttributes("Beer", "6", "Hearts"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Beer", "7", "Hearts"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Beer", "8", "Hearts"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Beer", "9", "Hearts"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Beer", "10", "Hearts"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Beer", "J", "Hearts"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Beer", "7", "Hearts"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Beer", "8", "Hearts"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Beer", "9", "Hearts"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Beer", "10", "Hearts"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Beer", "J", "Hearts"));
 
         CardDesk.AllServerCards.Add(new CardAttributes("Panic", "J", "Hearts"));
         CardDesk.AllServerCards.Add(new CardAttributes("Panic", "Q", "Hearts"));
@@ -95,14 +95,14 @@ public class CardManagerScript : MonoBehaviour // Список карт и св�
         CardDesk.AllServerCards.Add(new CardAttributes("WellsFargo", "3", "Hearts"));
 
         CardDesk.AllServerCards.Add(new CardAttributes("Diligence", "9", "Spades"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Diligence", "Q", "Spades"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Diligence", "Q", "Spades"));
 
-        CardDesk.AllServerCards.Add(new CardAttributes("General", "9", "Clubs"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("General", "9", "Clubs"));
         // CardDesk.AllServerCards.Add(new CardAttributes("General", "Q", "Spades"));
 
         CardDesk.AllServerCards.Add(new CardAttributes("Duel", "8", "Clubs"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Duel", "J", "Spades"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Duel", "Q", "Hearts"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Duel", "J", "Spades"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Duel", "Q", "Hearts"));
 
         CardDesk.AllServerCards.Add(new CardAttributes("Saloon", "5", "Hearts"));
 
@@ -112,24 +112,24 @@ public class CardManagerScript : MonoBehaviour // Список карт и св�
         CardDesk.AllServerCards.Add(new CardAttributes("Women", "K", "Hearts"));
 
         CardDesk.AllServerCards.Add(new CardAttributes("Indians", "K", "Diamonds"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Indians", "A", "Diamonds"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Indians", "A", "Diamonds"));
 
 
         /* _________________________________________________ PERMANENT CARD ________________________________________________________________ */
 
         CardDesk.AllServerCards.Add(new CardAttributes("Barrel", "Q", "Spades"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Barrel", "K", "Spades"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Barrel", "K", "Spades"));
 
         CardDesk.AllServerCards.Add(new CardAttributes("Dynamite", "2", "Hearts"));
 
-        CardDesk.AllServerCards.Add(new CardAttributes("Jail", "10", "Spades"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Jail", "10", "Spades"));
         // CardDesk.AllServerCards.Add(new CardAttributes("Jail", "J", "Spades"));
         // CardDesk.AllServerCards.Add(new CardAttributes("Jail", "4", "Hearts"));
 
-        CardDesk.AllServerCards.Add(new CardAttributes("Mustang", "8", "Hearts"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Mustang", "8", "Hearts"));
         // CardDesk.AllServerCards.Add(new CardAttributes("Mustang", "9", "Hearts"));
 
-        CardDesk.AllServerCards.Add(new CardAttributes("Roach", "A", "Spades"));
+        // CardDesk.AllServerCards.Add(new CardAttributes("Roach", "A", "Spades"));
 
 
         /* _________________________________________________ WEAPON CARD ___________________________________________________________________ */
@@ -139,11 +139,11 @@ public class CardManagerScript : MonoBehaviour // Список карт и св�
         CardDesk.AllServerCards.Add(new CardAttributes("Remington","K", "Clubs"));
 
         CardDesk.AllServerCards.Add(new CardAttributes("Scofield", "J", "Clubs"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Scofield", "Q", "Clubs"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Scofield", "K", "Spades"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Scofield", "Q", "Clubs"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Scofield", "K", "Spades"));
 
         CardDesk.AllServerCards.Add(new CardAttributes("Volcanic", "10", "Clubs"));
-        // CardDesk.AllServerCards.Add(new CardAttributes("Volcanic", "10", "Spades"));
+        CardDesk.AllServerCards.Add(new CardAttributes("Volcanic", "10", "Spades"));
 
         CardDesk.AllServerCards.Add(new CardAttributes("Winchester", "8", "Spades"));
 

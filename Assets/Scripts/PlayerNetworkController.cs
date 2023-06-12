@@ -111,12 +111,12 @@ public class PlayerNetworkController : NetworkBehaviour
                 item.material = Materials[(int)netId - 1];
                 if (Role == ServerManager.Roles.CAPTAIN)
                 {
-                    item.material.SetFloat("_RemovedS", 9f - 5f);
+                    item.material.SetFloat("_RemovedS", 9.6f - 5.6f);
                     maxHealth = 5;
                 }
                 else
                 {
-                    item.material.SetFloat("_RemovedS", 9f - 4f);
+                    item.material.SetFloat("_RemovedS", 9f - 1);
                     maxHealth = 4;
                 }
                 materialHP = item;
@@ -128,7 +128,11 @@ public class PlayerNetworkController : NetworkBehaviour
     public void DeathActionClientRpc(uint id)
     {
         if(netId == id)
-        {
+        {   
+            if (isLocalPlayer)
+            {;
+                Destroy(GameObject.FindGameObjectWithTag("Hand"));
+            } 
             Destroy(gameObject);
         }
     }
