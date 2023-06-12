@@ -5,6 +5,7 @@ using Mirror;
 using UnityEngine.XR;
 using System;
 // using static UnityEditor.Progress;
+using UnityEngine.SceneManagement;
 using System.IO;
 using TMPro;
 
@@ -31,8 +32,8 @@ public class ServerManager : NetworkBehaviour
 
     private int TempHealth;
     private int SindicateCount, HelperCount, RenegadeCount, CaptainCount;
-    public GameObject GB, GS, GR;
-    public TextMeshProUGUI textB, textS, textR;
+    public GameObject GB, GS, GR, winMenu;
+    public TextMeshProUGUI textB, textS, textR,winText;
 
     public struct CardList
     {
@@ -500,9 +501,22 @@ public class ServerManager : NetworkBehaviour
         textS.text = HelperCount.ToString();
         textR.text = RenegadeCount.ToString();
         textB.text = SindicateCount.ToString();
-        if (RenegadeCount == 0 && SindicateCount == 0) print("Captane win");
-        if (CaptainCount == 0 && SindicateCount == 0) print("Renegade win");
-        if (CaptainCount == 0 && SindicateCount != 0) print("Sindicate win");
+        if (RenegadeCount == 0 && SindicateCount == 0) {
+            winMenu.SetActive(true);
+            winText.text = "CAPTAIN WIN!";
+        }
+        if (CaptainCount == 0 && SindicateCount == 0) {
+            winMenu.SetActive(true);
+            winText.text = "Sindicate WIN!";
+        };
+        if (CaptainCount == 0 && SindicateCount != 0) {
+            winMenu.SetActive(true);
+            winText.text = "RENEGADE WIN!";
+        };
+    }
+    public void exitInScene(int index){
+
+        SceneManager.LoadScene(index);
     }
 
     [Server]
