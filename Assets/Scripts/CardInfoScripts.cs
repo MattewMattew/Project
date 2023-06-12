@@ -167,7 +167,7 @@ public class CardInfoScripts : MonoBehaviour
          {
             if (transform.parent.tag =="Field")
             {  
-               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Box") ;
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Barrel") ;
                Info.SetActive(false);
             }
             else 
@@ -184,7 +184,7 @@ public class CardInfoScripts : MonoBehaviour
          {
             if (transform.parent.tag =="Field")
             {  
-               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Bomb") ;
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Dynamite") ;
                Info.SetActive(false);
             }
             else 
@@ -218,7 +218,7 @@ public class CardInfoScripts : MonoBehaviour
          {
              if (transform.parent.tag =="Field")
             {  
-               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Jetpack") ;
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Mustang") ;
                Info.SetActive(false);
             }
             else 
@@ -235,7 +235,7 @@ public class CardInfoScripts : MonoBehaviour
          {
              if (transform.parent.tag =="Field")
             {  
-               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Scope") ;
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Roach") ;
                Info.SetActive(false);
             }
             else
@@ -258,7 +258,7 @@ public class CardInfoScripts : MonoBehaviour
             WeaponRange = 4;
             if (transform.parent.tag =="Field")
             {  
-               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Gun") ;
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/GunCarbine") ;
                Info.SetActive(false);
             }
             else 
@@ -279,7 +279,7 @@ public class CardInfoScripts : MonoBehaviour
             WeaponRange = 3;
             if (transform.parent.tag =="Field")
             {  
-               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Gun") ;
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/GunRemington") ;
                Info.SetActive(false);
             }
             else 
@@ -299,7 +299,7 @@ public class CardInfoScripts : MonoBehaviour
             WeaponRange = 2;
             if (transform.parent.tag =="Field")
             {  
-               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Gun") ;
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/GunScofield") ;
                Info.SetActive(false);
             }
             else 
@@ -319,7 +319,7 @@ public class CardInfoScripts : MonoBehaviour
             WeaponRange = 1;
             if (transform.parent.tag =="Field")
             {  
-               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Gun") ;
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/GunVolcanic") ;
                Info.SetActive(false);
             }
             else 
@@ -338,7 +338,7 @@ public class CardInfoScripts : MonoBehaviour
             WeaponRange = 5;
             if (transform.parent.tag =="Field")
             {  
-               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Gun") ;
+               Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/GunWinchester") ;
                Info.SetActive(false);
             }
             else 
