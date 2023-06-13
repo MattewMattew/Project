@@ -72,6 +72,15 @@ public class ServerManager : NetworkBehaviour
         }
     }
 
+    public struct AttributesGameCharacters
+    {
+        public string Name;
+        public AttributesGameCharacters(string name)
+        {
+            Name = name;
+        }
+    }
+
 
     [SyncVar]
     public uint turnPlayerId;
@@ -332,6 +341,17 @@ public class ServerManager : NetworkBehaviour
         PlayerNetworkController[] players = FindObjectsOfType<PlayerNetworkController>();
         playersCount = players.Length;
         List<Roles> RolesList = new List<Roles>();
+
+        List<AttributesGameCharacters> ListGameCharacters = new List<AttributesGameCharacters>();
+        
+        ListGameCharacters.Add(new AttributesGameCharacters("Character1"));
+        ListGameCharacters.Add(new AttributesGameCharacters("Character2"));
+        ListGameCharacters.Add(new AttributesGameCharacters("Character3"));
+        ListGameCharacters.Add(new AttributesGameCharacters("Character4"));
+        ListGameCharacters.Add(new AttributesGameCharacters("Character5"));
+        ListGameCharacters.Add(new AttributesGameCharacters("Character6"));
+        ListGameCharacters.Add(new AttributesGameCharacters("Character7"));
+
         if (players.Length == 6)
         {
             RolesList = new List<Roles>() { Roles.SINDICATE, Roles.SINDICATE, Roles.SINDICATE, Roles.CAPTAIN, Roles.HELPER, Roles.RENEGADE };
@@ -356,7 +376,9 @@ public class ServerManager : NetworkBehaviour
         }
         foreach (var player in players)
         {
-
+            var CharIndex = UnityEngine.Random.Range(0, ListGameCharacters.Count);
+            player.GiveCharactersClientRpc(player.netId, ListGameCharacters[CharIndex]);
+            
             var index = UnityEngine.Random.Range(0, RolesList.Count);
             player.GiveRole(player.netId, RolesList[index]);
             if (RolesList[index] == Roles.CAPTAIN)

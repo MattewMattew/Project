@@ -910,6 +910,7 @@ MonoBehaviour:
   Range: 0
   RoleInf: {fileID: 6872465579586802647}
   RoleInfo: {fileID: 3020888389688640576}
+  CharacterPortrait: {fileID: 0}
   isDead: 0
   maxHealth: 0
   Role: 0
