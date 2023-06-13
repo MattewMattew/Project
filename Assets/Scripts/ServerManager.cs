@@ -378,7 +378,7 @@ public class ServerManager : NetworkBehaviour
         {
             var CharIndex = UnityEngine.Random.Range(0, ListGameCharacters.Count);
             player.GiveCharactersClientRpc(player.netId, ListGameCharacters[CharIndex]);
-            
+            ListGameCharacters.RemoveAt(CharIndex);
             var index = UnityEngine.Random.Range(0, RolesList.Count);
             player.GiveRole(player.netId, RolesList[index]);
             if (RolesList[index] == Roles.CAPTAIN)
