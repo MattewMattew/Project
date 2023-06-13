@@ -140,6 +140,10 @@ public class ServerManager : NetworkBehaviour
 
         
     }
+      public void exitInScene(int index){
+
+        SceneManager.LoadScene(index);
+    }
 
 
     [Client]
