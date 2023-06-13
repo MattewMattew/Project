@@ -138,7 +138,7 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
     void Awake()
     {
         pos1 = transform.localPosition;
-        pos2 = new Vector2(0,transform.localPosition.y+99f);
+        pos2 = new Vector2(0,transform.localPosition.y+96f);
     }
 
     public void OnPointerExit(PointerEventData eventData)
