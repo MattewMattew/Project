@@ -389,7 +389,7 @@ public class ServerManager : NetworkBehaviour
             }
             else
             {
-                Healths.Add(new HealthList(player.netId, 1));
+                Healths.Add(new HealthList(player.netId, 4));
                 GiveHandCards(PackCards, player.netId, 4);
             }
             RolesList.RemoveAt(index);
@@ -581,7 +581,7 @@ public class ServerManager : NetworkBehaviour
             for (int i = 1; i <= playersCount; i++)
                 foreach (var item in FindObjectsOfType<PlayerNetworkController>())
                 {
-                    if (item.netId == i)
+                    if (item.netId == i && !item.isDead)
                     {
                         // print($"{i}");
                         GiveTurn((uint)i, false);
@@ -596,7 +596,7 @@ public class ServerManager : NetworkBehaviour
             for (int i = (int)turnPlayerId + 1; i <= playersCount; i++)
                 foreach (var item in FindObjectsOfType<PlayerNetworkController>())
                 {
-                    if (item.netId == i)
+                    if (item.netId == i && !item.isDead)
                     {
                         // print($"{i}");
                         GiveTurn((uint)i, false);

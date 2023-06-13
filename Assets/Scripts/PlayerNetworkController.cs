@@ -175,7 +175,7 @@ public class PlayerNetworkController : NetworkBehaviour
                 else
                 {
                     item.material.SetFloat("_CountS", 9f);
-                    item.material.SetFloat("_RemovedS", 9f - 1);
+                    item.material.SetFloat("_RemovedS", 9f - 4);
                     maxHealth = 4;
                 }
                 materialHP = item;
