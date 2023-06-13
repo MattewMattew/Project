@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 432, y: 1.84}
+  m_AnchoredPosition: {x: 187.05, y: 9.9536}
   m_SizeDelta: {x: 124, y: 116}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9072308427352429308
@@ -905,8 +905,11 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 95294fcab1d15e64090397609fae1e6b, type: 2}
   - {fileID: 2100000, guid: 37fbaf4ebba663044b8fd828c3d67508, type: 2}
   - {fileID: 2100000, guid: 25e01d0f579ba6446868e1cf8c2ef603, type: 2}
-  - {fileID: 2100000, guid: 2c1b9dae42216f145be656e24b690b24, type: 2}
-  - {fileID: 2100000, guid: 87a0ab516804be74b9fd092063326ddb, type: 2}
+  - {fileID: 2100000, guid: 8a8cf5783e5643f4085abf6733fee25a, type: 2}
+  - {fileID: 2100000, guid: af58e0a23d099be478f25c78402c22c9, type: 2}
+  HpBarNone:
+  - {fileID: 2100000, guid: 620d8c0e090215248be0289c5c0cbd5c, type: 2}
+  - {fileID: 2100000, guid: 31bd8f1aab6122e46aea02f50844100a, type: 2}
   Range: 0
   RoleInf: {fileID: 6872465579586802647}
   RoleInfo: {fileID: 3020888389688640576}
@@ -1722,6 +1725,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5621470554775821630}
     m_Modifications:
+    - target: {fileID: 1624381836431002696, guid: d3ea991636d76ad4eb5698edde7d2429, type: 3}
+      propertyPath: m_TagString
+      value: HpBarNone
+      objectReference: {fileID: 0}
     - target: {fileID: 1624381836431002806, guid: d3ea991636d76ad4eb5698edde7d2429, type: 3}
       propertyPath: m_Material
       value: 

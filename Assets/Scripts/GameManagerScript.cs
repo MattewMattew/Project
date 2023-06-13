@@ -21,7 +21,7 @@ public class GameManagerScript : MonoBehaviour // Колода
     void Update()
     {
         CountCards.text = (FindObjectOfType<ServerManager>().PackCards.Count).ToString();
-        GameObject.Find("DisCount").GetComponent<TextMeshProUGUI>().text = (FindObjectOfType<ServerManager>().Discard.Count).ToString();
+        // GameObject.Find("DisCount").GetComponent<TextMeshProUGUI>().text = (FindObjectOfType<ServerManager>().Discard.Count).ToString();
     }
     void Start()
     {

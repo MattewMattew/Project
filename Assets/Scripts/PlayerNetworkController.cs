@@ -15,7 +15,7 @@ public class PlayerNetworkController : NetworkBehaviour
     private GameObject AnimIndians;
     private Coroutine coroutine;
     private GameObject Anim;
-    public List<Material> Materials;
+    public List<Material> Materials, HpBarNone;
     Image materialHP;
     public int Range;
     public GameObject RoleInf;
@@ -155,6 +155,14 @@ public class PlayerNetworkController : NetworkBehaviour
         var materialComponents = GetComponentsInChildren<Image>();
         foreach (var item in materialComponents)
         {
+            if (item.gameObject.tag == "HpBarNone")
+                if (role == ServerManager.Roles.CAPTAIN)
+                    item.material = HpBarNone[1];
+                else 
+                    item.material = HpBarNone[0];
+                
+
+
             if (item.gameObject.tag == "HpBar")
             {
                 item.material = Materials[(int)netId - 1];
@@ -162,13 +170,13 @@ public class PlayerNetworkController : NetworkBehaviour
                 if (role == ServerManager.Roles.CAPTAIN)
                 {
                     item.material.SetFloat("_CountS", 9.6f);
-                    item.material.SetFloat("_RemovedS", 9.6f - 5.6f);
+                    item.material.SetFloat("_RemovedS", 10f - 5f);
                     maxHealth = 5;
                 }
                 else
                 {
                     item.material.SetFloat("_CountS", 9f);
-                    item.material.SetFloat("_RemovedS", 9f - 4);
+                    item.material.SetFloat("_RemovedS", 9f - 4f);
                     maxHealth = 4;
                 }
                 materialHP = item;
@@ -212,7 +220,10 @@ public class PlayerNetworkController : NetworkBehaviour
     {
         print($"{health} health");
         if(netId == id)
-            materialHP.material.SetFloat("_RemovedS", 9f - health);
+            if (Role == ServerManager.Roles.CAPTAIN)
+                materialHP.material.SetFloat("_RemovedS", 10f - health);
+            else
+                materialHP.material.SetFloat("_RemovedS", 9f - health);
     }
 
     [ClientRpc]
