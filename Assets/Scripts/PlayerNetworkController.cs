@@ -129,7 +129,8 @@ public class PlayerNetworkController : NetworkBehaviour
             RoleInfo.sprite=Resources.Load<Sprite>("Sprites/Role/Роль(Капитан)");
         }
         else{
-            RoleInfo.gameObject.SetActive(false);
+            RoleInfo.gameObject.SetActive(true);
+            RoleInfo.sprite= Resources.Load<Sprite>("Sprites/Role/None");
         }
         if (isLocalPlayer && netId == id)
         {
