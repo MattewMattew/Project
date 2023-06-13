@@ -4,9 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Mirror;
-
-
-
+using System.Net;
 
 public enum PlayerSpawnMethod { Random, RoundRobin }
 public enum NetworkManagerMode { Offline, ServerOnly, ClientOnly, Host }
@@ -18,6 +16,10 @@ public enum NetworkManagerMode { Offline, ServerOnly, ClientOnly, Host }
 
 public class NetworkManagerCard : NetworkManager
 {
+    private void Update()
+    {
+        print(networkAddress.GetType()+ $" {networkAddress}");
+    }
     public GameObject PrefabCanvas;
     public TMP_Dropdown DPlayer;
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
