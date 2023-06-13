@@ -543,6 +543,7 @@ public class ServerManager : NetworkBehaviour
                     Healths[Healths.IndexOf(item)] = new HealthList(attackedPlayerId, item.Health - 1);
                     foreach (var item1 in FindObjectsOfType<PlayerNetworkController>())
                     {
+                        print(item.Health - 1);
                         item1.HealthUpdateClientRpc(attackedPlayerId, item.Health - 1);
                     }
                     if (item.Health - 1 <= 0)
@@ -953,15 +954,15 @@ public class ServerManager : NetworkBehaviour
                 }
                 Hands[Hands.IndexOf(item)] = new HandList(id, list);
                 FindObjectOfType<PlayerNetworkController>().UpdateCountCardsClientRpc(list.Count, id);
-/*                foreach(var player in FindObjectsOfType<PlayerNetworkController>())
+                foreach (var player in FindObjectsOfType<PlayerNetworkController>())
                 {
-                    if (player.netId==id)
+                    if (player.netId == id)
                     {
-                        player.AnimAction(card);
+                        player.CmdAnimAction(id ,card);
                         break;
 
                     }
-                }*/
+                }
             }
         }
     }

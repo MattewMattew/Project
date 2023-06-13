@@ -164,6 +164,7 @@ public class PlayerNetworkController : NetworkBehaviour
     [ClientRpc]
     public void HealthUpdateClientRpc(uint id, int health)
     {
+        print($"{health} health");
         if(netId == id)
             materialHP.material.SetFloat("_RemovedS", 9f - health);
     }
@@ -344,17 +345,17 @@ public class PlayerNetworkController : NetworkBehaviour
     }
 
     [Command(requiresAuthority = false)]
-    public void CmdAnimAction(CardAttributes card, string mod)
+    public void CmdAnimAction(uint id, CardAttributes card)
     {
         foreach (var player in FindObjectsOfType<PlayerNetworkController>())
         {
-            player.AnimAction(card, mod);
+            player.AnimAction(id ,card);
         }
     }
 
 
     [ClientRpc] 
-    public void AnimAction(CardAttributes card, string mod)
+    public void AnimAction(uint id, CardAttributes card)
     {
         if(FindObjectOfType<ServerManager>().turnModificator != "Discarding") 
         {
@@ -380,8 +381,21 @@ public class PlayerNetworkController : NetworkBehaviour
             Anim.GetComponent<Animator>().SetBool("Volcanic", false);
             Anim.GetComponent<Animator>().SetBool("Scofield", false);
             if (coroutine != null) StopCoroutine(coroutine);
-            print ($"{card.Name} card");
-            if (netId == FindObjectOfType<ServerManager>().turnPlayerId || netId == FindObjectOfType<ServerManager>().attackedPlayerId)
+            if (netId == id)
+            {
+                if (card.Name == "Saloon" || card.Name == "Indians" || card.Name == "Gatling")
+                {
+                    print("India");
+                    AnimIndians.GetComponent<Animator>().SetBool(card.Name, true);
+                    coroutine = StartCoroutine(StartAnim(card.Name, AnimIndians.GetComponent<Animator>()));
+                }
+                else
+                {
+                    Anim.GetComponent<Animator>().SetBool(card.Name, true);
+                    coroutine = StartCoroutine(StartAnim(card.Name, Anim.GetComponent<Animator>()));
+                }
+            }
+/*            if (isTurnedOrAttacked || !isTurnedOrAttacked)
             {
                 if(card.Name=="Saloon" || card.Name=="Indians" || card.Name== "Gatling")
                 {
@@ -391,12 +405,12 @@ public class PlayerNetworkController : NetworkBehaviour
                 else 
                 {
                    print($"{netId} || {mod}");
-                   if(netId == FindObjectOfType<ServerManager>().turnPlayerId && card.Name != "Missed" && (mod != "Gatling" || mod != "Indians"))
+                   if(isTurnedOrAttacked && card.Name != "Missed" && (mod != "Gatling" || mod != "Indians"))
                    {
                         Anim.GetComponent<Animator>().SetBool(card.Name, true);
                         coroutine = StartCoroutine(StartAnim(card.Name, Anim.GetComponent<Animator>()));
                    } 
-                   if(netId == FindObjectOfType<ServerManager>().attackedPlayerId && (mod == "Duel" ||
+                   if(!isTurnedOrAttacked && (mod == "Duel" ||
                    mod == "Gatling" || mod == "Indians" || 
                    card.Name == "Missed"))
                    {    
@@ -405,14 +419,12 @@ public class PlayerNetworkController : NetworkBehaviour
                    }
                 }
 
-            }
+            }*/
             if(card.Name == "Saloon")
             {
-                print ("DontBeer");
+                print ("Beer");
                 Anim.GetComponent<Animator>().SetBool("Beer", true);
                 coroutine = StartCoroutine(StartAnim("Beer", Anim.GetComponent<Animator>()));
-
-
             }
         }
 

@@ -43,16 +43,16 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 case "Bang":
                 {
                     if (FindObjectOfType<ServerManager>().turnModificator == "Discarding")
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "Indians" && turnPlayer.netId == FindObjectOfType<ServerManager>().attackedPlayerId)
                     {
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
                         turnPlayer.CmdDefense();
                     }
                     else if (FindObjectOfType<ServerManager>().turnModificator == "Duel" && turnPlayer.netId == FindObjectOfType<ServerManager>().attackedPlayerId)
                     {
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
                         if(turnPlayer.netId == FindObjectOfType<ServerManager>().turnPlayerId)
                         {
                             turnPlayer.CmdDuel(turnPlayer.netId, FindObjectOfType<ServerManager>().duelTargetPlayerId);
@@ -72,12 +72,11 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 case "Missed":
                 {
                     if (FindObjectOfType<ServerManager>().turnModificator == "Discarding")
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
                     if(turnPlayer.netId == FindObjectOfType<ServerManager>().attackedPlayerId)
                         if (FindObjectOfType<ServerManager>().turnModificator == "Gatling" || FindObjectOfType<ServerManager>().turnModificator == "Bang")
                         {
-                            turnPlayer.CmdAnimAction(GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
-                            UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                            UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
                             turnPlayer.CmdDefense();
 
                         }
@@ -86,19 +85,19 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 case "Beer":
                 {
                     if (FindObjectOfType<ServerManager>().turnModificator == "Discarding")
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
                     {
                         turnPlayer.CmdRegenerationHealth(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
                     }
                     break;
                 }
                 case "Panic":
                 {
                     if (FindObjectOfType<ServerManager>().turnModificator == "Discarding")
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
                         UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
@@ -107,11 +106,11 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 case "Gatling":
                 {
                     if (FindObjectOfType<ServerManager>().turnModificator == "Discarding")
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
                     {
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
                         turnPlayer.CmdMassiveAttackAction(GetComponent<CardInfoScripts>().SelfCard.Name);
                     }
                     break;
@@ -119,40 +118,40 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 case "WellsFargo":
                 {
                     if (FindObjectOfType<ServerManager>().turnModificator == "Discarding")
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
                         {
                             turnPlayer.CmdGiveHandCards(turnPlayer.netId, 3);
-                            UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                            UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
                         }
                     break;
                 }
                 case "Diligence":
                 {
                     if (FindObjectOfType<ServerManager>().turnModificator == "Discarding")
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard  , FindObjectOfType<ServerManager>().turnModificator);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
                     {
                         turnPlayer.CmdGiveHandCards(turnPlayer.netId, 2);
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
                     }
                     break;
                 }
                 case "General":
                 {
                     if (FindObjectOfType<ServerManager>().turnModificator == "Discarding")
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
                     break;
                 }
                 case "Duel":
                 {
                     if (FindObjectOfType<ServerManager>().turnModificator == "Discarding")
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
                         UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
@@ -161,19 +160,19 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 case "Saloon":
                 {
                     if (FindObjectOfType<ServerManager>().turnModificator == "Discarding")
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
                     {
                         turnPlayer.CmdRegenerationHealth(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
                     }
                     break;
                 }
                 case "Women":
                 {
                     if (FindObjectOfType<ServerManager>().turnModificator == "Discarding")
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
                         UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
@@ -182,11 +181,11 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 case "Indians":
                 {
                     if (FindObjectOfType<ServerManager>().turnModificator == "Discarding")
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
                     {
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
                         turnPlayer.CmdMassiveAttackAction(GetComponent<CardInfoScripts>().SelfCard.Name);
                     }
                     break;
@@ -197,7 +196,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 case "Barrel":
                 {
                     if (FindObjectOfType<ServerManager>().turnModificator == "Discarding")
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
                         AddCardInventory(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
@@ -206,7 +205,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 case "Dynamite":
                 {
                     if (FindObjectOfType<ServerManager>().turnModificator == "Discarding")
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
                         AddCardInventory(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
@@ -215,7 +214,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 case "Jail":
                 {
                     if (FindObjectOfType<ServerManager>().turnModificator == "Discarding")
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
                         UseCardOnEnemy(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
@@ -224,7 +223,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 case "Mustang":
                 {
                     if (FindObjectOfType<ServerManager>().turnModificator == "Discarding")
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
                         AddCardInventory(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
@@ -233,7 +232,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 case "Roach":
                 {
                     if (FindObjectOfType<ServerManager>().turnModificator == "Discarding")
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
                         AddCardInventory(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
@@ -245,7 +244,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 case "Carbine":
                 {
                     if (FindObjectOfType<ServerManager>().turnModificator == "Discarding")
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
                         AddCardInventory(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
@@ -254,7 +253,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 case "Remington":
                 {
                     if (FindObjectOfType<ServerManager>().turnModificator == "Discarding")
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
                         AddCardInventory(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
@@ -263,7 +262,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 case "Scofield":
                 {
                     if (FindObjectOfType<ServerManager>().turnModificator == "Discarding")
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
                         AddCardInventory(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
@@ -272,7 +271,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 case "Volcanic":
                 {
                     if (FindObjectOfType<ServerManager>().turnModificator == "Discarding")
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
                         AddCardInventory(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
@@ -281,14 +280,14 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 case "Winchester":
                 {
                     if (FindObjectOfType<ServerManager>().turnModificator == "Discarding")
-                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
+                        UseCard(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
 
                     if (FindObjectOfType<ServerManager>().turnModificator == "No")
                         AddCardInventory(turnPlayer.netId, GetComponent<CardInfoScripts>().SelfCard);
                     break;
                 }
-            } 
-
+            }
+            
         }
         else if(transform.parent.tag == "Field" && turnPlayer)
         {
@@ -297,7 +296,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
                 {
                     if(card.TempCard != null)
                     {
-                        card.GetComponent<CardScript>().UseCard(turnPlayer.netId, card.GetComponent<CardInfoScripts>().SelfCard);
+                        card.GetComponent<CardScript>().UseCard(turnPlayer.netId, card.GetComponent<CardInfoScripts>().SelfCard, FindObjectOfType<ServerManager>().turnModificator);
                         if(card.GetComponent<CardInfoScripts>().SelfCard.Name == "Women")
                         {
                             GetComponentInParent<PlayerNetworkController>().CmdGiveCardToDiscard(GetComponent<CardInfoScripts>().SelfCard);
@@ -350,7 +349,7 @@ public class CardScript : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    void UseCard(uint id, CardAttributes card)
+    void UseCard(uint id, CardAttributes card, string mod)
     {
         FindObjectOfType<PlayerNetworkController>().CmdRemoveCardFromHand(id, card);
         FindObjectOfType<PlayerNetworkController>().CmdGiveCardToDiscard(GetComponent<CardInfoScripts>().SelfCard);
