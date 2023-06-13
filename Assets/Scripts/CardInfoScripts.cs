@@ -7,9 +7,9 @@ using TMPro;
 public class CardInfoScripts : MonoBehaviour
 {
    public CardAttributes SelfCard;
-   public TextMeshProUGUI NameCard, Dignity ,InfoCard;
+   public TextMeshProUGUI NameCard, Dignity ,InfoCard,ActiveText;
    public Image Logo, Suit,Icon;
-   public GameObject Type, Info;
+   public GameObject Type, Info, Active;
    public int WeaponRange;
    public string Name;
    Sprite LogoSprite;
@@ -169,6 +169,8 @@ public class CardInfoScripts : MonoBehaviour
             {  
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Barrel") ;
                Info.SetActive(false);
+               Active.SetActive(true);
+               ActiveText.text="Укрытие. Всякий раз, когда в вас попадают,есть шанс укланиться от выстрела";
             }
             else 
             {
@@ -176,7 +178,7 @@ public class CardInfoScripts : MonoBehaviour
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Barrel");
-               InfoCard.text="Всякий раз, когда в вас попадают, можете сделать проверку";
+               InfoCard.text="Всякий раз, когда в вас попадают, происходит проверку";
                InfoTypeCard = TypeCard.PERMANENT_CARD;}
             break;
          }
@@ -186,6 +188,8 @@ public class CardInfoScripts : MonoBehaviour
             {  
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Dynamite") ;
                Info.SetActive(false);
+               Active.SetActive(true);
+               ActiveText.text="Игроки передают карту по кругу, пока «Динамит» не взорвётся";
             }
             else 
             {
@@ -203,6 +207,8 @@ public class CardInfoScripts : MonoBehaviour
             {  
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Jail") ;
                Info.SetActive(false);
+               Active.SetActive(true);
+               ActiveText.text="Сыграйте эту карту на любого игрока, независимо от расстояния(«Тюрьму» нельзя сыграть на шерифа!)";
             }
             else 
             {
@@ -220,6 +226,8 @@ public class CardInfoScripts : MonoBehaviour
             {  
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Mustang") ;
                Info.SetActive(false);
+               Active.SetActive(true);
+               ActiveText.text="Для всех остальных игроков расстояние до вас увеличивается на 1";
             }
             else 
             {
@@ -237,6 +245,8 @@ public class CardInfoScripts : MonoBehaviour
             {  
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/Roach") ;
                Info.SetActive(false);
+               Active.SetActive(true);
+               ActiveText.text="Для вас расстояние до всех остальных игроков уменьшается на 1";
             }
             else
             {
@@ -260,6 +270,8 @@ public class CardInfoScripts : MonoBehaviour
             {  
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/GunCarbine") ;
                Info.SetActive(false);
+               Active.SetActive(true);
+               ActiveText.text="Максимальная дистанция выстрела-4";
             }
             else 
             {
@@ -281,6 +293,8 @@ public class CardInfoScripts : MonoBehaviour
             {  
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/GunRemington") ;
                Info.SetActive(false);
+               Active.SetActive(true);
+               ActiveText.text="Максимальная дистанция выстрела-3";
             }
             else 
             {
@@ -301,6 +315,8 @@ public class CardInfoScripts : MonoBehaviour
             {  
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/GunScofield") ;
                Info.SetActive(false);
+               Active.SetActive(true);
+               ActiveText.text="Максимальная дистанция выстрела-2";
             }
             else 
             {
@@ -321,6 +337,8 @@ public class CardInfoScripts : MonoBehaviour
             {  
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/GunVolcanic") ;
                Info.SetActive(false);
+               Active.SetActive(true);
+               ActiveText.text="За один ход сыграть сколько угодно карт «Выстрел»";
             }
             else 
             {
@@ -328,7 +346,7 @@ public class CardInfoScripts : MonoBehaviour
                Info.SetActive(true);
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/NeonKarta") ;
                Logo.sprite = Resources.Load<Sprite>("Sprites/Cards/Volcanic");
-               InfoCard.text="Позволяет за один ход сыграть сколько угодно карт «Бэнг!»";
+               InfoCard.text="Позволяет за один ход сыграть сколько угодно карт «Выстрел»";
             }
             break;
          }
@@ -340,6 +358,8 @@ public class CardInfoScripts : MonoBehaviour
             {  
                Type.GetComponent<Image>().sprite =Resources.Load<Sprite>("Sprites/CardIcons/GunWinchester") ;
                Info.SetActive(false);
+               Active.SetActive(true);
+               ActiveText.text="Максимальная дистанция выстрела-2";
             }
             else 
             {
