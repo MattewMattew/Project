@@ -77,44 +77,37 @@ public class PlayerNetworkController : NetworkBehaviour
             {
                 case "Character1":
                 {
-                    print($"{id} character1");
-                    // CharacterPortrait.sprite = Resources.Load<Sprite>("Sprites/Characters/Myzhik1");
+                    CharacterPortrait.sprite = Resources.Load<Sprite>("Sprites/Characters/Myzhik1");
                     break;
                 }
                 case "Character2":
                 {
-                    print($"{id} character2");
-                    // CharacterPortrait.sprite = Resources.Load<Sprite>("Sprites/Characters/Myzhik2");
+                    CharacterPortrait.sprite = Resources.Load<Sprite>("Sprites/Characters/Myzhik2");
                     break;
                 }
                 case "Character3":
                 {
-                    print($"{id} character3");
-                    // CharacterPortrait.sprite = Resources.Load<Sprite>("Sprites/Characters/Myzhik3");
+                    CharacterPortrait.sprite = Resources.Load<Sprite>("Sprites/Characters/Myzhik3");
                     break;
                 }
                 case "Character4":
                 {
-                    print($"{id} character4");
-                    // CharacterPortrait.sprite = Resources.Load<Sprite>("Sprites/Characters/Myzhik4");
+                    CharacterPortrait.sprite = Resources.Load<Sprite>("Sprites/Characters/Myzhik4");
                     break;
                 }
                 case "Character5":
                 {
-                    print($"{id} character5");
-                    // CharacterPortrait.sprite = Resources.Load<Sprite>("Sprites/Characters/Myzhik5");
+                    CharacterPortrait.sprite = Resources.Load<Sprite>("Sprites/Characters/Myzhik5");
                     break;
                 }
                 case "Character6":
                 {
-                    print($"{id} character6");
-                    // CharacterPortrait.sprite = Resources.Load<Sprite>("Sprites/Characters/Solnishko");
+                    CharacterPortrait.sprite = Resources.Load<Sprite>("Sprites/Characters/Solnishko");
                     break;
                 }
                 case "Character7":
                 {
-                    print($"{id} character7");
-                    // CharacterPortrait.sprite = Resources.Load<Sprite>("Sprites/Characters/Solnishko2");
+                    CharacterPortrait.sprite = Resources.Load<Sprite>("Sprites/Characters/Solnishko2");
                     break;
                 }
             }
