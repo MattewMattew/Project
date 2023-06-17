@@ -435,15 +435,15 @@ public class ServerManager : NetworkBehaviour
         textB.text = SindicateCount.ToString();
         if (RenegadeCount == 0 && SindicateCount == 0) {
             winMenu.SetActive(true);
-            winText.text = "CAPTAIN WIN!";
+            winText.text = "ЧЛЕНЫ ЭКИПАЖА ПОБЕДИЛИ!";
         }
         if (CaptainCount == 0 && SindicateCount == 0) {
             winMenu.SetActive(true);
-            winText.text = "RENEGADE WIN!";
+            winText.text = "РЕНЕГАТ ПОБЕДИЛ!";
         };
         if (CaptainCount == 0 && SindicateCount != 0) {
             winMenu.SetActive(true);
-            winText.text = "Sindicate WIN!";
+            winText.text = "СИНДИКАТ ПОБЕДИЛ!";
         };
     }
 
