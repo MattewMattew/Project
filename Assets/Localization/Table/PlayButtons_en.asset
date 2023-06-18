@@ -111,6 +111,67 @@ MonoBehaviour:
     m_Localized: Connect
     m_Metadata:
       m_Items: []
+  - m_Id: 7617673868533760
+    m_Localized: Close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7617904924352512
+    m_Localized: "\rThe members of the syndicate seek to get rid of the captain and
+      gain control over the crew."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7618452943724544
+    m_Localized: 'The captain must remove from the game all members of the syndicate
+      and the renegade, named
+
+      law and for the benefit of society.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7618725065973760
+    m_Localized: 'The lieutenants protect the captain at all costs: they have taken
+      an oath to serve law and order.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7619073658773504
+    m_Localized: 'The renegade wants to become the new captain, why should he stay
+
+      the
+      only survivor.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7619668239114240
+    m_Localized: "There are 5 game models in total, namely:\r\nfor 2 players - captain,
+      member of the syndicate;\r\nfor 4 players - a captain, a renegade and 2 members
+      of the syndicate;\r\nfor 5 players - captain, renegade, assistant and 2 members
+      of the syndicate;\r\nfor 6 players - captain, renegade, assistant and 3 members
+      of the syndicate;\r\nfor 7 players - a captain, a renegade, 2 assistants and
+      3 members of the syndicate.\r\nThe captain reveals himself (everyone sees him).\r\nOther
+      players must watch the roles, and keep them secret from\r\nrivals. For example,
+      the captain's mate cannot reveal his role\r\nno one, including the captain,
+      even if he wants to.\r\nThe captain gets one extra health over the limit.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7620522828554240
+    m_Localized: Close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7620702730641408
+    m_Localized: This is the number of cards in your hand, it cannot exceed your
+      health.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7620969572261888
+    m_Localized: This is the Role of the player and each player has his own
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7621168835256320
+    m_Localized: This is the distance between the players
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7621880348598272
+    m_Localized: Close
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
