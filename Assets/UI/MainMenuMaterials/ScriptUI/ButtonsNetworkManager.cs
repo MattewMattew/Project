@@ -19,6 +19,9 @@ public class ButtonsNetworkManager : MonoBehaviour
     public Button SetNameButton;
     public TMP_InputField InputName;
     public TextMeshProUGUI TexB;
+    private Button ClientButton;
+    private Button HostButton;
+    private Button BackButton;
     // Start is called before the first frame update
     void Awake() {
 
@@ -28,12 +31,30 @@ public class ButtonsNetworkManager : MonoBehaviour
     {
 
 
-        InputName.text = DisplayName; ;
-        TexB.text = DisplayName; ;
-
+        InputName.text = DisplayName;
+        TexB.text = DisplayName;
+        ClientButton = GameObject.Find("Client").GetComponent<Button>();
+        ClientButton.onClick.AddListener(Client);
+        HostButton = GameObject.Find("Host").GetComponent<Button>();
+        HostButton.onClick.AddListener(Host);
+        HostButton = GameObject.Find("Back").GetComponent<Button>();
+        HostButton.onClick.AddListener(Back);
 
     }
-
+    void Client()
+    {
+        FindObjectOfType<NetworkManagerCard>().StartClient();
+    }
+    void Host()
+    {
+        FindObjectOfType<NetworkManagerCard>().StartHost();
+    }
+    void Back()
+    {
+        FindObjectOfType<NetworkManagerCard>().StopClient();
+        FindObjectOfType<NetworkManagerCard>().StopHost();
+        NextScene(0);
+    }
     // Update is called once per frame
     void Update()
     {

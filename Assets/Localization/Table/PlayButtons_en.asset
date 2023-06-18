@@ -100,7 +100,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2183190279774208
-    m_Localized: Save
+    m_Localized: Save name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7546546206990336
+    m_Localized: Host
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7547145761775616
+    m_Localized: Connect
     m_Metadata:
       m_Items: []
   references:

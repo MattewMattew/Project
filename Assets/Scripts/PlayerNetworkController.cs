@@ -29,6 +29,48 @@ public class PlayerNetworkController : NetworkBehaviour
         Anim = GetComponentInChildren<Animator>().gameObject;
         
     }
+    private void Update()
+    {
+        if (materialHP != null)
+        {
+            if(netId == FindObjectOfType<ServerManager>().turnPlayerId)
+            {
+                materialHP.material.SetColor("_Color", new Color(0, 0.5f, 0));
+                foreach (var item in GetComponentsInChildren<Image>())
+                {
+                    if (item.tag == "Field")
+                    {
+                        item.color = new Color(0, 0.5f, 0.5f) * Color.white;
+                        break;
+                    }
+                }
+            }
+            else if (netId == FindObjectOfType<ServerManager>().attackedPlayerId)
+            {
+                materialHP.material.SetColor("_Color", new Color(0.5f, 0, 0));
+                foreach (var item in GetComponentsInChildren<Image>())
+                {
+                    if (item.tag == "Field")
+                    {
+                        item.color = new Color(0.5f, 0, 0) * Color.white;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                materialHP.material.SetColor("_Color", new Color(0, 0.5f, 0.5f));
+                foreach (var item in GetComponentsInChildren<Image>())
+                {
+                    if (item.tag == "Field")
+                    {
+                        item.color = Color.white;
+                        break;
+                    }
+                }
+            }
+        }
+    }
     public void SetName()
     {
         if (isLocalPlayer)
@@ -364,7 +406,7 @@ public class PlayerNetworkController : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void CmdDefense()
     {
-        FindObjectOfType<ServerManager>().GiveTurn(FindObjectOfType<ServerManager>().turnPlayerId, false);
+        FindObjectOfType<ServerManager>().GiveTurn(FindObjectOfType<ServerManager>().turnPlayerId, false, false);
     }
     [Command(requiresAuthority = false)]
     public void CmdDuel(uint idAttacking, uint idDefenser)
@@ -411,16 +453,22 @@ public class PlayerNetworkController : NetworkBehaviour
     {
         foreach (var player in FindObjectsOfType<PlayerNetworkController>())
         {
-            player.AnimAction(id ,card);
+            player.AnimAction(id ,card, player.netId);
         }
     }
 
-
-    [ClientRpc] 
-    public void AnimAction(uint id, CardAttributes card)
+    [Command(requiresAuthority = false)]
+    public void CmdWomenPanicAction(uint id, CardAttributes card)
     {
-        if(FindObjectOfType<ServerManager>().turnModificator != "Discarding") 
+         WomenPanicActionClientRpc(id, card);
+    }
+
+    [ClientRpc]
+    public void WomenPanicActionClientRpc(uint id, CardAttributes card)
+    {
+        if(netId == id)
         {
+            if (coroutine != null) StopCoroutine(coroutine);
             AnimIndians.GetComponent<Animator>().SetBool("Gatling", false);
             AnimIndians.GetComponent<Animator>().SetBool("Indians", false);
             AnimIndians.GetComponent<Animator>().SetBool("Saloon", false);
@@ -442,12 +490,42 @@ public class PlayerNetworkController : NetworkBehaviour
             Anim.GetComponent<Animator>().SetBool("Carbine", false);
             Anim.GetComponent<Animator>().SetBool("Volcanic", false);
             Anim.GetComponent<Animator>().SetBool("Scofield", false);
-            if (coroutine != null) StopCoroutine(coroutine);
-            if (netId == id)
+            Anim.GetComponent<Animator>().SetBool(card.Name, true);
+            coroutine = StartCoroutine(StartAnim(card.Name, Anim.GetComponent<Animator>()));
+        }
+    }
+    [ClientRpc] 
+    public void AnimAction(uint id, CardAttributes card, uint net)
+    {
+        if(FindObjectOfType<ServerManager>().turnModificator != "Discarding") 
+        {
+            if (netId == id || net == FindObjectOfType<ServerManager>().duelTargetPlayerId)
             {
+                print($"StartAnim {id} {netId}");
+                AnimIndians.GetComponent<Animator>().SetBool("Gatling", false);
+                AnimIndians.GetComponent<Animator>().SetBool("Indians", false);
+                AnimIndians.GetComponent<Animator>().SetBool("Saloon", false);
+                Anim.GetComponent<Animator>().SetBool("Bang", false);
+                Anim.GetComponent<Animator>().SetBool("Duel", false);
+                Anim.GetComponent<Animator>().SetBool("Diligence", false);
+                Anim.GetComponent<Animator>().SetBool("WellsFargo", false);
+                Anim.GetComponent<Animator>().SetBool("Jail", false);
+                Anim.GetComponent<Animator>().SetBool("Panic", false);
+                Anim.GetComponent<Animator>().SetBool("Women", false);
+                Anim.GetComponent<Animator>().SetBool("Beer", false);
+                Anim.GetComponent<Animator>().SetBool("Missed", false);
+                Anim.GetComponent<Animator>().SetBool("Barrel", false);
+                Anim.GetComponent<Animator>().SetBool("Roach", false);
+                Anim.GetComponent<Animator>().SetBool("Dynamite", false);
+                Anim.GetComponent<Animator>().SetBool("Mustang", false);
+                Anim.GetComponent<Animator>().SetBool("Remington", false);
+                Anim.GetComponent<Animator>().SetBool("Winchester", false);
+                Anim.GetComponent<Animator>().SetBool("Carbine", false);
+                Anim.GetComponent<Animator>().SetBool("Volcanic", false);
+                Anim.GetComponent<Animator>().SetBool("Scofield", false);
+                if (coroutine != null) StopCoroutine(coroutine);
                 if (card.Name == "Saloon" || card.Name == "Indians" || card.Name == "Gatling")
                 {
-                    print("India");
                     AnimIndians.GetComponent<Animator>().SetBool(card.Name, true);
                     coroutine = StartCoroutine(StartAnim(card.Name, AnimIndians.GetComponent<Animator>()));
                 }
@@ -457,34 +535,8 @@ public class PlayerNetworkController : NetworkBehaviour
                     coroutine = StartCoroutine(StartAnim(card.Name, Anim.GetComponent<Animator>()));
                 }
             }
-/*            if (isTurnedOrAttacked || !isTurnedOrAttacked)
-            {
-                if(card.Name=="Saloon" || card.Name=="Indians" || card.Name== "Gatling")
-                {
-                    AnimIndians.GetComponent<Animator>().SetBool(card.Name, true);
-                    coroutine = StartCoroutine(StartAnim(card.Name, AnimIndians.GetComponent<Animator>()));
-                }
-                else 
-                {
-                   print($"{netId} || {mod}");
-                   if(isTurnedOrAttacked && card.Name != "Missed" && (mod != "Gatling" || mod != "Indians"))
-                   {
-                        Anim.GetComponent<Animator>().SetBool(card.Name, true);
-                        coroutine = StartCoroutine(StartAnim(card.Name, Anim.GetComponent<Animator>()));
-                   } 
-                   if(!isTurnedOrAttacked && (mod == "Duel" ||
-                   mod == "Gatling" || mod == "Indians" || 
-                   card.Name == "Missed"))
-                   {    
-                        Anim.GetComponent<Animator>().SetBool(card.Name, true);
-                        coroutine = StartCoroutine(StartAnim(card.Name, Anim.GetComponent<Animator>()));
-                   }
-                }
-
-            }*/
             if(card.Name == "Saloon")
             {
-                print ("Beer");
                 Anim.GetComponent<Animator>().SetBool("Beer", true);
                 coroutine = StartCoroutine(StartAnim("Beer", Anim.GetComponent<Animator>()));
             }

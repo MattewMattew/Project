@@ -96,6 +96,8 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
                                     {
                                         if(card.GetComponent<CardInfoScripts>().SelfCard.Name == "Women")
                                         {
+                                            GetComponentInParent<PlayerNetworkController>().CmdWomenPanicAction(GetComponentInParent<PlayerNetworkController>().netId, 
+                                                card.GetComponent<CardInfoScripts>().SelfCard);
                                             DeleteCard(card);
                                             GetComponent<PlayerNetworkController>().CmdRandomRemoveCardFromHand(GetComponent<PlayerNetworkController>(),
                                                                                             card.GetComponent<CardInfoScripts>().SelfCard);
@@ -103,7 +105,9 @@ public class DropPlaceScript : MonoBehaviour, IPointerEnterHandler,
                                         }
                                         if (card.GetComponent<CardInfoScripts>().SelfCard.Name == "Panic")
                                         {
-                                            GetComponent<PlayerNetworkController>().CmdRandomRemoveCardFromHand(GetComponent<PlayerNetworkController>(),
+                                             GetComponentInParent<PlayerNetworkController>().CmdWomenPanicAction(GetComponentInParent<PlayerNetworkController>().netId,
+                                                card.GetComponent<CardInfoScripts>().SelfCard);
+                                             GetComponent<PlayerNetworkController>().CmdRandomRemoveCardFromHand(GetComponent<PlayerNetworkController>(),
                                                                                             card.GetComponent<CardInfoScripts>().SelfCard);
                                             DeleteCard(card);
                                             return;
