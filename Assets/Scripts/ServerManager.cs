@@ -141,7 +141,8 @@ public class ServerManager : NetworkBehaviour
         
     }
       public void exitInScene(int index){
-
+        FindObjectOfType<NetworkManagerCard>().StopClient();
+        FindObjectOfType<NetworkManagerCard>().StopHost();
         SceneManager.LoadScene(index);
     }
 
