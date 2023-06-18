@@ -158,9 +158,13 @@ public class PlayerNetworkController : NetworkBehaviour
         {
             if (item.gameObject.tag == "HpBarNone")
                 if (role == ServerManager.Roles.CAPTAIN)
+                {
                     item.material = HpBarNone[1];
-                else 
+                }
+                else
+                {
                     item.material = HpBarNone[0];
+                }
                 
 
 
