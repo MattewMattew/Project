@@ -862,7 +862,7 @@ public class ServerManager : NetworkBehaviour
                             if (PackCards.Count <= 0) ResetPack();
                             RemoveCardFromInventory(cardInv.GetComponent<CardInfoScripts>().SelfCard, id);
                             print(PackCards[0].Dignity + " PackCards[0].Dignity");
-                            if(PackCards[0].Dignity != "J" || PackCards[0].Dignity != "Q" || PackCards[0].Dignity != "K" || PackCards[0].Dignity != "A")
+                            if(PackCards[0].Dignity != "J" && PackCards[0].Dignity != "Q" && PackCards[0].Dignity != "K" && PackCards[0].Dignity != "A")
                             {
                                 if (PackCards[0].Suit == "Spades" && (Int32.Parse(PackCards[0].Dignity) >= 2 && Int32.Parse(PackCards[0].Dignity) <= 9))
                                 {
