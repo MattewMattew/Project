@@ -158,7 +158,7 @@ public class CardManagerScript : MonoBehaviour // Список карт и св�
     void Exit()
     {
         print("sd");
-        if(menu.active == false)
+        if (menu.active == false && !FindObjectOfType<ServerManager>())
         {
             SceneManager.LoadScene(0);
         }
