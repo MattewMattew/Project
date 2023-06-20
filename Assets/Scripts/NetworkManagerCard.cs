@@ -16,6 +16,7 @@ public enum NetworkManagerMode { Offline, ServerOnly, ClientOnly, Host }
 
 public class NetworkManagerCard : NetworkManager
 {
+    
     private void Update()
     {
         print(networkAddress.GetType()+ $" {networkAddress}");
@@ -49,11 +50,6 @@ public class NetworkManagerCard : NetworkManager
 
     public override void OnServerDisconnect(NetworkConnectionToClient conn)
     {
-        // destroy ball
-/*        if (ball != null)
-            NetworkServer.Destroy(ball);*/
-
-        // call base functionality (actually destroys the player)
         base.OnServerDisconnect(conn);
     }
 }

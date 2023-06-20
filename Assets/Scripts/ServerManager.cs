@@ -339,6 +339,7 @@ public class ServerManager : NetworkBehaviour
         GameObject.Find("MainCanvas").SetActive(false);
 
     }
+
     [Server]
     public void init()
     {
@@ -553,7 +554,7 @@ public class ServerManager : NetworkBehaviour
                 if(discardCard > 0 && turnModificator != "Jail") 
                 {
                     turnModificator = "Discarding";
-                    Coroutine = StartCoroutine(MoveFunc(10));
+                    Coroutine = StartCoroutine(MoveFunc(30));
                     player.EndTurnClientRpc();
                     return;
                 }
@@ -675,13 +676,13 @@ public class ServerManager : NetworkBehaviour
                     GiveHandCards(PackCards, turnPlayerId, 2);
                 }
             }
-            Coroutine = StartCoroutine(MoveFunc(15));
+            Coroutine = StartCoroutine(MoveFunc(60));
         }
         attackedPlayerId = 0;
         if(target)
         {
             attackedPlayerId = id;
-            Coroutine = StartCoroutine(MoveFunc(15));
+            Coroutine = StartCoroutine(MoveFunc(30));
             // turnModificator = "Attack";
         }
         turnModificator = "No";
@@ -880,6 +881,7 @@ public class ServerManager : NetworkBehaviour
                                                     GiveCardToDiscard(cardInv.SelfCard);
                                                     if (item.Health - 3 <= 0)
                                                     {
+                                                        ChangeMove();
                                                         DeathAction(turnPlayerId);
                                                     }
                                                 }

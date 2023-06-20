@@ -172,6 +172,109 @@ MonoBehaviour:
     m_Localized: Close
     m_Metadata:
       m_Items: []
+  - m_Id: 7623764685807616
+    m_Localized: "The first move is made by the captain, then the right to move is
+      transferred clockwise. Each turn consists of three phases:\r\n<b>1. Kit\r\n</b>\r\nTake
+      the top two cards from the deck into your hand. If the deck runs out of cards,
+      shuffle the discard pile and make a new deck.\r\n<b>2.</b> Draw\r\n\r\n</b>\r\nYou
+      may play any number of cards to help yourself or harm members of the Syndicate.
+      As a general rule, you only play cards on your turn (with the exception of
+      Pass! and Beer cards). You have the right to play as many cards as you want
+      (including not playing any), but you must comply with three restrictions:\r\nYou
+      cannot play more than 1 Bang! per turn (this rule does not apply to other cards
+      with a symbol).\nYou must not have multiple cards with the same name in the
+      game (maximum one of each).\r\nYou can only have 1 weapon in play (when playing
+      a new weapon card, discard the previously placed one).\r\nThere are two types
+      of game cards: one-time cards (with a red frame) go to the discard pile after
+      use, and permanent cards (with a blue frame) remain in the game.\nWhen you
+      play a single card, discard it from your hand to the discard pile and apply
+      all of its effects (as indicated by text or symbols). When you play a permanent
+      card, place it faceup in front of you (\u201CJail\u201D in front of another
+      player). The cards in front of you are in play, and their effects last forever
+      until the card is discarded (for example, with Pretty Woman) or leaves the
+      game in some other way (for example, with Dynamite). You can keep as many cards
+      as you want in play, but they must all be different. Important: in this phase,
+      you cannot discard a card (one-time or permanent) without applying its effect.
+      You can discard cards during the discard phase and only if the hand limit is
+      exceeded.\n<b>3. Reset\r\n</b>\r\nIf you don't want to or can't play any more
+      cards, the play phase ends and you must discard any excess cards from your
+      hand. The hand limit is equal to the number of ammo (health) remaining at the
+      end of the turn. Discard all cards above this limit and pass to the left.\r\nDistance
+      between players The distance from one player to another is equal to the number
+      of gaps between them, counting to the nearest side around the table (see diagram).
+      Many cards only work at a certain distance. For example, at the beginning of
+      the game, you only have a Colt with the symbol from your weapon, so you can
+      only reach a target - a player or a card - at a distance of 1. Eliminated players
+      do not count towards the distance calculation: if someone's character dies,
+      the rest become closer to each other. friend.\r\n<b>4.Character's death</b>\r\n</b>\nWhen
+      your character loses his last life point, you may immediately play a Beer card
+      (see below) and save a life. If you do not have a Beer card, your character
+      dies and you are out of the game. When out of the game, reveal your role card
+      and discard all your cards from your hand and from the game.\n<b>5.Penalties
+      and rewards</b>\n</b>\nIf the captain kills an assistant, the captain must
+      discard all his cards from his hand and from the game. Any player who kills
+      a member of the Syndicate (even if they themselves are a member of the Syndicate)
+      will receive 3 cards in their hand."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7641110645235712
+    m_Localized: 'The game ends in one of the following cases:
+
+
+      a) Death of
+      the captain. If only the renegade is left alive at the table, he wins, otherwise
+      the members of the Syndicate win.
+
+
+      b) The reign of order. If all members
+      of the Syndicate and the renegade are killed, the captain and his assistants
+      win.
+
+
+      Example 1. All members of the Syndicate are knocked out, but the
+      renegade is still alive. The game continues: now the renegade will have to
+      confront the captain and his assistants alone.
+
+
+      Example 2. The captain
+      is killed, but all members of the Syndicate are destroyed. Only the renegade
+      and the assistant captain remained in the game. The party ends with the victory
+      of the members of the Syndicate: they have achieved their goal, albeit at the
+      cost of their own lives!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7641494814121984
+    m_Localized: 'You can only reach a target without a weapon at a distance of 1,
+      that is, at your neighbor on the right or left. To hit a target from a greater
+      distance, you need to play a more advanced weapon: place its card on your player
+      board on top of the Colt. The weapon card can be identified by a blue border
+      without bullet holes, a black and white illustration, and a number in the scope
+      that indicates the maximum attack distance. A played weapon replaces the Colt
+      until its card leaves play. Your weapons in the game can, for example, be stolen
+      (with the "Theft" card) or discarded (with the help of "Threat"). But the good
+      old Colt you will not lose under any circumstances. You can only keep one weapon
+      in play: if you want to play a new one, discard the old one. Important: the
+      weapon does not change the distance between the players, but sets the maximum
+      distance at which you can hit the opponent. "PP" allows you to play as many
+      cards as you want in one move'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7641704827117568
+    m_Localized: Close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7641986202001408
+    m_Localized: Close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7711950460084224
+    m_Localized: All characters have 4 health
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8257594610343936
+    m_Localized: Exti
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

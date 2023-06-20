@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public struct Card 
 {
@@ -33,6 +36,8 @@ public static class CardDesk
 }
 public class CardManagerScript : MonoBehaviour // Список карт и свойства
 {
+    public GameObject menu;
+    private Button exitButton;
     public void Awake() 
     {
         /*                                                       80 cards                                                                    */
@@ -147,6 +152,27 @@ public class CardManagerScript : MonoBehaviour // Список карт и св�
 
         CardDesk.AllServerCards.Add(new CardAttributes("Winchester", "8", "Spades"));
 
-
+        exitButton = GameObject.Find("Exit").GetComponent<Button>();
+        exitButton.onClick.AddListener(Exit);
     }
+    void Exit()
+    {
+        print("sd");
+        if(menu.active == false)
+        {
+            SceneManager.LoadScene(0);
+        }
+    }
+/*    private void Update()
+    {
+        if(!FindObjectOfType<ServerManager>())
+        {
+            print("done");
+            mainMenu.SetActive(true);
+        }
+        else if(mainMenu.active == true)
+        {
+            mainMenu.SetActive(false);
+        }
+    }*/
 }
